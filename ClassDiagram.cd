@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BaseWindow&lt;DERIVED_TYPE&gt;">
+    <Position X="9.25" Y="0.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAIABAAACAAAAAAAAAAEBAAAAAAEAAAAAACAAAAAA=</HashCode>
+      <FileName>BaseWindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="D2DWindow&lt;DERIVED_TYPE&gt;">
+    <Position X="9.25" Y="4" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>RICAQABAAAAACAAAAAAAAAAAAAAAAAIoAEAAAAAAQAA=</HashCode>
+      <FileName>D2DWindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HubWindow">
+    <Position X="16" Y="11.75" Width="2" />
+    <NestedTypes>
+      <Struct Name="HubWindow::LabDef" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>HubWindow.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAABAEACAgAAAIAAgAAAAEAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>HubWindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="m_random&lt;T&gt;">
+    <Position X="27.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQBABABAAAAAQAEiEAAAAAABESgAAAAAAAAACAAABBA=</HashCode>
+      <FileName>m_random.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MainWindow&lt;DERIVED_TYPE&gt;">
+    <Position X="13.25" Y="8.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>QACAAABAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MainWindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MainButton">
+    <Position X="9.25" Y="8.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>QAAAAABAAICADEAiQAEAAABCwABAAEAIAAAACEIAAgA=</HashCode>
+      <FileName>MainButton.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseEdit">
+    <Position X="3.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAQAAAAAAIABDAAqQIAAAABAAAAAAEAAAAAAAEAQAgA=</HashCode>
+      <FileName>BaseEdit.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseWndProps">
+    <Position X="17.25" Y="5.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAEgAAAABAAAAAAAAAAAAEQAAAAAAAAAIAAAAAgAAAA=</HashCode>
+      <FileName>WndProps.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WndProps&lt;DERIVED_TYPE, WND_COUNT&gt;">
+    <Position X="17" Y="8.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEABAAAQAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>WndProps.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WndProps&lt;DERIVED_TYPE, 0&gt;">
+    <Position X="21.25" Y="8.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>WndProps.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IControl">
+    <Position X="5.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAgAAAAABAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>IControl.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MainCheckBox">
+    <Position X="5.25" Y="8.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAABQAICADAAmQAAAAABCwAAAAEAIAAAADEAAIgE=</HashCode>
+      <FileName>MainCheckBox.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LabTestWindow">
+    <Position X="13.5" Y="11.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQAAABAAgKAIAAAgAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>LabTestWindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DpiScale">
+    <Position X="26" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAADAIQAAAAAAAAAAQAgABCAAIAAAA=</HashCode>
+      <FileName>DpiScale.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
