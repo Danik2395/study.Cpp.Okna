@@ -24,6 +24,9 @@
     <ClCompile Include="LabTestWindow.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Lab1Window.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseWindow.h">
@@ -53,7 +56,7 @@
     <ClInclude Include="MainButton.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="BaseEdit.h">
+    <ClInclude Include="MainEdit.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="WndProps.h">
@@ -66,6 +69,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="DpiScale.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Lab1Window.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

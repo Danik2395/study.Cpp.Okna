@@ -132,15 +132,17 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Lab1Window.cpp" />
     <ClCompile Include="LabTestWindow.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="HubWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BaseEdit.h" />
+    <ClInclude Include="MainEdit.h" />
     <ClInclude Include="D2DWindow.h" />
     <ClInclude Include="DpiScale.h" />
     <ClInclude Include="IControl.h" />
+    <ClInclude Include="Lab1Window.h" />
     <ClInclude Include="MainCheckBox.h" />
     <ClInclude Include="WndProps.h" />
     <ClInclude Include="MainButton.h" />

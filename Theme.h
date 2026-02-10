@@ -7,6 +7,7 @@ namespace thm {
 
 	constexpr unsigned int wndBaseColorLight = 0xFF1F1f21;
 	constexpr unsigned int wndBaseColorDark = 0xFF1E1E1E;
+	constexpr unsigned int textColor= 0xFFA2A4A5;
 
 
 // ##########

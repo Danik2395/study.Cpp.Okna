@@ -86,7 +86,7 @@ protected:
             if (SUCCEEDED(hr) && !pTextColorBrush)
             {
                 hr = this->pRenderTarget->CreateSolidColorBrush(
-                    D2D1::ColorF(thm::bttnTextColor),
+                    D2D1::ColorF(thm::textColor),
                     &pTextColorBrush
                 );
             }

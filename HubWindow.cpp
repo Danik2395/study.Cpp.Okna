@@ -54,7 +54,7 @@ LRESULT HubWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         btnPadding = S(btnPadding);
 
         LabDef labs[] = {
-            { ID_BTN_LAB1, L"Лабораторная 1" },
+            { ID_BTN_LAB1, L"Рекурсия" },
             { ID_BTN_LAB_TEST, L"Лабораторная тест" },
             { ID_BTN_LAB2, L"Лабораторная" },
             { ID_BTN_LAB3, L"Лабораторная" },
@@ -100,6 +100,9 @@ LRESULT HubWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
             LaunchLabInThread<LabTestWindow>();
             break;
 
+        case ID_BTN_LAB1:
+            LaunchLabInThread<Lab1Window>();
+            break;
         }
         return 0;
     }

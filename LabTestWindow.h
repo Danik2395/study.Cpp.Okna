@@ -4,20 +4,20 @@
 #pragma once
 #include "WndProps.h"
 #include "MainWindow.h"
-#include "BaseEdit.h"
+#include "MainEdit.h"
 #include "MainButton.h"
 #include "MainCheckBox.h"
 #include <memory>
 
-#define ID_BTN_CALC 2001
-#define ID_IN_FIELD 2002
-#define ID_OUT_FIELD 2003
-#define ID_CHECK_SMTH 2004
+#define ID_BTN_CALC 99999
+#define ID_IN_FIELD 99991
+#define ID_OUT_FIELD 99990
+#define ID_CHECK_SMTH 99994
 
 class LabTestWindow : public WndProps<LabTestWindow, 4>, public MainWindow<LabTestWindow>
 {
-    std::unique_ptr<BaseEdit> inField;
-    std::unique_ptr<BaseEdit> outField;
+    std::unique_ptr<MainEdit> inField;
+    std::unique_ptr<MainEdit> outField;
     std::unique_ptr<MainButton> calcButton;
     std::unique_ptr<MainCheckBox> testCheckBox;
 

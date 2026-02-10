@@ -1,15 +1,17 @@
 //
-// BaseEdit.h
+// MainEdit.h
 //
 #include "IControl.h"
 #include <Windows.h>
 #include <string>
 #pragma once
 
-class BaseEdit : public IControl
+class MainEdit : public IControl
 {
 	std::wstring text_;
 	HFONT hFont_;
+	int fontSize_;
+	
 
 	int posX_;
 	int posY_;
@@ -20,25 +22,33 @@ class BaseEdit : public IControl
 	HWND hWndParent_;
 	int id_;
 
+	DWORD styles_;
+
 public:
-	//BaseEdit(int id) :
+	//MainEdit(int id) :
 	//	id_(id),
 	//	height_(0), width_(0), posX_(0), posY_(0),
 	//	hWndParent_(NULL), hWnd_(NULL)
 	//{}
-	BaseEdit(
+	MainEdit(
 		int id,
 		int width,
 		int height,
 		int x,
 		int y,
-		HWND parent
+		int fontSize,
+		HWND parent,
+		DWORD styles = 0
 	) :
 		id_(id),
 		width_(width), height_(height), posX_(x), posY_(y),
-		hWndParent_(parent), hWnd_(NULL)
+		fontSize_(fontSize),
+		hWndParent_(parent),
+		styles_(styles),
+		hWnd_(NULL),
+		hFont_(NULL)
 	{}
-	~BaseEdit() { if (hFont_) DeleteObject(hFont_); }
+	~MainEdit() { if (hFont_) DeleteObject(hFont_); }
 
 	std::wstring GetText()
 	{
@@ -57,10 +67,71 @@ public:
 		if (hWnd_) SetWindowText(hWnd_, text.c_str());
 	}
 
+	template<typename T>
+	static T GetNumber(std::wstring buffer)
+	{
+		static constexpr bool isIntegral = std::is_integral<T>::value;
+		static constexpr bool isUnsigned = std::is_unsigned<T>::value;
+		bool hasDot = false;
+		bool hasSign = false;
+
+		size_t len = buffer.length();
+
+		if constexpr (!isUnsigned)
+		{
+			if (buffer[0] == L'-')
+			{
+				buffer.erase(0, 1);
+				--len;
+				hasSign = true;
+			}
+		}
+
+		for (int i = 0; i < len; ++i)
+		{
+			if (buffer[i] >= L'0' && buffer[i] <= L'9') continue;
+
+			if constexpr (!isIntegral)
+			{
+				if (buffer[i] == L'.')
+				{
+					if (hasDot)
+					{
+						buffer.erase(i--, 1);
+						--len;
+					}
+					hasDot = true;
+				}
+				else if (buffer[i] == L',')
+				{                                     
+					buffer[i] = L'.';
+					hasDot = true;
+				}
+
+				continue;
+			}
+
+			buffer.erase(i--, 1);
+			--len;
+		}
+
+		if (len == 0) return 0;
+
+		if constexpr (isIntegral)
+		{
+			return hasSign ? -std::stoi(buffer) : std::stoi(buffer);
+		}
+		else
+		{
+			return hasSign ? -std::stof(buffer) : std::stof(buffer);
+		}
+	}
+
 	void Create(bool readOnly = false)
 	{
-		DWORD style = WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL | ES_CENTER | ES_MULTILINE;
+		DWORD style = WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL;
 		if (readOnly) style |= ES_READONLY;
+		style |= styles_;
 
 		hWnd_ = CreateWindowEx(
 			0,
@@ -77,8 +148,7 @@ public:
 		UINT dpi = GetDpiForWindow(hWndParent_);
 		if (dpi < 1) dpi = GetDpiForSystem();
 
-		int fontSizePoints = 12;
-		int fontHeight = -MulDiv(fontSizePoints, dpi, 72); // Minus for only gliph size without paddings
+		int fontHeight = -MulDiv(fontSize_, dpi, 72); // Minus for only glyph size without paddings
 
 		if (hFont_) DeleteObject(hFont_);
 

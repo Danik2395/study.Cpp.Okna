@@ -188,6 +188,7 @@ public:
 protected:
 	CComPtr<ID2D1BitmapBrush> pBaseNoiseBrush;
 	CComPtr<ID2D1BitmapBrush> pHoverNoiseBrush;
+	CComPtr<ID2D1SolidColorBrush> pSignColorBrush;
 
 	void CreateDeviceDepRes(HRESULT &hr)
 	{
@@ -232,6 +233,14 @@ protected:
 				}
 			}
 		}
+
+		if (SUCCEEDED(hr) && !pSignColorBrush)
+		{
+			hr = this->pRenderTarget->CreateSolidColorBrush(
+				D2D1::ColorF(thm::bttnTextColor),
+				&pSignColorBrush
+			);
+		}
 	}
 
 	void DrawContent()
@@ -244,14 +253,14 @@ protected:
 			this->pRenderTarget->FillRectangle(rect, isHovered ? pHoverNoiseBrush : pBaseNoiseBrush);
 		}
 
-		if (pTextFormat && pTextColorBrush && !sign_.empty())
+		if (pTextFormat && pSignColorBrush && !sign_.empty())
 		{
 			this->pRenderTarget->DrawText(
 				sign_.c_str(),
 				static_cast<UINT32>(signLength),
 				pTextFormat,
 				rect,
-				pTextColorBrush
+				pSignColorBrush
 			);
 		}
 	}

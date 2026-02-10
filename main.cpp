@@ -1,7 +1,7 @@
 ﻿//
 // main.cpp
 //
-// DIP aware set y = ²⁄₁ · ²⁄₃ · ⁴⁄₃ · ⁴⁄₅ · ⁶⁄₅ · ⁶⁄₇
+//
 #ifndef UNICODE
 #define UNICODE
 #endif 
