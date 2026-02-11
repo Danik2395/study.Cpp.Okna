@@ -2,6 +2,7 @@
 // MainEdit.h
 //
 #include "IControl.h"
+#include "DpiScale.h"
 #include <Windows.h>
 #include <string>
 #pragma once
@@ -23,6 +24,8 @@ class MainEdit : public IControl
 	int id_;
 
 	DWORD styles_;
+
+	DpiScale dpi;
 
 public:
 	//MainEdit(int id) :
@@ -145,10 +148,11 @@ public:
 			NULL
 		);
 
-		UINT dpi = GetDpiForWindow(hWndParent_);
-		if (dpi < 1) dpi = GetDpiForSystem();
+		//UINT dpi = GetDpiForWindow(hWndParent_);
+		//if (dpi < 1) dpi = GetDpiForSystem();
+		dpi.Init(hWnd_);
 
-		int fontHeight = -MulDiv(fontSize_, dpi, 72); // Minus for only glyph size without paddings
+		int fontHeight = -MulDiv(fontSize_, dpi.GetDpi(), 72); // Minus for only glyph size without paddings
 
 		if (hFont_) DeleteObject(hFont_);
 

@@ -35,7 +35,7 @@ public:
 
     protected:
         CComPtr<IDWriteTextFormat> pLabelTextFormat;
-        CComPtr<ID2D1SolidColorBrush> pLabelTextBrush;
+        CComPtr<ID2D1SolidColorBrush> pLabelColorBrush;
 
         void CreateDeviceDepRes(HRESULT& hr);
         void DrawContent();

@@ -135,7 +135,7 @@ public:
 
 				if (isHovered)
 				{
-					//SendMessage(GetParent(m_hwnd), WM_COMMAND, MAKEWPARAM(id_, BN_CLICKED), (LPARAM)this->m_hwnd);
+					SendMessage(GetParent(m_hwnd), WM_COMMAND, MAKEWPARAM(id_, BN_CLICKED), (LPARAM)this->m_hwnd);
 
 					isSelected = !isSelected;
 				}

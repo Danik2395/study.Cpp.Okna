@@ -55,8 +55,6 @@ protected:
 	CComPtr<ID2D1HwndRenderTarget> pRenderTarget;
 
     CComPtr<IDWriteFactory> pDWriteFactory;
-    CComPtr<IDWriteTextFormat> pTextFormat;
-    CComPtr<ID2D1SolidColorBrush> pTextColorBrush;
 
     virtual void CreateDeviceDepRes(HRESULT& hr) = 0;
     virtual void DrawContent() = 0;
@@ -83,13 +81,6 @@ protected:
                 &pRenderTarget
             );
 
-            if (SUCCEEDED(hr) && !pTextColorBrush)
-            {
-                hr = this->pRenderTarget->CreateSolidColorBrush(
-                    D2D1::ColorF(thm::textColor),
-                    &pTextColorBrush
-                );
-            }
             if (SUCCEEDED(hr) && !pDWriteFactory)
             {
                 hr = DWriteCreateFactory(
@@ -97,20 +88,6 @@ protected:
                     __uuidof(IDWriteFactory),
                     reinterpret_cast<IUnknown**>(&pDWriteFactory) // Cannot use IID_PPV_ARGS cause of IUnknown**. Macro takes void**
                 );
-            }
-            if (SUCCEEDED(hr) && !pTextFormat && pDWriteFactory)
-            {
-                hr = pDWriteFactory->CreateTextFormat(
-                    L"Segoe UI", NULL, DWRITE_FONT_WEIGHT_NORMAL, DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL,
-                    14.0f, L"ru-ru", &pTextFormat
-                );
-
-
-                if (SUCCEEDED(hr))
-                {
-                    hr = pTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
-                    hr = pTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
-                }
             }
 
             CreateDeviceDepRes(hr);

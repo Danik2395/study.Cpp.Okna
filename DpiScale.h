@@ -21,7 +21,6 @@ public:
         SetDpi(dpi);
     }
 
-    // WM_DPICHANGED
     void SetDpi(UINT dpi)
     {
         dpi_ = static_cast<float>(dpi);

@@ -40,7 +40,8 @@ public:
 	int Height() const { return wndHeight; }
 };
 
-template <class DERIVED_TYPE, int WND_COUNT = 0>  // Basic template
+// Basic template
+template <class DERIVED_TYPE, int WND_COUNT = 0> // Class for creating parent windows
 class WndProps : public BaseWndProps
 {
     static std::atomic<int> sInstanceCount;
@@ -70,7 +71,8 @@ public:
     }
 };
 
-template <class DERIVED_TYPE> // And if default argument no isInstanceCount
+// And if default argument no isInstanceCount
+template <class DERIVED_TYPE>                    // Class for creating parent windows
 class WndProps<DERIVED_TYPE, 0> : public BaseWndProps
 {
 public:

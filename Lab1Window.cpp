@@ -8,16 +8,15 @@ double Lab1Window::cycle(int n)
 {
     double result{ 1 };
 
-    for (n *= 2; n != 0; n -= 2)
+    for (n *= 2; n != 0; n -= 2) // Using steps as series member and multiplying it by two
     {
         result *= static_cast<double>(n) * n / (n * n - 1);
     }
-
     return result;
 }
 
 double Lab1Window::recursion(int n)
-{
+{                                // The same but in other form
     return n == 1 ? static_cast<double>(n) * n * 4 / (n * n * 4 - 1) :
                     static_cast<double>(n) * n * 4 / (n * n * 4 - 1) * recursion(n - 1);
 }
@@ -47,7 +46,7 @@ void Lab1Window::CreateDeviceDepRes(HRESULT &hr)
     {
         hr = pDWriteFactory->CreateTextFormat(
             L"Segoe UI", NULL, DWRITE_FONT_WEIGHT_BOLD, DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL,
-            17.0f, L"ru-ru", &pLabelTextFormat
+            15.0f, L"ru-ru", &pLabelTextFormat
         );
 
 
@@ -57,6 +56,14 @@ void Lab1Window::CreateDeviceDepRes(HRESULT &hr)
             hr = pLabelTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
         }
     }
+
+    if (SUCCEEDED(hr) && !pLabelColorBrush)
+    {
+        hr = this->pRenderTarget->CreateSolidColorBrush(
+            D2D1::ColorF(thm::textColor),
+            &pLabelColorBrush
+        );
+    }
 }
 
 
@@ -65,42 +72,42 @@ void Lab1Window::DrawContent()
 {
     MainWindow::DrawContent();
 
-    if (pLabelTextFormat && pTextColorBrush)
+    if (pLabelTextFormat && pLabelColorBrush)
     {
         D2D1_RECT_F inLabelRect = D2D1::RectF(20.0f, 20.0f, 20.0f + 100.0f, 30.0f);
         pRenderTarget->DrawText(
             L"Количество итераций",
             19,
-            pTextFormat,
+            pLabelTextFormat,
             inLabelRect,
-            pTextColorBrush
+            pLabelColorBrush
         );
 
         D2D1_RECT_F staticLabelRect = D2D1::RectF(200.0f, 5.0f, 200.0f + 280.0f, 20.0f);
         pRenderTarget->DrawText(
             L"Вариант 12",
             10,
-            pTextFormat,
+            pLabelTextFormat,
             staticLabelRect,
-            pTextColorBrush
+            pLabelColorBrush
         );
 
         D2D1_RECT_F outCycleLabelRect = D2D1::RectF(20.0f, 150.0f, 20.0f + 150.0f, 180.0f);
         pRenderTarget->DrawText(
             L"Результат цикла",
             15,
-            pTextFormat,
+            pLabelTextFormat,
             outCycleLabelRect,
-            pTextColorBrush
+            pLabelColorBrush
         );
 
         D2D1_RECT_F outRecLabelRect = D2D1::RectF(200.0f, 150.0f, 200.0f + 150.0f, 180.0f);
         pRenderTarget->DrawText(
             L"Результат рекурсии",
             18,
-            pTextFormat,
+            pLabelTextFormat,
             outRecLabelRect,
-            pTextColorBrush
+            pLabelColorBrush
         );
 
     }

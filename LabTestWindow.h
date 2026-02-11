@@ -9,10 +9,10 @@
 #include "MainCheckBox.h"
 #include <memory>
 
-#define ID_BTN_CALC 99999
-#define ID_IN_FIELD 99991
-#define ID_OUT_FIELD 99990
-#define ID_CHECK_SMTH 99994
+#define ID_BTN_CALC 9999
+#define ID_IN_FIELD 9991
+#define ID_OUT_FIELD 9990
+#define ID_CHECK_SMTH 9994
 
 class LabTestWindow : public WndProps<LabTestWindow, 4>, public MainWindow<LabTestWindow>
 {

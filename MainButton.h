@@ -188,6 +188,8 @@ public:
 protected:
 	CComPtr<ID2D1BitmapBrush> pBaseNoiseBrush;
 	CComPtr<ID2D1BitmapBrush> pHoverNoiseBrush;
+
+	CComPtr<IDWriteTextFormat> pSignTextFormat;
 	CComPtr<ID2D1SolidColorBrush> pSignColorBrush;
 
 	void CreateDeviceDepRes(HRESULT &hr)
@@ -234,6 +236,20 @@ protected:
 			}
 		}
 
+		if (SUCCEEDED(hr) && !pSignTextFormat && pDWriteFactory)
+		{
+			hr = pDWriteFactory->CreateTextFormat(
+				L"Segoe UI", NULL, DWRITE_FONT_WEIGHT_NORMAL, DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL,
+				14.0f, L"ru-ru", &pSignTextFormat
+			);
+
+
+			if (SUCCEEDED(hr))
+			{
+				hr = pSignTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+				hr = pSignTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+			}
+		}
 		if (SUCCEEDED(hr) && !pSignColorBrush)
 		{
 			hr = this->pRenderTarget->CreateSolidColorBrush(
@@ -253,12 +269,12 @@ protected:
 			this->pRenderTarget->FillRectangle(rect, isHovered ? pHoverNoiseBrush : pBaseNoiseBrush);
 		}
 
-		if (pTextFormat && pSignColorBrush && !sign_.empty())
+		if (pSignTextFormat && pSignColorBrush && !sign_.empty())
 		{
 			this->pRenderTarget->DrawText(
 				sign_.c_str(),
 				static_cast<UINT32>(signLength),
-				pTextFormat,
+				pSignTextFormat,
 				rect,
 				pSignColorBrush
 			);

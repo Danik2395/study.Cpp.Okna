@@ -4,6 +4,7 @@
 #include <windows.h>
 #pragma once
 
+// Interface for controls-windows
 class IControl
 {
 public:
