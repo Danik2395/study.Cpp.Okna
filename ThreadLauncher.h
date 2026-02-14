@@ -16,7 +16,7 @@ void LaunchLabInThread()
             win.Name(),
             (WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN) & ~(WS_THICKFRAME | WS_MAXIMIZEBOX),
             0,
-			CW_USEDEFAULT, CW_USEDEFAULT, win.Width(), win.Height()
+			win.PosX(), win.PosY(), win.Width(), win.Height()
         ))
         {
             return;

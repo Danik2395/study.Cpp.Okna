@@ -129,7 +129,7 @@ LRESULT Lab1Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
             S(200), S(30),
             15,
             m_hwnd,
-            ES_CENTER
+            ES_CENTER | ES_READONLY
         );
 
         inField = std::make_unique<MainEdit>(
@@ -147,7 +147,7 @@ LRESULT Lab1Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
             S(20), S(180),
             16,
             m_hwnd,
-            ES_CENTER
+            ES_CENTER | ES_READONLY
         );
 
         outRecursionField = std::make_unique<MainEdit>(
@@ -156,7 +156,7 @@ LRESULT Lab1Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
             S(200), S(180),
             16,
             m_hwnd,
-            ES_CENTER
+            ES_CENTER | ES_READONLY
         );
 
         calcButton = std::make_unique<MainButton>(
@@ -169,10 +169,10 @@ LRESULT Lab1Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 
 
-        staticField->Create(1);
+        staticField->Create();
         inField->Create();
-        outCycleField->Create(1);
-        outRecursionField->Create(1);
+        outCycleField->Create();
+        outRecursionField->Create();
         calcButton->Create();
 
         staticField->SetText(L"Y = (²⁄₁ · ²⁄₃) · (⁴⁄₃ · ⁴⁄₅) · (⁶⁄₅ · ⁶⁄₇)");

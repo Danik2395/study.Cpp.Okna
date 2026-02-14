@@ -9,6 +9,7 @@
 
 #include "LabTestWindow.h"
 #include "Lab1Window.h"
+#include "Lab2Window.h"
 #pragma once
 
 #define ID_BTN_LAB_TEST 1111

@@ -28,7 +28,7 @@
       <FileName>HubWindow.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="m_random&lt;T&gt;" Collapsed="true">
+  <Class Name="m_random&lt;T&gt;">
     <Position X="26.25" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQBABABAAAAAQAEiEAAAAAABESgAAAAAAAAACAAABBA=</HashCode>
@@ -91,8 +91,8 @@
       <FileName>LabTestWindow.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="DpiScale" Collapsed="true">
-    <Position X="24.5" Y="2.25" Width="1.5" />
+  <Class Name="DpiScale">
+    <Position X="10.5" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAEAAAAADAIQAAAAAAAAAAQAgABCAAIAAAA=</HashCode>
       <FileName>DpiScale.h</FileName>
@@ -110,6 +110,32 @@
     <TypeIdentifier>
       <HashCode>QAgAAABIAAKACAAQoAAQAAAAAAAAAAICAAAAAAAAAAI=</HashCode>
       <FileName>Lab1Window.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SingleNodeList&lt;T&gt;">
+    <Position X="28.25" Y="2.25" Width="1.75" />
+    <NestedTypes>
+      <Struct Name="SingleNodeList&lt;T&gt;::Node" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>SingleNodeList.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Class Name="SingleNodeList&lt;T&gt;::Iterator" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>SingleNodeList.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AEAAACECABAQgAAAAAAAEAASEAAAAAAAEAAgAAAEAAA=</HashCode>
+      <FileName>SingleNodeList.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Stack&lt;T, CONTAINER&gt;">
+    <Position X="30.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAIhCEAAQAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>Stack.h</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

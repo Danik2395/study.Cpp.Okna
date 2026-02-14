@@ -6,7 +6,6 @@
 #include "MainWindow.h"
 #include "MainEdit.h"
 #include "MainButton.h"
-#include "MainCheckBox.h"
 #include <memory>
 
 #define ID_VAR_12_FIELD 1001

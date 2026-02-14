@@ -14,21 +14,17 @@
     <Filter Include="Windows\Child">
       <UniqueIdentifier>{9d132fce-c4fa-4485-9f55-70e07ce380f8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Windows\Helper Class">
-      <UniqueIdentifier>{b384fb23-8349-447f-a4b1-2c4a5086eefe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Algorithms">
+    <Filter Include="Algorithms and containers">
       <UniqueIdentifier>{58867d02-65ef-4c43-aee5-be2b4666e26a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Windows\Helpers">
+      <UniqueIdentifier>{b384fb23-8349-447f-a4b1-2c4a5086eefe}</UniqueIdentifier>
+    </Filter>
     <Filter Include="main">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+      <UniqueIdentifier>{c7c59d47-0f2b-4d48-a5d1-9e69547662bf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>main</Filter>
-    </ClCompile>
     <ClCompile Include="Lab1Window.cpp">
       <Filter>Windows\Lab</Filter>
     </ClCompile>
@@ -37,6 +33,12 @@
     </ClCompile>
     <ClCompile Include="HubWindow.cpp">
       <Filter>Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="Lab2Window.cpp">
+      <Filter>Windows\Lab</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>main</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -68,19 +70,28 @@
       <Filter>Windows\Lab</Filter>
     </ClInclude>
     <ClInclude Include="IControl.h">
-      <Filter>Windows\Helper Class</Filter>
+      <Filter>Windows\Helpers</Filter>
     </ClInclude>
     <ClInclude Include="ThreadLauncher.h">
-      <Filter>Windows\Helper Class</Filter>
+      <Filter>Windows\Helpers</Filter>
     </ClInclude>
     <ClInclude Include="WndProps.h">
-      <Filter>Windows\Helper Class</Filter>
+      <Filter>Windows\Helpers</Filter>
     </ClInclude>
     <ClInclude Include="DpiScale.h">
-      <Filter>Windows\Helper Class</Filter>
+      <Filter>Windows\Helpers</Filter>
     </ClInclude>
     <ClInclude Include="m_random.h">
-      <Filter>Algorithms</Filter>
+      <Filter>Algorithms and containers</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleNodeList.h">
+      <Filter>Algorithms and containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Stack.h">
+      <Filter>Algorithms and containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Lab2Window.h">
+      <Filter>Windows\Lab</Filter>
     </ClInclude>
     <ClInclude Include="Theme.h">
       <Filter>main</Filter>

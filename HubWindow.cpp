@@ -55,10 +55,10 @@ LRESULT HubWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         LabDef labs[] = {
             { ID_BTN_LAB1, L"Рекурсия" },
-            { ID_BTN_LAB_TEST, L"Лабораторная тест" },
-            { ID_BTN_LAB2, L"Лабораторная" },
+            { ID_BTN_LAB2, L"Стек" },
             { ID_BTN_LAB3, L"Лабораторная" },
             { ID_BTN_LAB4, L"Лабораторная" },
+            { ID_BTN_LAB_TEST, L"Лабораторная тест" },
         };
 
 		for (const auto &lab : labs) // Range-based for. labs __bound is known at compile time
@@ -102,6 +102,10 @@ LRESULT HubWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         case ID_BTN_LAB1:
             LaunchLabInThread<Lab1Window>();
+            break;
+
+        case ID_BTN_LAB2:
+            LaunchLabInThread<Lab2Window>();
             break;
         }
         return 0;

@@ -34,7 +34,7 @@ class m_random
 	inline ULONGLONG randNum()
 	{
 		// While shifting bytes in direction opposite to shift direction becomes zeros
-		// then this XORing this value with original value
+		// then XORing original value with this value
 		seed ^= seed << 13;
 		seed ^= seed >> 7;
 		seed ^= seed << 17;
@@ -86,8 +86,8 @@ class m_random
 	}
 
 public:
-	m_random() : seed(GetTickCount64()), tick(0), minusChance(33), hasLimits(false) {}
-	m_random(ULONGLONG init_seed) : seed(init_seed), tick(0), minusChance(33), hasLimits(false) {}
+	m_random() : seed(GetTickCount64()), tick(0), minusChance(0), hasLimits(false) {}
+	m_random(ULONGLONG init_seed) : seed(init_seed), tick(0), minusChance(0), hasLimits(false) {}
 
 	m_random(T minVal, T maxVal) : seed(GetTickCount64()), tick(0), minusChance(0), minV(minVal), maxV(maxVal)
 	{

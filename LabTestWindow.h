@@ -24,7 +24,7 @@ class LabTestWindow : public WndProps<LabTestWindow, 4>, public MainWindow<LabTe
     void calc(const std::wstring &wstr);
 
 public:
-    LabTestWindow() : WndProps(L"Лабораторная тест", 700, 500) {}
+    LabTestWindow() : WndProps(L"Лабораторная тест", 700, 500, 600, 400) {}
 
     PCWSTR ClassName() const override { return L"LabTestWindowClass"; }
     LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) override;

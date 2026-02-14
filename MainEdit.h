@@ -65,9 +65,40 @@ public:
 		return text_;
 	}
 
-	void SetText(const std::wstring & text) const
+	void SetText(const std::wstring &text) const
 	{
 		if (hWnd_) SetWindowText(hWnd_, text.c_str());
+	}
+	
+	void RemoveText() const
+	{
+		if (hWnd_) SetWindowText(hWnd_, L""); // To not to write L"" and call c_srt() every time
+	}
+
+	void AppendText(const std::wstring &newText) const
+	{
+		int length = GetWindowTextLength(hWnd_);
+
+		SendMessage(hWnd_, EM_SETSEL, (WPARAM)length, (LPARAM)length);    // Empty select at the end of the text
+
+		SendMessage(hWnd_, EM_REPLACESEL, NULL, (LPARAM)newText.c_str()); // Replacing this select with new text
+	}
+
+	void PrependText(const std::wstring &newText) const
+	{
+		SendMessage(hWnd_, EM_SETSEL, (WPARAM)0, (LPARAM)0);
+		SendMessage(hWnd_, EM_REPLACESEL, NULL, (LPARAM)newText.c_str());
+	}
+
+	void ReplaceSelText(const std::wstring &newText, int stPos, int endPos) const
+	{
+		int length = GetWindowTextLength(hWnd_);
+
+		if (endPos > length) endPos = length;
+
+		SendMessage(hWnd_, EM_SETSEL, (WPARAM)stPos, (LPARAM)endPos);     // Empty select at the end of the text
+
+		SendMessage(hWnd_, EM_REPLACESEL, NULL, (LPARAM)newText.c_str()); // Replacing this select with new text
 	}
 
 	template<typename T>
@@ -120,6 +151,8 @@ public:
 
 		if (len == 0) return 0;
 
+		if (len > 10 && buffer[0] > L'2') buffer.erase(11);
+
 		if constexpr (isIntegral)
 		{
 			return hasSign ? -std::stoi(buffer) : std::stoi(buffer);
@@ -130,10 +163,10 @@ public:
 		}
 	}
 
-	void Create(bool readOnly = false)
+	void Create(/*bool readOnly = false*/)
 	{
 		DWORD style = WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL;
-		if (readOnly) style |= ES_READONLY;
+		//if (readOnly) style |= ES_READONLY;
 		style |= styles_;
 
 		hWnd_ = CreateWindowEx(

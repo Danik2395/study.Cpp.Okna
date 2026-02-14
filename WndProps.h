@@ -3,41 +3,42 @@
 //
 #include "DpiScale.h"
 #include <windows.h>
+#include <type_traits>
 #include <atomic>
 #include <string>
 #pragma once
 
 class BaseWndProps
 {
+protected:
 	std::wstring wndName;
 
 	int wndWidth;
 	int wndHeight;
+    int wndPosX;
+    int wndPosY;
 
 public:
-	//BaseWndProps(
-	//	const std::wstring &name,
-	//	int width,
-	//	int height
-	//) : 
-	//	wndName(name),
-	//	wndWidth(width),
-	//	wndHeight(height)
-	//{}
     BaseWndProps(
         const std::wstring &name,
         int width,
-        int height
+        int height,
+        int posX = CW_USEDEFAULT,
+        int posY = CW_USEDEFAULT
     ) : wndName(name)
     {
         wndWidth = DpiScale::ScaleForSystem(width);
         wndHeight = DpiScale::ScaleForSystem(height);
+        wndPosX = posX == CW_USEDEFAULT ? posX : DpiScale::ScaleForSystem(posX);
+        wndPosY = posY == CW_USEDEFAULT ? posY : DpiScale::ScaleForSystem(posY);
     }
-	BaseWndProps() : wndName(L"Window"), wndWidth(800), wndHeight(800) {}
+	BaseWndProps() : wndName(L"Window"), wndWidth(800), wndHeight(800), wndPosX(CW_USEDEFAULT), wndPosY(CW_USEDEFAULT) {}
 
 	PCWSTR Name() const { return wndName.c_str(); }
 	int Width() const { return wndWidth; }
 	int Height() const { return wndHeight; }
+	int PosX() const { return wndPosX; }
+	int PosY() const { return wndPosY; }
 };
 
 // Basic template
@@ -47,8 +48,8 @@ class WndProps : public BaseWndProps
     static std::atomic<int> sInstanceCount;
 
 public:
-    WndProps(const std::wstring& name, int width, int height)
-        : BaseWndProps(name, width, height)
+    template <typename... Args>
+    WndProps(Args&&... args) : BaseWndProps(std::forward<Args>(args)...)
     {
         ++sInstanceCount;
     }
@@ -76,19 +77,10 @@ template <class DERIVED_TYPE>                    // Class for creating parent wi
 class WndProps<DERIVED_TYPE, 0> : public BaseWndProps
 {
 public:
-    WndProps(const std::wstring& name, int width, int height)
-        : BaseWndProps(name, width, height)
-    {}
+    using BaseWndProps::BaseWndProps; // Inheriting constructors
 
     int CheckInstanceCount() const { return 0; }
 };
 
 template <class DERIVED_TYPE, int WND_COUNT>
-std::atomic<int> WndProps<DERIVED_TYPE, WND_COUNT>::sInstanceCount{ 0 };
-
-
-
-class ControlWndProps
-{
-
-};
+std::atomic<int> WndProps<DERIVED_TYPE, WND_COUNT>::sInstanceCount{ 0 }; // Initializing atomic variable

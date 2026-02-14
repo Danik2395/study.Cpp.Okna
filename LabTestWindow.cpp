@@ -48,12 +48,12 @@ LRESULT LabTestWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         dpiS.Init(m_hwnd);
 
         inField = std::make_unique<MainEdit>(ID_IN_FIELD, S(200), S(100), S(10), S(10), 12, m_hwnd, ES_CENTER | ES_MULTILINE);
-        outField = std::make_unique<MainEdit>(ID_OUT_FIELD, S(200), S(100), S(10), S(210), 12, m_hwnd, ES_CENTER | ES_MULTILINE);
+        outField = std::make_unique<MainEdit>(ID_OUT_FIELD, S(200), S(100), S(10), S(210), 12, m_hwnd, ES_CENTER | ES_MULTILINE | ES_READONLY);
         calcButton = std::make_unique<MainButton>(ID_BTN_CALC, L"Посчитать", S(100), S(30), S(20), S(150), m_hwnd);
         testCheckBox = std::make_unique<MainCheckBox>(ID_CHECK_SMTH, S(15), S(15), S(300), S(10), m_hwnd);
 
         inField->Create();
-        outField->Create(true);
+        outField->Create();
         calcButton->Create();
         testCheckBox->Create();
 
