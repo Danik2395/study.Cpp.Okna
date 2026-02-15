@@ -14,7 +14,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
     HubWindow win;
     if (!win.Create(
         win.Name(),
-        WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN, // Clip for not to clip the UI (children). Excludes area occupied by children windows from repaint
+        WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN, // Excludes area occupied by children windows from repaint (When window is overlaped by something or out of screen it repaints all client area including children. This style fixes this.)
         0,
         CW_USEDEFAULT, CW_USEDEFAULT, win.Width(), win.Height()
     ))

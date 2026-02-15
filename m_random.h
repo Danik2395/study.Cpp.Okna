@@ -20,7 +20,7 @@ class m_random
 	T maxV;
 	T minV;
 
-	inline void checkLimits()
+	void checkLimits()
 	{
 		if (minV > maxV)
 		{
@@ -31,7 +31,7 @@ class m_random
 	}
 
 	// XORshift64
-	inline ULONGLONG randNum()
+	ULONGLONG randNum()
 	{
 		// While shifting bytes in direction opposite to shift direction becomes zeros
 		// then XORing original value with this value
@@ -41,7 +41,7 @@ class m_random
 		return seed;
 	}
 
-	inline void compileRandNum()
+	void compileRandNum()
 	{
 		ULONGLONG raw = randNum();
 
@@ -100,19 +100,19 @@ public:
 		hasLimits = true;
 	}
 
-	inline m_random& genSeed()
+	m_random& genSeed()
 	{
 		seed = GetTickCount64();
 		return *this;
 	}
 
-	inline m_random& setSeed(ULONGLONG userSeed)
+	m_random& setSeed(ULONGLONG userSeed)
 	{
 		seed = userSeed;
 		return *this;
 	}
 
-	inline m_random& setLimits(T minVal, T maxVal)
+	m_random& setLimits(T minVal, T maxVal)
 	{
 		minV = minVal;
 		maxV = maxVal;
@@ -121,7 +121,7 @@ public:
 		return *this;
 	}
 
-	inline m_random& setMinusChance(T chance)
+	m_random& setMinusChance(T chance)
 	{
 		if (chance < 0) chance = 0;
 		if (chance > 100) chance = 100;

@@ -96,6 +96,9 @@
     <ClInclude Include="Theme.h">
       <Filter>main</Filter>
     </ClInclude>
+    <ClInclude Include="MainRadioButton.h">
+      <Filter>Windows\Child</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

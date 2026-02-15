@@ -1,5 +1,5 @@
 //
-// MainCheckBox.h
+// MainRadioButton.h
 //
 #include "D2DWindow.h"
 #include "IControl.h"
@@ -8,9 +8,10 @@
 #include <string>
 #pragma once
 
-class MainCheckBox : public D2DWindow<MainCheckBox>, public IControl
+template<int GROUP_ID>
+class MainRadioButton : public D2DWindow<MainRadioButton<GROUP_ID>>, public IControl
 {
-	PCWSTR name_; // In case it'll become needed sometime
+	PCWSTR name_;
 
 	int posX_;
 	int posY_;
@@ -22,55 +23,71 @@ class MainCheckBox : public D2DWindow<MainCheckBox>, public IControl
 
 	bool isHovered;
 	bool isPressed;
-	bool isSelected;
 
-	BOOL chbxInvalidate() { return InvalidateRect(this->m_hwnd, NULL, FALSE); }
+	inline static int selected_{ 0 };
+
+	BOOL radiInvalidate() { return InvalidateRect(this->m_hwnd, NULL, FALSE); }
 
 public:
-	MainCheckBox(int id) :
+	MainRadioButton(int id) :
 		id_(id),
 		name_(NULL),
 		height_(0), width_(0), posX_(0), posY_(0),
 		hWndParent_(NULL),
 		isHovered(false),
-		isPressed(false),
-		isSelected(false)
-	{}
-	MainCheckBox(
+		isPressed(false)
+	{
+	}
+	MainRadioButton(
 		int id,
 		int width,
 		int height,
 		int x,
 		int y,
-		HWND parent
+		HWND parent,
+		bool selDefault = false
 	) :
 		id_(id),
 		name_(NULL),
 		width_(width), height_(height), posX_(x), posY_(y),
 		hWndParent_(parent),
 		isHovered(false),
-		isSelected(false),
 		isPressed(false)
-	{}
+	{
+		if (selDefault)
+		{
+			selected_ = id_;
+		}
+	}
 
-	inline bool State() const { return isSelected; } // Because idk how to overload operator though the pointer
+	inline int WhichSel() const { return selected_; }
+	inline bool IsSelected() const { return selected_ == id_; }
 
 	void Create()
 	{
-		BaseWindow::Create(
+		BaseWindow<MainRadioButton<GROUP_ID>>::Create(
 			name_,
-			WS_VISIBLE | WS_CHILD, // Child window without border and title bar
+			WS_CHILD | WS_VISIBLE,
 			0,
 			posX_, posY_, width_, height_,
 			hWndParent_,
 			(HMENU)id_
 		);
+
+		if (this->m_hwnd)
+		{
+			HRGN hRgn = CreateEllipticRgn(-1, -1, width_ + 2, height_ + 2);
+			SetWindowRgn(this->m_hwnd, hRgn, TRUE);
+		}
 	}
 
 	LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) override
 	{
 		switch (uMsg)
 		{
+		case WM_ERASEBKGND:
+			return 1;
+
 		case WM_SETCURSOR:
 		{
 			if (isHovered)
@@ -95,12 +112,12 @@ public:
 				TRACKMOUSEEVENT tme = { sizeof(TRACKMOUSEEVENT), TME_LEAVE, this->m_hwnd, 0 };
 				TrackMouseEvent(&tme);
 
-				chbxInvalidate();
+				radiInvalidate();
 			}
 			else // Because when SetCapture() "set" it makes system not to send WM_MOUSELEAVE (you captured, you processing)
 			{
 				POINT pt = { GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam) };
-				RECT rc; GetClientRect(m_hwnd, &rc);
+				RECT rc; GetClientRect(this->m_hwnd, &rc);
 
 				if (!PtInRect(&rc, pt))
 				{
@@ -113,7 +130,7 @@ public:
 		case WM_MOUSELEAVE:
 		{
 			isHovered = false;
-			chbxInvalidate();
+			radiInvalidate();
 			return 0;
 		}
 
@@ -121,7 +138,7 @@ public:
 		{
 			isPressed = true;
 			SetCapture(this->m_hwnd);
-			chbxInvalidate();
+			radiInvalidate();
 			return 0;
 		}
 
@@ -131,22 +148,30 @@ public:
 			{
 				isPressed = false;
 				ReleaseCapture();
-				chbxInvalidate();
+				radiInvalidate();
 
 				if (isHovered)
 				{
-					SendMessage(GetParent(m_hwnd), WM_COMMAND, MAKEWPARAM(id_, BN_CLICKED), (LPARAM)this->m_hwnd);
+					int prevSel = selected_;
+					selected_ = id_;
+					SendMessage(GetParent(this->m_hwnd), WM_COMMAND, MAKEWPARAM(id_, BN_CLICKED), (LPARAM)this->m_hwnd);
 
-					isSelected = !isSelected;
+
+					if (prevSel != 0 && prevSel != id_)
+					{
+						HWND hPrev = GetDlgItem(GetParent(this->m_hwnd), prevSel); // We can use it because every id was put into hMenu
+						if (hPrev) InvalidateRect(hPrev, NULL, FALSE);
+					}
+					radiInvalidate();
 				}
 			}
 			return 0;
 		}
 		}
-		return D2DWindow::HandleMessage(uMsg, wParam, lParam);
+		return D2DWindow<MainRadioButton<GROUP_ID>>::HandleMessage(uMsg, wParam, lParam);
 	}
 
-	PCWSTR  ClassName() const override { return L"MainCheckBoxClass"; }
+	PCWSTR  ClassName() const override { return L"MainRadioButtonClass"; }
 
 	BOOL Move(int x, int y) override
 	{
@@ -164,7 +189,7 @@ public:
 			SWP_NOZORDER | SWP_NOSIZE | SWP_NOACTIVATE // No child reorder, no resize, no parent window activation
 		);
 
-		res = chbxInvalidate();
+		res = radiInvalidate();
 
 		return res;
 	}
@@ -177,6 +202,8 @@ protected:
 	CComPtr<ID2D1BitmapBrush> pHoverNoiseBrush;
 	CComPtr<ID2D1SolidColorBrush> pBorderBrush;
 	CComPtr<ID2D1SolidColorBrush> pSelBrush;
+
+	bool EnableAlpha() const override { return true; }
 
 	void CreateDeviceDepRes(HRESULT& hr)
 	{
@@ -232,31 +259,32 @@ protected:
 	void DrawContent()
 	{
 		D2D1_SIZE_F size = this->pRenderTarget->GetSize();
-		D2D1_RECT_F rect = D2D1::RectF(0, 0, size.width, size.height);
+
+		const float x = size.width / 2;
+		const float y = size.height / 2;
+		const float radiX = x - thm::selBorderWidth / 2;
+		const float radiY = y - thm::selBorderWidth / 2;
+
+		D2D1_ELLIPSE ellipse = D2D1::Ellipse(D2D1::Point2F(x, y), radiX, radiY);
+
+
 
 		if (pBaseNoiseBrush && pHoverNoiseBrush)
 		{
-			this->pRenderTarget->FillRectangle(rect, isHovered ? pHoverNoiseBrush : pBaseNoiseBrush);
+			this->pRenderTarget->FillEllipse(ellipse, isHovered ? pHoverNoiseBrush : pBaseNoiseBrush);
 		}
 
 		if (pBorderBrush)
 		{
-			rect = D2D1::RectF(
-				thm::selBorderWidth,
-				thm::selBorderWidth,
-				size.width - thm::selBorderWidth,
-				size.height - thm::selBorderWidth
-			);
-			this->pRenderTarget->DrawRectangle(rect, pBorderBrush, thm::selBorderWidth);
+			this->pRenderTarget->DrawEllipse(ellipse, pBorderBrush, thm::selBorderWidth);
 		}
-		
-		if (isSelected && pSelBrush)
-		{
-			float paddingX = size.width * 0.3;
-			float paddingY = size.height * 0.3;
-			D2D1_RECT_F rectSel = D2D1::RectF(paddingX, paddingY, size.width - paddingX, size.height - paddingY);
 
-			this->pRenderTarget->FillRectangle(rectSel, pSelBrush);
+		if (selected_ == id_ && pSelBrush)
+		{
+			ellipse.radiusX = radiX * 0.45;
+			ellipse.radiusY = radiY * 0.45;
+
+			this->pRenderTarget->FillEllipse(ellipse, pSelBrush);
 		}
 	}
 };

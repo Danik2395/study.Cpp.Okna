@@ -146,6 +146,7 @@
     <ClInclude Include="IControl.h" />
     <ClInclude Include="Lab1Window.h" />
     <ClInclude Include="MainCheckBox.h" />
+    <ClInclude Include="MainRadioButton.h" />
     <ClInclude Include="SingleNodeList.h" />
     <ClInclude Include="Stack.h" />
     <ClInclude Include="WndProps.h" />

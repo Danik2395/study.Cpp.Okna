@@ -45,9 +45,10 @@ public:
 template <class DERIVED_TYPE, int WND_COUNT = 0> // Class for creating parent windows
 class WndProps : public BaseWndProps
 {
-    static std::atomic<int> sInstanceCount;
+    inline static std::atomic<int> sInstanceCount{ 0 };
 
 public:
+    // WndProps(name, width, height, x, y)
     template <typename... Args>
     WndProps(Args&&... args) : BaseWndProps(std::forward<Args>(args)...)
     {
@@ -81,6 +82,3 @@ public:
 
     int CheckInstanceCount() const { return 0; }
 };
-
-template <class DERIVED_TYPE, int WND_COUNT>
-std::atomic<int> WndProps<DERIVED_TYPE, WND_COUNT>::sInstanceCount{ 0 }; // Initializing atomic variable

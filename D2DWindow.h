@@ -58,6 +58,7 @@ protected:
 
     virtual void CreateDeviceDepRes(HRESULT& hr) = 0;
     virtual void DrawContent() = 0;
+    virtual bool EnableAlpha() const { return false; }
 
     HRESULT CreateGraphicsResources()
     {
@@ -75,8 +76,16 @@ protected:
             GetClientRect(this->m_hwnd, &rc);
             D2D1_SIZE_U size = D2D1::SizeU(rc.right - rc.left, rc.bottom - rc.top);
 
+            D2D1_RENDER_TARGET_PROPERTIES props = D2D1::RenderTargetProperties(
+                D2D1_RENDER_TARGET_TYPE_DEFAULT,
+                D2D1::PixelFormat(
+                    DXGI_FORMAT_B8G8R8A8_UNORM,
+                    EnableAlpha() ? D2D1_ALPHA_MODE_PREMULTIPLIED : D2D1_ALPHA_MODE_IGNORE
+                )
+            );
+
             hr = pFactory->CreateHwndRenderTarget(
-                D2D1::RenderTargetProperties(),
+                props,
                 D2D1::HwndRenderTargetProperties(this->m_hwnd, size),
                 &pRenderTarget
             );

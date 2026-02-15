@@ -4,19 +4,23 @@
 #include "Lab2Window.h"
 
 
-void Lab2Window::clearStack()
-{
-                                // For not to pop all elements on clear button
-    lStack.~Stack();            // Dstructing but the name is still avaliable to interact with
-    new (&lStack) Stack<int>(); // Constructing new stack to this name
+// For not to pop all elements on clear button
+// Dstructing but the name is still avaliable to interact with
+// Constructing new stack to this name
 
-}
+#define CLEAR_STACK(st)\
+do\
+{\
+st.~Stack();\
+new (&st) Stack<int>();\
+} while (0);\
+
 
 
 
 void Lab2Window::clearAll()
 {
-    clearStack();
+    CLEAR_STACK(stackGeneral)
 
     outField->RemoveText();
     inField->RemoveText();
@@ -33,15 +37,18 @@ void Lab2Window::randCreateStack()
 
     inField->SetText(std::to_wstring(stackSize));
 
-    if (!lStack.empty()) clearStack();
+    if (!stackGeneral.empty())
+    {
+        CLEAR_STACK(stackGeneral)
+    }
     outField->RemoveText();
     setBottomLine();
 
     dist.setLimits(-1000000, 1000000);
     while(stackSize != 0)
     {
-        lStack.push(dist);
-        outField->PrependText(std::to_wstring(lStack.top()).append(L"\r\n"));
+        stackGeneral.push(dist);
+        outField->PrependText(std::to_wstring(stackGeneral.top()).append(L"\r\n"));
         --stackSize;
     }
 }
@@ -70,7 +77,7 @@ void Lab2Window::addToStack()
 
         if (isNumber)                                                       // Sending the number to the outField
         {
-            lStack.push(std::stoi(buffer));
+            stackGeneral.push(std::stoi(buffer));
             outField->PrependText(buffer.append(L"\r\n"));
             cleanString.append(buffer + L" ");
             buffer.clear();
@@ -86,10 +93,10 @@ void Lab2Window::addToStack()
 
 void Lab2Window::popFromStack()
 {
-    if (lStack.empty()) return;
+    if (stackGeneral.empty()) return;
 
     int strLen{ 2 };         // \0 + num
-    int numToPop = lStack.top();
+    int numToPop = stackGeneral.top();
 
     if (numToPop < 0)        // Minus adds length
     {
@@ -103,7 +110,7 @@ void Lab2Window::popFromStack()
         ++strLen;
     } while (numToPop != 0); // Works for int
 
-    lStack.pop();
+    stackGeneral.pop();
 
     outField->ReplaceSelText(L"", 0, strLen);
 }
@@ -112,15 +119,99 @@ void Lab2Window::popFromStack()
 
 void Lab2Window::sortStack()
 {
-    lStack.sort();
+    stackGeneral.sort();
     outField->RemoveText();
 
-    for (const auto &val : lStack)
+    for (const auto &val : stackGeneral)
     {
         outField->AppendText(std::to_wstring(val).append(L"\r\n"));
     }
 
     setBottomLine();
+}
+
+
+
+void Lab2Window::splitHandler()
+{
+    int prevSelRadi = selectedRadi;
+    selectedRadi = radiGeneral->WhichSel();
+    if (prevSelRadi == selectedRadi) return;
+    if (
+        (prevSelRadi == ID_RADI_EVEN || prevSelRadi == ID_RADI_ODD) &&
+        (selectedRadi == ID_RADI_EVEN || selectedRadi == ID_RADI_ODD)
+        ) return;
+
+    switch (selectedRadi)
+    {
+    case ID_RADI_GENERAL:                    // Need to assemble two parts
+    {
+        for (const auto &num : stackOdd)     // Adding odd part
+        {
+            stackGeneral.push(num);
+        }
+        CLEAR_STACK(stackOdd)
+
+        for (const auto &num : stackEven)    // Adding even part
+        {
+            stackGeneral.push(num);
+        }
+        CLEAR_STACK(stackEven)
+
+        outField->RemoveText();
+
+        for (const auto &num : stackGeneral) // Printing assembled stack
+        {
+            outField->AppendText(std::to_wstring(num).append(L"\r\n"));
+        }
+        setBottomLine();
+
+        return;
+    }
+
+    case ID_RADI_EVEN:
+        [[fallthrough]];                                                     // Idk. C++17 thing. For readability
+    case ID_RADI_ODD:                                                        // Need to split stack
+    {
+        outField->RemoveText();
+        oddStackStart = 0;
+        oddStackStart += BOTTOM_LNLEN + 2;                                   // line + \r + \n
+
+        for (const auto &num : stackGeneral)
+        {
+            if (num % 2 == 0)                                                // Even stack is on top
+            {
+                stackEven.push(num);
+
+                int tempNum{ num };
+                do                                                           // Calculating where odd stack will start
+                {
+                    tempNum /= 10;
+                    oddStackStart += 3;                                      // num + \r + \n
+                } while (tempNum != 0);
+
+                outField->PrependText(std::to_wstring(num).append(L"\r\n")); // Prepending text because pushing even numbers TO the top
+
+                continue;
+            }
+            stackOdd.push(num);
+        }
+        CLEAR_STACK(stackGeneral)
+        
+        setBottomLine();
+        outField->AppendText(L"\r\n");
+
+        for (const auto &num : stackOdd)
+        {
+            outField->AppendText(std::to_wstring(num).append(L"\r\n"));      // And odd stack reading numbers FROM the top
+        }
+        setBottomLine();
+
+        return;
+    }
+    }
+
+    return;
 }
 
 
@@ -240,13 +331,40 @@ LRESULT Lab2Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
             m_hwnd
         );
 
+        radiGeneral = std::make_unique<MainRadioButton<ID_RADI_GROUP>>(
+            ID_RADI_GENERAL,
+            S(16), S(16),
+            S(260), S(260),
+            m_hwnd,
+            1
+        );
+
+        radiEven = std::make_unique<MainRadioButton<ID_RADI_GROUP>>(
+            ID_RADI_EVEN,
+            S(16), S(16),
+            S(260), S(321),
+            m_hwnd
+        );
+
+        radiOdd = std::make_unique<MainRadioButton<ID_RADI_GROUP>>(
+            ID_RADI_ODD,
+            S(16), S(16),
+            S(260), S(382),
+            m_hwnd
+        );
+
         inField->Create();
         outField->Create();
+
         bttnAddElem->Create();
         bttnRandCreate->Create();
         bttnClear->Create();
         bttnPop->Create();
         bttnSort->Create();
+
+        radiGeneral->Create();
+        radiEven->Create();
+        radiOdd->Create();
 
         setBottomLine();
 
@@ -277,9 +395,19 @@ LRESULT Lab2Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         case ID_BTTN_SORT:
             sortStack();
             return 0;
+
+        case ID_RADI_GENERAL:
+        case ID_RADI_EVEN:
+        case ID_RADI_ODD:
+            splitHandler();
+            return 0;
         }
         return 0;
     }
     }
     return MainWindow::HandleMessage(uMsg, wParam, lParam);
 }
+
+
+
+#undef CLEAR_STACK

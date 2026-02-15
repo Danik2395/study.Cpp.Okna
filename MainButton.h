@@ -24,7 +24,7 @@ class MainButton : public D2DWindow<MainButton>, public IControl
 	bool isHovered;
 	bool isPressed;
 
-	inline BOOL bttnInvalidate() { return InvalidateRect(this->m_hwnd, NULL, FALSE); }
+	BOOL bttnInvalidate() { return InvalidateRect(this->m_hwnd, NULL, FALSE); }
 
 	void SetSign(const std::wstring &newSign)
 	{
