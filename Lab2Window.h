@@ -48,9 +48,18 @@ class Lab2Window : public WndProps<Lab2Window, 4>, public MainWindow<Lab2Window>
     Stack<int> stackGeneral;
     Stack<int> stackEven;
     Stack<int> stackOdd;
+    Stack<int>* manipStack;
     int oddStackStart; // For text logic
 
-    void setBottomLine() { outField->AppendText(BOTTOM_LINE); }
+    void setBottomLine(int carPos = -1)
+    {
+        if (carPos == -1)
+        {
+            outField->AppendText(BOTTOM_LINE);
+            return;
+        }
+        outField->ReplaceSelText(BOTTOM_LINE, carPos, carPos);
+    }
 
     void randCreateStack();
     //void clearStack();
@@ -64,7 +73,8 @@ public:
     Lab2Window() : WndProps(L"Стек", 450, 450), // 350 height
         selectedRadi(ID_RADI_GENERAL),
         isSplitted(false),
-        oddStackStart(0)
+        oddStackStart(0),
+        manipStack(&stackGeneral)
     {}
 
     PCWSTR ClassName() const override { return L"Lab2WindowClass"; }

@@ -28,6 +28,16 @@ class MainRadioButton : public D2DWindow<MainRadioButton<GROUP_ID>>, public ICon
 
 	BOOL radiInvalidate() { return InvalidateRect(this->m_hwnd, NULL, FALSE); }
 
+	void InvalidatePrevSel(int prevSel)
+	{
+		if (prevSel != 0 && prevSel != id_)
+		{
+			HWND hPrev = GetDlgItem(GetParent(this->m_hwnd), prevSel); // We can use it because every id was put into hMenu
+			if (hPrev) InvalidateRect(hPrev, NULL, FALSE);
+		}
+		radiInvalidate();
+	}
+
 public:
 	MainRadioButton(int id) :
 		id_(id),
@@ -60,8 +70,15 @@ public:
 		}
 	}
 
-	inline int WhichSel() const { return selected_; }
-	inline bool IsSelected() const { return selected_ == id_; }
+	int WhichSel() const { return selected_; }
+	bool IsSelected() const { return selected_ == id_; }
+
+	void SetSelected(int id)
+	{
+		int prevSelected = selected_;
+		selected_ = id;
+		InvalidatePrevSel(prevSelected);
+	}
 
 	void Create()
 	{
@@ -156,13 +173,7 @@ public:
 					selected_ = id_;
 					SendMessage(GetParent(this->m_hwnd), WM_COMMAND, MAKEWPARAM(id_, BN_CLICKED), (LPARAM)this->m_hwnd);
 
-
-					if (prevSel != 0 && prevSel != id_)
-					{
-						HWND hPrev = GetDlgItem(GetParent(this->m_hwnd), prevSel); // We can use it because every id was put into hMenu
-						if (hPrev) InvalidateRect(hPrev, NULL, FALSE);
-					}
-					radiInvalidate();
+					InvalidatePrevSel(prevSel);
 				}
 			}
 			return 0;

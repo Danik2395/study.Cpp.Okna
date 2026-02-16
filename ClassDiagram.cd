@@ -10,7 +10,7 @@
   <Class Name="D2DWindow&lt;DERIVED_TYPE&gt;">
     <Position X="7" Y="4" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>RICAQABAAAAACAAAAAAAAAAAAAAAAAIIAAAAAAAAQAA=</HashCode>
+      <HashCode>RICAQABAAAAACAAAAAAAAAAAAAAAAAIICAAAAAAAQAA=</HashCode>
       <FileName>D2DWindow.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -50,9 +50,9 @@
     </TypeIdentifier>
   </Class>
   <Class Name="BaseWndProps">
-    <Position X="17.25" Y="5" Width="2.5" />
+    <Position X="17.25" Y="4" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAEgAAAABAAAAAAAAAAAAEQAAAAAAAAAIAAAAAgAAAA=</HashCode>
+      <HashCode>AAEgAAAABAAAAAYAAAAAwEQAAAAAAAAAIAAAAAgAAAA=</HashCode>
       <FileName>WndProps.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -66,7 +66,7 @@
   <Class Name="WndProps&lt;DERIVED_TYPE, 0&gt;">
     <Position X="20.75" Y="8.25" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAABAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>WndProps.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -87,7 +87,7 @@
   <Class Name="LabTestWindow">
     <Position X="13.5" Y="11.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAQAAABAAgKAIAAAgAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <HashCode>AAQAAABAAgKAIAAAgAAAAAAAAAQAAAACAAAgAAAAAAA=</HashCode>
       <FileName>LabTestWindow.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -101,7 +101,7 @@
   <Class Name="MainEdit">
     <Position X="0.75" Y="8.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAgIABDQAqQIAAAAZAAAAAAEAAAAQAAEAAAgA=</HashCode>
+      <HashCode>AAQAAAAAgIABDQA6QIIAAAZgAAAAAEAAAAQAAEAAAgA=</HashCode>
       <FileName>MainEdit.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -114,6 +114,9 @@
   </Class>
   <Class Name="SingleNodeList&lt;T&gt;">
     <Position X="28.25" Y="2.25" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
     <NestedTypes>
       <Struct Name="SingleNodeList&lt;T&gt;::Node" Collapsed="true">
         <TypeIdentifier>
@@ -134,8 +137,15 @@
   <Class Name="Stack&lt;T, CONTAINER&gt;">
     <Position X="30.5" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAIAAAIhCEAAQAAAAAAAIAAAAAAA=</HashCode>
+      <HashCode>AIAAAAACAAAAAAAAAIAAAIhSkAAQAAAAAAAIAAAAAAA=</HashCode>
       <FileName>Stack.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lab2Window">
+    <Position X="21" Y="11.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>QAgABAFIgkCQCAAgoAAAGABIQAYAgAACAAAABIQAIAA=</HashCode>
+      <FileName>Lab2Window.h</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

@@ -7,24 +7,32 @@
 // For not to pop all elements on clear button
 // Dstructing but the name is still avaliable to interact with
 // Constructing new stack to this name
-
 #define CLEAR_STACK(st)\
 do\
 {\
-st.~Stack();\
-new (&st) Stack<int>();\
+(st)->~Stack();\
+new (st) Stack<int>();\
 } while (0);\
 
+
+// Text carriage position
+#define CAR_POS(carPos) if (radiOdd->IsSelected()) carPos = oddStackStart;
 
 
 
 void Lab2Window::clearAll()
 {
-    CLEAR_STACK(stackGeneral)
+    CLEAR_STACK(&stackGeneral)
+    CLEAR_STACK(&stackEven)
+    CLEAR_STACK(&stackOdd)
 
     outField->RemoveText();
     inField->RemoveText();
     setBottomLine();
+
+    radiGeneral->SetSelected(ID_RADI_GENERAL);
+    selectedRadi = ID_RADI_GENERAL;
+    isSplitted = false;
 }
 
 
@@ -37,18 +45,57 @@ void Lab2Window::randCreateStack()
 
     inField->SetText(std::to_wstring(stackSize));
 
-    if (!stackGeneral.empty())
+    if (!manipStack->empty())
     {
-        CLEAR_STACK(stackGeneral)
+        CLEAR_STACK(manipStack)
     }
-    outField->RemoveText();
-    setBottomLine();
+
+    int carPos{ 0 };
+    if (isSplitted)
+    {
+        CAR_POS(carPos)
+    }
+
+    if (radiEven->IsSelected())
+    {
+        outField->ReplaceSelText(L"", 0, oddStackStart);
+        outField->PrependText(L"\r\n");
+        setBottomLine(0);
+
+        oddStackStart = 0;
+        oddStackStart += BOTTOM_LNLEN + 2; // line + \r + \n
+
+    }
+    else
+    {
+        outField->ReplaceSelText(L"", carPos, 10000000);
+        setBottomLine();
+    }
 
     dist.setLimits(-1000000, 1000000);
     while(stackSize != 0)
     {
-        stackGeneral.push(dist);
-        outField->PrependText(std::to_wstring(stackGeneral.top()).append(L"\r\n"));
+        manipStack->push(dist);
+
+        int tempNum{ manipStack->top() };
+        if (radiEven->IsSelected())
+        {
+            if (tempNum < 0)
+            {
+                ++oddStackStart;
+                tempNum = -tempNum;
+            }
+
+            do                   // Calculating where odd stack will start
+            {
+                tempNum /= 10;
+                ++oddStackStart; // num digit
+            } while (tempNum != 0);
+            oddStackStart += 2;  // \r + \n of num
+
+        }
+
+        outField->ReplaceSelText(std::to_wstring(manipStack->top()).append(L"\r\n"), carPos, carPos);
         --stackSize;
     }
 }
@@ -59,6 +106,12 @@ void Lab2Window::addToStack()
 {
     std::wstring setOfNumber = inField->GetText();
     if (setOfNumber.length() == 0) return;
+
+    int carPos{ 0 };
+    if (isSplitted)
+    {
+        CAR_POS(carPos)
+    }
     
     std::wstring buffer;
     std::wstring cleanString;
@@ -77,8 +130,26 @@ void Lab2Window::addToStack()
 
         if (isNumber)                                                       // Sending the number to the outField
         {
-            stackGeneral.push(std::stoi(buffer));
-            outField->PrependText(buffer.append(L"\r\n"));
+            manipStack->push(std::stoi(buffer));
+
+            int tempNum{ manipStack->top() };
+            if (radiEven->IsSelected())
+            {
+                if (tempNum < 0)                                            // Mind the minus
+                {
+                    ++oddStackStart;
+                    tempNum = -tempNum;
+                }
+
+                do
+                {
+                    tempNum /= 10;
+                    ++oddStackStart;
+                } while (tempNum != 0);
+                oddStackStart += 2;
+            }
+
+            outField->ReplaceSelText(buffer.append(L"\r\n"), carPos, carPos);
             cleanString.append(buffer + L" ");
             buffer.clear();
             continue;                                                       // If it was number we already on the non number so continuing without increment (out of range or past end error also)
@@ -93,10 +164,16 @@ void Lab2Window::addToStack()
 
 void Lab2Window::popFromStack()
 {
-    if (stackGeneral.empty()) return;
+    if (manipStack->empty()) return;
 
-    int strLen{ 2 };         // \0 + num
-    int numToPop = stackGeneral.top();
+    int carPos{ 0 };
+    if (isSplitted)
+    {
+        CAR_POS(carPos)
+    }
+
+    int strLen{ 2 };         // \r + \n
+    int numToPop = manipStack->top();
 
     if (numToPop < 0)        // Minus adds length
     {
@@ -110,24 +187,63 @@ void Lab2Window::popFromStack()
         ++strLen;
     } while (numToPop != 0); // Works for int
 
-    stackGeneral.pop();
+    manipStack->pop();
 
-    outField->ReplaceSelText(L"", 0, strLen);
+    if (radiEven->IsSelected()) oddStackStart -= strLen ;
+
+    outField->ReplaceSelText(L"", carPos, carPos + strLen);
 }
 
 
 
 void Lab2Window::sortStack()
 {
-    stackGeneral.sort();
-    outField->RemoveText();
+    manipStack->sort();
 
-    for (const auto &val : stackGeneral)
+    int carPos{ 0 };
+    if (radiEven->IsSelected())
     {
-        outField->AppendText(std::to_wstring(val).append(L"\r\n"));
-    }
+        outField->ReplaceSelText(L"", 0, oddStackStart);
 
-    setBottomLine();
+        for (const auto &val : *manipStack)
+        {
+            outField->ReplaceSelText(std::to_wstring(val).append(L"\r\n"), carPos, carPos);
+
+            carPos += 2;         
+            int numToAdd = val;
+
+            if (numToAdd < 0)        // Minus adds length
+            {
+                numToAdd = -numToAdd;
+                ++carPos;
+            }
+
+            do
+            {
+                numToAdd /= 10;
+                ++carPos;
+            } while (numToAdd != 0); // Works for int
+        }
+        setBottomLine(carPos);
+        carPos += BOTTOM_LNLEN;
+        outField->ReplaceSelText(L"\r\n", carPos, carPos);
+    }
+    else
+    {
+        if (isSplitted)
+        {
+            CAR_POS(carPos)
+
+        }
+
+        outField->ReplaceSelText(L"", carPos, 10000000);
+
+        for (const auto &val : *manipStack)
+        {
+            outField->AppendText(std::to_wstring(val).append(L"\r\n"));
+        }
+        setBottomLine();
+    }
 }
 
 
@@ -136,27 +252,32 @@ void Lab2Window::splitHandler()
 {
     int prevSelRadi = selectedRadi;
     selectedRadi = radiGeneral->WhichSel();
-    if (prevSelRadi == selectedRadi) return;
+    if (prevSelRadi == selectedRadi) return; // Nothing to recalculate
+
+    manipStack = radiGeneral->IsSelected() ? &stackGeneral : radiEven->IsSelected() ? &stackEven : &stackOdd; // Setting the manipulating stack
+
     if (
         (prevSelRadi == ID_RADI_EVEN || prevSelRadi == ID_RADI_ODD) &&
         (selectedRadi == ID_RADI_EVEN || selectedRadi == ID_RADI_ODD)
-        ) return;
+        ) return; // Nothing to recalculate because already splitted stack
 
     switch (selectedRadi)
     {
     case ID_RADI_GENERAL:                    // Need to assemble two parts
     {
+        isSplitted = false;
+
         for (const auto &num : stackOdd)     // Adding odd part
         {
             stackGeneral.push(num);
         }
-        CLEAR_STACK(stackOdd)
+        CLEAR_STACK(&stackOdd)
 
         for (const auto &num : stackEven)    // Adding even part
         {
             stackGeneral.push(num);
         }
-        CLEAR_STACK(stackEven)
+        CLEAR_STACK(&stackEven)
 
         outField->RemoveText();
 
@@ -173,6 +294,8 @@ void Lab2Window::splitHandler()
         [[fallthrough]];                                                     // Idk. C++17 thing. For readability
     case ID_RADI_ODD:                                                        // Need to split stack
     {
+        isSplitted = true;
+
         outField->RemoveText();
         oddStackStart = 0;
         oddStackStart += BOTTOM_LNLEN + 2;                                   // line + \r + \n
@@ -184,11 +307,18 @@ void Lab2Window::splitHandler()
                 stackEven.push(num);
 
                 int tempNum{ num };
+                if (tempNum < 0)
+                {
+                    ++oddStackStart;
+                    tempNum = -tempNum;
+                }
+
                 do                                                           // Calculating where odd stack will start
                 {
                     tempNum /= 10;
-                    oddStackStart += 3;                                      // num + \r + \n
+                    ++oddStackStart;                                      // num digit
                 } while (tempNum != 0);
+                oddStackStart += 2;                                       // \r + \n of num
 
                 outField->PrependText(std::to_wstring(num).append(L"\r\n")); // Prepending text because pushing even numbers TO the top
 
@@ -196,7 +326,7 @@ void Lab2Window::splitHandler()
             }
             stackOdd.push(num);
         }
-        CLEAR_STACK(stackGeneral)
+        CLEAR_STACK(&stackGeneral)
         
         setBottomLine();
         outField->AppendText(L"\r\n");
@@ -284,7 +414,7 @@ LRESULT Lab2Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         outField = std::make_unique<MainEdit>(
             ID_OUT_FIELD,
-            S(220), S(240),
+            S(220), S(340),
             S(20), S(60),
             16,
             m_hwnd,
@@ -334,7 +464,7 @@ LRESULT Lab2Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         radiGeneral = std::make_unique<MainRadioButton<ID_RADI_GROUP>>(
             ID_RADI_GENERAL,
             S(16), S(16),
-            S(260), S(260),
+            S(260), S(265),
             m_hwnd,
             1
         );
@@ -342,14 +472,14 @@ LRESULT Lab2Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         radiEven = std::make_unique<MainRadioButton<ID_RADI_GROUP>>(
             ID_RADI_EVEN,
             S(16), S(16),
-            S(260), S(321),
+            S(260), S(291),
             m_hwnd
         );
 
         radiOdd = std::make_unique<MainRadioButton<ID_RADI_GROUP>>(
             ID_RADI_ODD,
             S(16), S(16),
-            S(260), S(382),
+            S(260), S(317),
             m_hwnd
         );
 
@@ -411,3 +541,4 @@ LRESULT Lab2Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 
 #undef CLEAR_STACK
+#undef CAR_POS
