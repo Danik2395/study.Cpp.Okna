@@ -382,12 +382,39 @@ void Lab2Window::DrawContent()
 
     if (pLabelTextFormat && pLabelColorBrush)
     {
-        D2D1_RECT_F inLabelRect = D2D1::RectF(20.0f, 20.0f, 150.0f, 45.0f);
+        D2D1_RECT_F textRect = D2D1::RectF(20.0f, 20.0f, 150.0f, 45.0f);
         pRenderTarget->DrawText(
             L"Свободное значение",
             18,
             pLabelTextFormat,
-            inLabelRect,
+            textRect,
+            pLabelColorBrush
+        );
+
+        textRect = D2D1::RectF(286.0f, 265.0f, 450.0f, 285.0f);
+        pRenderTarget->DrawText(
+            L"Общий",
+            5,
+            pLabelTextFormat,
+            textRect,
+            pLabelColorBrush
+        );
+
+        textRect = D2D1::RectF(286.0f, 291.0f, 450.0f, 311.0f);
+        pRenderTarget->DrawText(
+            L"Чётный",
+            6,
+            pLabelTextFormat,
+            textRect,
+            pLabelColorBrush
+        );
+
+        textRect = D2D1::RectF(286.0f, 317.0f, 450.0f, 337.0f);
+        pRenderTarget->DrawText(
+            L"Нечётный",
+            8,
+            pLabelTextFormat,
+            textRect,
             pLabelColorBrush
         );
     }

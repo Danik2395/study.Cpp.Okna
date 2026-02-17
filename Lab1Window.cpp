@@ -74,39 +74,39 @@ void Lab1Window::DrawContent()
 
     if (pLabelTextFormat && pLabelColorBrush)
     {
-        D2D1_RECT_F inLabelRect = D2D1::RectF(20.0f, 20.0f, 20.0f + 100.0f, 30.0f);
+        D2D1_RECT_F textRect = D2D1::RectF(20.0f, 20.0f, 20.0f + 100.0f, 30.0f);
         pRenderTarget->DrawText(
             L"Количество итераций",
             19,
             pLabelTextFormat,
-            inLabelRect,
+            textRect,
             pLabelColorBrush
         );
 
-        D2D1_RECT_F staticLabelRect = D2D1::RectF(200.0f, 5.0f, 200.0f + 280.0f, 20.0f);
+        textRect = D2D1::RectF(200.0f, 5.0f, 200.0f + 280.0f, 20.0f);
         pRenderTarget->DrawText(
             L"Вариант 12",
             10,
             pLabelTextFormat,
-            staticLabelRect,
+            textRect,
             pLabelColorBrush
         );
 
-        D2D1_RECT_F outCycleLabelRect = D2D1::RectF(20.0f, 150.0f, 20.0f + 150.0f, 180.0f);
+        textRect = D2D1::RectF(20.0f, 150.0f, 20.0f + 150.0f, 180.0f);
         pRenderTarget->DrawText(
             L"Результат цикла",
             15,
             pLabelTextFormat,
-            outCycleLabelRect,
+            textRect,
             pLabelColorBrush
         );
 
-        D2D1_RECT_F outRecLabelRect = D2D1::RectF(200.0f, 150.0f, 200.0f + 150.0f, 180.0f);
+        textRect = D2D1::RectF(200.0f, 150.0f, 200.0f + 150.0f, 180.0f);
         pRenderTarget->DrawText(
             L"Результат рекурсии",
             18,
             pLabelTextFormat,
-            outRecLabelRect,
+            textRect,
             pLabelColorBrush
         );
 
