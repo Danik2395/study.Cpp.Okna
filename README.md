@@ -263,6 +263,31 @@
 	- `front()`
 	- `back()`
 - Bubble sort перестановкой указателей
+	- Перестановкой данных будет не лучше из-за неизвестного типа данных, а указатель фиксирован. Ну, может, если сделать value указателем. Тогда перестановкой данных будет даже легче.
+
+```cpp
+	...
+
+	struct Node
+	{
+		T* value;
+		Node* next;
+	}
+
+	...
+
+	push_front(const T &val)
+	{
+		...
+
+		T* newVal = new T(val);
+		Node* newNode= new Node{ newVal, head_ };
+		head_ = newNode;
+
+		...
+	}
+```
+	
 - Перегрузка копирования
 	- `operator=()`
 

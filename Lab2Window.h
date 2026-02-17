@@ -87,3 +87,5 @@ protected:
     void CreateDeviceDepRes(HRESULT& hr);
     void DrawContent();
 };
+
+#undef BUTTOM_LINE

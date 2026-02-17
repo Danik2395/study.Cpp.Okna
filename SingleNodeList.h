@@ -152,6 +152,36 @@ public:
 		tail_ = temp;
 	}
 
+	// Non optimal
+	void sort2()
+	{
+		if (!head_ || !head_->next) return;
+
+		Node* endN = nullptr;         // Optimization for bubble sort
+
+		bool swapped = false;
+		do
+		{
+			swapped = false;
+			Node* cur = head_;
+
+			while (cur->next != endN)
+			{
+				if (cur->value < cur->next->value)
+				{
+					swapped = true;
+					T tempVal = cur->value;
+					cur->value = cur->next->value;
+					cur->next->value = tempVal;
+				}
+
+				cur = cur->next;
+			}
+
+			endN = cur;
+		} while (swapped);
+	}
+
 	SingleNodeList& operator=(SingleNodeList &secList)
 	{
 		if (&secList == this) return *this;

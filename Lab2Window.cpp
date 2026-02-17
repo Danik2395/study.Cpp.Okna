@@ -42,6 +42,7 @@ void Lab2Window::randCreateStack()
     m_random<int> dist(5, 15);
     int stackSize = MainEdit::GetNumber<int>(inField->GetText());
     if (stackSize < 1) stackSize = dist;
+    else if (stackSize > 100) stackSize = 100;
 
     inField->SetText(std::to_wstring(stackSize));
 
