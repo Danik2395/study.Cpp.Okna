@@ -62,7 +62,6 @@ class Lab2Window : public WndProps<Lab2Window, 4>, public MainWindow<Lab2Window>
     }
 
     void randCreateStack();
-    //void clearStack();
     void clearAll();
     void addToStack();
     void popFromStack();
@@ -70,7 +69,7 @@ class Lab2Window : public WndProps<Lab2Window, 4>, public MainWindow<Lab2Window>
     void splitHandler();
 
 public:
-    Lab2Window() : WndProps(L"Стек", 450, 450), // 350 height
+    Lab2Window() : WndProps(L"Стек", 450, 450),
         selectedRadi(ID_RADI_GENERAL),
         isSplitted(false),
         oddStackStart(0),

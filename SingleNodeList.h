@@ -77,8 +77,8 @@ public:
 		head_ = newHead;
 	}
 
-	T &front() const { return head_->value; }
-	T &back() const { return tail_->value; }
+	T& front() const { return head_->value; }
+	T& back() const { return tail_->value; }
 	 
 
 	bool empty() const { return head_ == nullptr; }

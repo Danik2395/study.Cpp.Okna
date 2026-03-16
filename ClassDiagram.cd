@@ -16,8 +16,11 @@
   </Class>
   <Class Name="HubWindow">
     <Position X="16" Y="11.25" Width="2" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
     <NestedTypes>
-      <Struct Name="HubWindow::LabDef" Collapsed="true">
+      <Struct Name="HubWindow::LabDef">
         <TypeIdentifier>
           <NewMemberFileName>HubWindow.h</NewMemberFileName>
         </TypeIdentifier>
@@ -78,7 +81,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="MainCheckBox">
-    <Position X="7" Y="8.25" Width="2.5" />
+    <Position X="6.25" Y="8.25" Width="2.5" />
     <TypeIdentifier>
       <HashCode>QAAAAABQAICADAAmQAAAAABCwAAAAEAIAAAADEAAIgE=</HashCode>
       <FileName>MainCheckBox.h</FileName>
@@ -130,7 +133,7 @@
       </Class>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AEAAACECABAQgAAAAAAAEAASEAAAAAAAEAAgAAAEAAA=</HashCode>
+      <HashCode>AEAAACECABAQgAAAAAAAEAASEAAAAAAAEAAgAAAEAAQ=</HashCode>
       <FileName>SingleNodeList.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -146,6 +149,13 @@
     <TypeIdentifier>
       <HashCode>QAgABAFIgkCQCAAgoAAAGABIQAYAgAACAAAABIQAIAA=</HashCode>
       <FileName>Lab2Window.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MainRadioButton&lt;GROUP_ID&gt;">
+    <Position X="9.75" Y="8.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>QAAAAABAAICAHAAmQAAAAABgwIAAAUAIAIQACkAAIgA=</HashCode>
+      <FileName>MainRadioButton.h</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

@@ -163,10 +163,9 @@ public:
 		}
 	}
 
-	void Create(/*bool readOnly = false*/)
+	void Create()
 	{
 		DWORD style = WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL;
-		//if (readOnly) style |= ES_READONLY;
 		style |= styles_;
 
 		hWnd_ = CreateWindowEx(

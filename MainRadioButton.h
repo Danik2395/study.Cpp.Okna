@@ -214,8 +214,6 @@ protected:
 	CComPtr<ID2D1SolidColorBrush> pBorderBrush;
 	CComPtr<ID2D1SolidColorBrush> pSelBrush;
 
-	bool EnableAlpha() const override { return true; }
-
 	void CreateDeviceDepRes(HRESULT& hr)
 	{
 		const UINT width = 32;
