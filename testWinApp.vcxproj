@@ -134,12 +134,15 @@
   <ItemGroup>
     <ClCompile Include="Lab1Window.cpp" />
     <ClCompile Include="Lab2Window.cpp" />
+    <ClCompile Include="Lab3Window.cpp" />
     <ClCompile Include="LabTestWindow.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="HubWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lab2Window.h" />
+    <ClInclude Include="Lab3Window.h" />
+    <ClInclude Include="List.h" />
     <ClInclude Include="MainEdit.h" />
     <ClInclude Include="D2DWindow.h" />
     <ClInclude Include="DpiScale.h" />

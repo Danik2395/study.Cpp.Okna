@@ -56,7 +56,7 @@ LRESULT HubWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         LabDef labs[] = {
             { ID_BTN_LAB1, L"Рекурсия" },
             { ID_BTN_LAB2, L"Стек" },
-            { ID_BTN_LAB3, L"Лабораторная" },
+            { ID_BTN_LAB3, L"Список" },
             { ID_BTN_LAB4, L"Лабораторная" },
             { ID_BTN_LAB_TEST, L"Лабораторная тест" },
         };
@@ -106,6 +106,10 @@ LRESULT HubWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         case ID_BTN_LAB2:
             LaunchLabInThread<Lab2Window>();
+            break;
+
+        case ID_BTN_LAB3:
+            LaunchLabInThread<Lab3Window>();
             break;
         }
         return 0;

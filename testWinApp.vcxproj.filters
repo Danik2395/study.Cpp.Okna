@@ -40,6 +40,9 @@
     <ClCompile Include="main.cpp">
       <Filter>main</Filter>
     </ClCompile>
+    <ClCompile Include="Lab3Window.cpp">
+      <Filter>Windows\Lab</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainCheckBox.h">
@@ -98,6 +101,12 @@
     </ClInclude>
     <ClInclude Include="MainRadioButton.h">
       <Filter>Windows\Child</Filter>
+    </ClInclude>
+    <ClInclude Include="List.h">
+      <Filter>Algorithms and containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Lab3Window.h">
+      <Filter>Windows\Lab</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

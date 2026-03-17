@@ -131,6 +131,9 @@ void Lab2Window::addToStack()
 
         if (isNumber)                                                       // Sending the number to the outField
         {
+            int val = MainEdit::GetNumber<int>(buffer);
+            buffer.assign(std::to_wstring(val));
+
             manipStack->push(std::stoi(buffer));
 
             int tempNum{ manipStack->top() };

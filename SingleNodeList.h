@@ -72,7 +72,7 @@ public:
 	{
 		if (!head_) return;
 
-		Node * newHead = head_->next;
+		Node* newHead = head_->next;
 		delete head_;
 		head_ = newHead;
 	}
