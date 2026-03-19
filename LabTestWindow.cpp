@@ -61,12 +61,21 @@ LRESULT LabTestWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         radio1 = std::make_unique<MainRadioButton<ID_RADI_GROUP>>(ID_RADI_1, S(30), S(30), S(340), S(40), m_hwnd);
         radio2 = std::make_unique<MainRadioButton<ID_RADI_GROUP>>(ID_RADI_2, S(30), S(50), S(390), S(40), m_hwnd);
 
+        listView = std::make_unique<MainListView>(ID_LIST_VIEW, S(300), S(300), S(340), S(60), 12, m_hwnd, LVS_SINGLESEL | LVS_SHOWSELALWAYS, LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
+
         inField->Create();
         outField->Create();
         calcButton->Create();
         testCheckBox->Create();
         radio1->Create();
         radio2->Create();
+        listView->Create();
+
+        listView->AddColumn(0, L"some text", 130);
+        listView->AddColumn(0, L"subitem", 110);
+        listView->AddRow(L"a", L"2");
+        listView->AddRow(L"b", L"i");
+        listView->AddRow(L"A", L"8");
 
         return 0;
     }

@@ -108,6 +108,9 @@
     <ClInclude Include="Lab3Window.h">
       <Filter>Windows\Lab</Filter>
     </ClInclude>
+    <ClInclude Include="MainListView.h">
+      <Filter>Windows\Child</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
