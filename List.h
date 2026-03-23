@@ -2,11 +2,19 @@
 // List.h
 //
 
+#include <type_traits>
 #pragma once
+
 
 template<typename T>
 class List
 {
+	static constexpr bool isCString =
+		std::is_same<T, char*>::value ||
+		std::is_same<T, const char*>::value ||
+		std::is_same<T, wchar_t*>::value ||
+		std::is_same<T, const wchar_t*>::value;
+
 	struct Node
 	{
 		T value;
@@ -18,8 +26,47 @@ class List
 	Node* tail_;
 	// prev -> head -> tail -> next
 
+	size_t size_;
+
+	template<typename U = T> // Template is needed only because enable_if works with templates. And method call would be actual type
+	typename std::enable_if<isCString, U>::type
+	getCopyCString(const U &str)
+	{
+		if (str == nullptr) return nullptr;
+
+		int strCount{1}; // Mind the '\n'
+		while (str[strCount] != '\0') ++strCount;
+		
+		using baseU = std::remove_pointer<U>::type;
+		using nonConstBaseU = std::remove_const<baseU>::type;
+		nonConstBaseU* copyStr = new nonConstBaseU[strCount];
+
+		--strCount;      // To match the index
+		while (strCount != -1) copyStr[strCount] = str[strCount--];
+
+		return reinterpret_cast<U>(copyStr);
+	}
+
+	template<typename U = T>
+	typename std::enable_if<isCString, bool>::type
+	compareCString(const U &firstStr, const U &secondStr)
+	{
+		int i{ 0 };
+		while (firstStr[i] != L'\0')
+		{
+			if (firstStr[i] != secondstr[i]) return false;
+			++i;
+		}
+		return secondStr[i] == L'\0';
+	}
+
 public:
-	List() : head_(nullptr), tail_(nullptr) {}
+	List() : head_(nullptr), tail_(nullptr), size_(0) {}
+
+	List(const List &secondList) : head_(nullptr), tail_(nullptr), size_(0)
+	{
+		*this = secondList;
+	}
 
 	~List() { clear(); }
 
@@ -73,18 +120,32 @@ public:
 
 	void push_front(const T &val)
 	{
-		Node* newN = new Node{ val, head_, nullptr };
+		T actualVal = val;
+		if constexpr (isCString)
+		{
+			actualVal = getCopyCString(val);
+		}
+
+		Node* newN = new Node{ actualVal, head_, nullptr };
 		if (head_) head_->prev = newN;
 		head_ = newN;
 		if (tail_ == nullptr) tail_ = head_;
+		++size_;
 	}
 
 	void push_back(const T &val)
 	{
-		Node* newN = new Node{ val, nullptr, tail_ };
+		T actualVal = val;
+		if constexpr (isCString)
+		{
+			actualVal = getCopyCString(val);
+		}
+
+		Node* newN = new Node{ actualVal, nullptr, tail_ };
 		if (tail_) tail_->next = newN;
 		tail_ = newN;
 		if (head_ == nullptr) head_ = tail_;
+		++size_;
 	}
 
 	void pop_front()
@@ -92,10 +153,17 @@ public:
 		if (!head_) return;
 
 		Node* newHead = head_->next;
+
+		if constexpr (isCString)
+		{
+			delete[] head_->value;
+		}
 		delete head_;
+
 		head_ = newHead;
 		if (head_) head_->prev = nullptr;
 		else       tail_ = nullptr; // On the deletion of the last element
+		--size_;
 	}
 
 	void pop_back()
@@ -103,10 +171,17 @@ public:
 		if (!tail_) return;
 
 		Node* newTail = tail_->prev;
+
+		if constexpr (isCString)
+		{
+			delete[] tail_->value;
+		}
 		delete tail_;
+
 		tail_ = newTail;
 		if (tail_) tail_->next = nullptr;
 		else       head_ = nullptr; // On the deletion of the last element
+		--size_;
 	}
 
 	T& front() const { return head_->value; }
@@ -114,13 +189,21 @@ public:
 
 	bool empty() const { return head_ == nullptr; }
 
+	size_t size() const { return size_; }
+
 	void clear()
 	{
 		Node* cur = head_;
 		while (cur)
 		{
 			Node* next = cur->next;
+			
+			if constexpr (isCString)
+			{
+				delete[] cur->value;
+			}
 			delete cur;
+
 			cur = next;
 		}
 		head_ = nullptr;
@@ -141,6 +224,10 @@ public:
 		if (nextNode) nextNode->prev = prevNode;
 		else tail_ = prevNode;             // Deleting tail
 
+		if constexpr (isCString)
+		{
+			delete[] wantedNode->value;
+		}
 		delete wantedNode;                 // Deleting the wanted node
 
 		return nextNode ? nextNode : end();
@@ -158,10 +245,14 @@ public:
 		else tail_ = first.ptr_->prev;
 
 		Node* tempNode = first.ptr_->next;
-		while (tempNode != afterLast.ptr_->next)
+		while (tempNode != afterLast.ptr_)
 		{
-			delete tempNode->prev;
+			if constexpr (isCString)
+			{
+				delete[] tempNode->prev->value;
+			}
 			tempNode = tempNode->next;
+			delete tempNode->prev;
 		}
 	}
 
@@ -185,7 +276,17 @@ public:
 			{
 				Node* nextN = cur->next;
 
-				if (cur->value < nextN->value)
+				bool isNextGreater{};
+				if constexpr (isCString)
+				{
+					isNextGreater = compareCString(cur->value, nextN->value);
+				}
+				else
+				{
+					isNextGreater = cur->value < nextN->value;
+				}
+
+				if (isNextGreater)
 				{
 					swapped = true;
 					cur->next = nextN->next;
@@ -212,7 +313,7 @@ public:
 
 		temp = head_;
 		Node* tempPrev = nullptr;
-		while (temp) // Linking previous nodes correctly
+		while (temp)                          // Linking previous nodes correctly
 		{
 			temp->prev = tempPrev;
 			tempPrev = temp;
@@ -243,30 +344,34 @@ public:
 		tail_ = tempNode;
 	}
 
-	List& operator=(List& secList)
+	List& operator=(const List& secondList)
 	{
-		if (&secList == this) return *this;
-		Node* cur = secList.head_;
+		if (&secondList == this) return *this;
+		Node* cur = secondList.head_;
 		clear();
 
 		while (cur)
 		{
-			Node* newNode = new Node{ cur->value, nullptr, tail_ };
+			//Node* newNode = new Node{ cur->value, nullptr, tail_ };
 
-			if (head_ != nullptr)
-			{
-				tail_->next = newNode;
-				tail_ = newNode;
-			}
-			else
-			{
-				head_ = newNode;
-				tail_ = newNode;
-			}
+			//if (head_ != nullptr)
+			//{
+			//	tail_->next = newNode;
+			//	tail_ = newNode;
+			//}
+			//else
+			//{
+			//	head_ = newNode;
+			//	tail_ = newNode;
+			//}
 
+			push_back(cur->value);
 			cur = cur->next;
 		}
 
 		return *this;
 	}
 };
+
+using pcwList = List<const wchar_t*>;
+using cwList = List<const wchar_t>;

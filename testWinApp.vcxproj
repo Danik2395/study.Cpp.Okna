@@ -151,6 +151,7 @@
     <ClInclude Include="MainCheckBox.h" />
     <ClInclude Include="MainListView.h" />
     <ClInclude Include="MainRadioButton.h" />
+    <ClInclude Include="shuntingYard.h" />
     <ClInclude Include="SingleNodeList.h" />
     <ClInclude Include="Stack.h" />
     <ClInclude Include="WndProps.h" />

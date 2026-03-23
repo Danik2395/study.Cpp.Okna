@@ -111,6 +111,9 @@
     <ClInclude Include="MainListView.h">
       <Filter>Windows\Child</Filter>
     </ClInclude>
+    <ClInclude Include="shuntingYard.h">
+      <Filter>Algorithms and containers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
