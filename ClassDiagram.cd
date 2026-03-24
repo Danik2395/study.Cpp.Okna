@@ -15,7 +15,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="HubWindow">
-    <Position X="26.75" Y="11.25" Width="2" />
+    <Position X="26.75" Y="12.25" Width="2" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
@@ -88,9 +88,9 @@
     </TypeIdentifier>
   </Class>
   <Class Name="LabTestWindow">
-    <Position X="24.25" Y="11.25" Width="2" />
+    <Position X="24.25" Y="12.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAQAAABAAgKAIAAAgAAAAAAAAAQAAAACAAAgAAAAAAA=</HashCode>
+      <HashCode>AAQAAABAAgKAIAAAgAAAAAAAAAQAAAACAAAgAIAAAAA=</HashCode>
       <FileName>LabTestWindow.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -104,12 +104,12 @@
   <Class Name="MainEdit">
     <Position X="11.5" Y="8.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAgIABDQA6QIIAAAZgAAAAAEAAAAQAAEAAAgA=</HashCode>
+      <HashCode>AAQAAAAAgIABDQA6QIIAAAJgAAAAEFAAAAQAAEAAAgA=</HashCode>
       <FileName>MainEdit.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Lab1Window">
-    <Position X="29.5" Y="11.25" Width="1.75" />
+    <Position X="29.5" Y="12.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>QAgAAABIAAKACAAQoAAQAAAAAAAAAAICAAAAAAAAAAI=</HashCode>
       <FileName>Lab1Window.h</FileName>
@@ -145,7 +145,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Lab2Window">
-    <Position X="31.75" Y="11.25" Width="1.75" />
+    <Position X="31.75" Y="12.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>QAgABAFIgkCQCAAgoAAAGABIQAYAgAACAAAABIQAIAA=</HashCode>
       <FileName>Lab2Window.h</FileName>
@@ -156,13 +156,6 @@
     <TypeIdentifier>
       <HashCode>QAAAAABAAICAHAAmQAAAAABgwIAAAUAIAIQACkAAIgA=</HashCode>
       <FileName>MainRadioButton.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="MainListView">
-    <Position X="9.25" Y="8.25" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>UAQAAAAAgIACDAAiSQAAAARAAAEAEEAAEAQIAMBCAgA=</HashCode>
-      <FileName>MainListView.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="List&lt;T&gt;">
@@ -180,8 +173,29 @@
       </Class>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AEAAACECABAQgAAAgAEIAAASEAAAAAIAEAEgAAAAAAI=</HashCode>
+      <HashCode>QEAAACECABAQgAAAgIEIAABSFAAAAAIAEAEggAAAAAI=</HashCode>
       <FileName>List.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VariablesListView">
+    <Position X="9" Y="8.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>EAQAAAAAgIACDgAiSQAAAARACAEAEEAAEAQIAEBiAAI=</HashCode>
+      <FileName>VariablesListView.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lab3Window">
+    <Position X="34" Y="12.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>QAAAIgNIolCACIAAoABAEAIoQAQAACAAAYAAAAQEQAA=</HashCode>
+      <FileName>Lab3Window.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lab4Window">
+    <Position X="36.25" Y="12.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>QAAAEABIAACASAgAoACAIAAQAAAAKAAAAAAAABAABAA=</HashCode>
+      <FileName>Lab4Window.h</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />
