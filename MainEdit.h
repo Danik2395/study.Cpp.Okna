@@ -4,8 +4,12 @@
 #include "IControl.h"
 #include "DpiScale.h"
 #include <Windows.h>
+#include <commctrl.h>
 #include <string>
 #pragma once
+
+#define EDT_ID_EDIT_SUBCL 1201
+#define EDT_ID_PARENT_SUBCL 1202
 
 class MainEdit : public IControl
 {
@@ -26,6 +30,52 @@ class MainEdit : public IControl
 	DWORD styles_;
 
 	DpiScale dpi;
+
+
+	// Subclass to make the click on the parent behaviour normal (remove focus from the edit)
+	static LRESULT CALLBACK ParentSubclassProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData)
+	{
+		MainEdit* pThis = reinterpret_cast<MainEdit*>(dwRefData);
+
+		switch (uMsg)
+		{
+		case WM_LBUTTONDOWN: // On the parent window left click setting focus to the parent window
+		{
+			if (GetFocus() != pThis->hWnd_)
+			{
+				SetFocus(pThis->hWndParent_);
+			}
+			break;
+		}
+		}
+
+		return DefSubclassProc(hWnd, uMsg, wParam, lParam);
+	}
+
+	// Subclass to make normal behaviour on the Return and Escape buttons
+	static LRESULT CALLBACK EditSubclassProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData)
+	{
+		MainEdit* pThis = reinterpret_cast<MainEdit*>(dwRefData);
+
+		switch (uMsg)
+		{
+		case WM_CHAR:                         // Not WM_KEYDOWN because it need to know exactly if it's dispatched char related to edit
+		{
+			if (wParam == VK_RETURN || wParam == VK_ESCAPE)
+			{
+				SetFocus(pThis->hWndParent_); // Removing focus to the main window on the Return button
+				return 0;
+			}
+			break;
+
+		}
+		case WM_NCDESTROY:
+			RemoveWindowSubclass(hWnd, EditSubclassProc, uIdSubclass);
+			RemoveWindowSubclass(hWnd, ParentSubclassProc, uIdSubclass);
+		}
+
+		return DefSubclassProc(hWnd, uMsg, wParam, lParam);
+	}
 
 public:
 	//MainEdit(int id) :
@@ -51,7 +101,11 @@ public:
 		hWnd_(NULL),
 		hFont_(NULL)
 	{}
-	~MainEdit() { if (hFont_) DeleteObject(hFont_); }
+	~MainEdit()
+	{
+		if (hWnd_) DestroyWindow(hWnd_);
+	  	if (hFont_) DeleteObject(hFont_);
+	}
 
 	std::wstring GetText()
 	{
@@ -121,6 +175,9 @@ public:
 		//UINT dpi = GetDpiForWindow(hWndParent_);
 		//if (dpi < 1) dpi = GetDpiForSystem();
 		dpi.Init(hWnd_);
+
+		SetWindowSubclass(hWnd_, EditSubclassProc, EDT_ID_EDIT_SUBCL, reinterpret_cast<DWORD_PTR>(this));
+		SetWindowSubclass(hWndParent_, ParentSubclassProc, EDT_ID_PARENT_SUBCL, reinterpret_cast<DWORD_PTR>(this));
 
 		int fontHeight = -MulDiv(fontSize_, dpi.GetDpi(), 72); // Minus for only glyph size without paddings
 
