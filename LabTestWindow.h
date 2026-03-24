@@ -8,7 +8,7 @@
 #include "MainButton.h"
 #include "MainCheckBox.h"
 #include "MainRadioButton.h"
-#include "MainListView.h"
+#include "VariablesListView.h"
 #include <memory>
 
 #define LTEST_IDBTN_CALC 9999
@@ -20,7 +20,7 @@
 #define LTEST_IDRADI_1 9995
 #define LTEST_IDRADI_2 9996
 
-#define ID_LIST_VIEW 9997
+#define LTEST_IDLIST_VIEW 9997
 
 class LabTestWindow : public WndProps<LabTestWindow, 4>, public MainWindow<LabTestWindow>
 {
@@ -33,7 +33,7 @@ class LabTestWindow : public WndProps<LabTestWindow, 4>, public MainWindow<LabTe
     std::unique_ptr<MainRadioButton<LTEST_IDRADI_GROUP>> radio2;
     int selectedRadi;
 
-    std::unique_ptr<MainListView> listView;
+    std::unique_ptr<VariablesListView> listView;
 
     void calc(const std::wstring &wstr);
 

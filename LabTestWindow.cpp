@@ -61,7 +61,7 @@ LRESULT LabTestWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         radio1 = std::make_unique<MainRadioButton<LTEST_IDRADI_GROUP>>(LTEST_IDRADI_1, S(30), S(30), S(340), S(40), m_hwnd);
         radio2 = std::make_unique<MainRadioButton<LTEST_IDRADI_GROUP>>(LTEST_IDRADI_2, S(30), S(50), S(390), S(40), m_hwnd);
 
-        listView = std::make_unique<MainListView>(ID_LIST_VIEW, S(300), S(300), S(340), S(60), 12, m_hwnd, LVS_SINGLESEL | LVS_SHOWSELALWAYS, LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
+        listView = std::make_unique<VariablesListView>(LTEST_IDLIST_VIEW, S(300), S(300), S(340), S(60), 12, m_hwnd);
 
         inField->Create();
         outField->Create();

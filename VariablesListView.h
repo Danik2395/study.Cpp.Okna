@@ -1,8 +1,9 @@
 //
-// MainListView.h
+// VariablesListView.h
 //
 #include "IControl.h"
 #include "DpiScale.h"
+#include "Utils.h"
 #include <Windows.h>
 #include <string>
 #include <commctrl.h>
@@ -10,9 +11,11 @@
 #pragma comment(lib, "comctl32.lib")
 #pragma once
 
-#define ID_TEMP_EDIT 1001
+#define VLV_ID_TEMP_EDIT 1011
+#define VLV_ID_SUBCL_EDIT 1101
+#define VLV_ID_SUBCL_LWV 1102
 
-class MainListView : public IControl
+class VariablesListView : public IControl
 {
 	HFONT hFont_;
 	int fontSize_;
@@ -25,7 +28,7 @@ class MainListView : public IControl
 
 	HWND hWnd_;
 	HWND hWndParent_;
-	int id_;
+	int VLV_ID_;
 
 	DWORD styles_;
 	DWORD exStyles_;
@@ -36,10 +39,42 @@ class MainListView : public IControl
 	int editRow_;
 	int editCol_;
 
+	// Subclass windowProc for temporary edit to handle the Enter and Esc button clicks
+	static LRESULT CALLBACK EditSubclassProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData)
+	{
+		                                // Here we have VariablesListView class with hWnd_ of it
+		VariablesListView* pThis = reinterpret_cast<VariablesListView*>(dwRefData);
+
+		switch (uMsg)
+		{
+		case /*WM_CHAR*/WM_KEYDOWN:     // It could be WM_KEYDOWN because it destroys the Edit window faster then it could dispatch char
+		{
+			if (wParam == VK_RETURN)
+			{
+				SetFocus(pThis->hWnd_); // Using hWnd_ of the VariablesListView
+				return 0;
+			}
+			else if (wParam == VK_ESCAPE)
+			{
+				pThis->hEdit_ = NULL;   // Setting to NULL so the VariablesListView won't fell into WM_COMMAND -> EN_KILLFOCUS and saved value
+				DestroyWindow(hWnd);
+				SetFocus(pThis->hWnd_);
+				return 0;
+			}
+			break;
+
+		}
+		case WM_NCDESTROY:
+			RemoveWindowSubclass(hWnd, EditSubclassProc, uIdSubclass);
+		}
+
+		return DefSubclassProc(hWnd, uMsg, wParam, lParam);
+	}
+
 	// Subclass windowProc for the ListView
 	static LRESULT CALLBACK ListViewSubclassProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData)
 	{
-		MainListView* pThis = reinterpret_cast<MainListView*>(dwRefData);
+		VariablesListView* pThis = reinterpret_cast<VariablesListView*>(dwRefData);
 
 		switch (uMsg)
 		{
@@ -63,13 +98,13 @@ class MainListView : public IControl
 				wchar_t buffer[256] = { 0 };
 				ListView_GetItemText(hWnd, hti.iItem, hti.iSubItem, buffer, 256);
 
-				// Creating edit as a child element of the list view
+				// Creating edit as a child element of the list view with cell value text
 				pThis->hEdit_ = CreateWindowEx(
 					0, L"EDIT", buffer,
 					WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL,
 					rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top,
 					hWnd,
-					(HMENU)ID_TEMP_EDIT,
+					(HMENU)VLV_ID_TEMP_EDIT,
 					GetModuleHandle(NULL),
 					NULL
 				);
@@ -77,10 +112,10 @@ class MainListView : public IControl
 				// Setting font as in the listview
 				SendMessage(pThis->hEdit_, WM_SETFONT, SendMessage(hWnd, WM_GETFONT, 0, 0), TRUE);
 				SetFocus(pThis->hEdit_);
-				SendMessage(pThis->hEdit_, EM_SETSEL, 0, -1); // Selecting all text in the edit
+				SendMessage(pThis->hEdit_, EM_SETSEL, 0, -1);                                     // Selecting all text in the edit
 
 				// Setting edit subclass
-				SetWindowSubclass(pThis->hEdit_, EditSubclassProc, 1, dwRefData); // It takes MainListView class in the dwRefData so it uppears in the EditSubaClassProc
+				SetWindowSubclass(pThis->hEdit_, EditSubclassProc, VLV_ID_SUBCL_EDIT, dwRefData);     // It takes VariablesListView class in the dwRefData so it uppears in the EditSubaClassProc
 			}
 			return 0;
 		}
@@ -88,12 +123,15 @@ class MainListView : public IControl
 		case WM_COMMAND:
 		{
 			// Moment when user pressed in another place (unfocus)
-			if (HIWORD(wParam) == EN_KILLFOCUS && pThis->hEdit_ && (HWND)lParam == pThis->hEdit_)
+			if (HIWORD(wParam) == EN_KILLFOCUS && pThis->hEdit_ && (HWND)lParam == pThis->hEdit_) // It's lParam not dwRefData. It means message is from Edit
 			{
 				wchar_t buffer[256] = { 0 };
 				GetWindowText(pThis->hEdit_, buffer, 256);
 
-				pThis->SetCellValue(pThis->editRow_, pThis->editCol_, buffer);
+				std::wstring clearBuffer = std::to_wstring(UTL::GetNumber<double>(buffer));
+			
+				// Or just copypaste from MainEdit. There it has GetText() method. But it works differently and uses more basic_strign methods than here.
+				pThis->SetCellValue(pThis->editRow_, pThis->editCol_, std::move(clearBuffer));
 
 				DestroyWindow(pThis->hEdit_);
 				pThis->hEdit_ = NULL;
@@ -101,7 +139,7 @@ class MainListView : public IControl
 			break;
 		}
 
-		case WM_MOUSEWHEEL: // On the scroll setting saving value and setting unfocus
+		case WM_MOUSEWHEEL:     // On the scroll setting saving value and setting unfocus
 		case WM_VSCROLL:
 		case WM_HSCROLL:
 			if (pThis->hEdit_)
@@ -118,37 +156,8 @@ class MainListView : public IControl
 		return DefSubclassProc(hWnd, uMsg, wParam, lParam);
 	}
 
-	// Subclass windowProc for temporary edit to handle the Enter and Esc button clicks
-	static LRESULT CALLBACK EditSubclassProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData)
-	{
-		                                // Here we have MainListView class with hWnd_ of it
-		MainListView* pThis = reinterpret_cast<MainListView*>(dwRefData);
-
-		if (uMsg == WM_KEYDOWN)
-		{
-			if (wParam == VK_RETURN)
-			{
-				SetFocus(pThis->hWnd_); // Using hWnd_ of the MainListView
-				return 0;
-			}
-			else if (wParam == VK_ESCAPE)
-			{
-				pThis->hEdit_ = NULL;   // Setting to NULL so the MainListView won't fell into WM_COMMAND -> EN_KILLFOCUS and saved value
-				DestroyWindow(hWnd);
-				SetFocus(pThis->hWnd_);
-				return 0;
-			}
-		}
-		else if (uMsg == WM_NCDESTROY)
-		{
-			RemoveWindowSubclass(hWnd, EditSubclassProc, uIdSubclass);
-		}
-
-		return DefSubclassProc(hWnd, uMsg, wParam, lParam);
-	}
-
 public:
-	MainListView(
+	VariablesListView(
 		int id,
 		int width,
 		int height,
@@ -156,10 +165,11 @@ public:
 		int y,
 		int fontSize,
 		HWND parent,
-		DWORD styles = 0,
-		DWORD exStyles = 0
+		DWORD styles = LVS_SINGLESEL | LVS_SHOWSELALWAYS,
+		DWORD exStyles = LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES
+
 	) :
-		id_(id),
+		VLV_ID_(id),
 		width_(width), height_(height), posX_(x), posY_(y),
 		fontSize_(fontSize),
 		hWndParent_(parent),
@@ -177,13 +187,12 @@ public:
 		InitCommonControlsEx(&icex);
 
 	}
-	~MainListView()
+	~VariablesListView()
 	{
 		if (hWnd_) DestroyWindow(hWnd_);
 		if (hFont_) DeleteObject(hFont_);
 	}
 
-	// Set subItemIndex not to -1 to get set not 0 column
 	void AddColumn(int colIndex, const std::wstring &text, int width, int subItemIndex = -1)
 	{
 		LVCOLUMN lvc = { 0 };
@@ -217,6 +226,11 @@ public:
 	void SetCellValue(int rowIndex, int colIndex, const std::wstring &text)
 	{
 		ListView_SetItemText(hWnd_, rowIndex, colIndex, const_cast<LPWSTR>(text.c_str()));
+	}
+
+	int GetItemsCount()
+	{
+		return ListView_GetItemCount(hWnd_);
 	}
 
 	std::wstring GetCellValue(int rowIndex, int colIndex) const
@@ -258,7 +272,7 @@ public:
 			style,
 			posX_, posY_, width_, height_,
 			hWndParent_,
-			(HMENU)id_,
+			(HMENU)VLV_ID_,
 			GetModuleHandle(NULL),
 			NULL
 		);
@@ -270,7 +284,7 @@ public:
 		int fontHeight = -MulDiv(fontSize_, dpi.GetDpi(), 72); // Minus for only glyph size without paddings
 
 		// Setting subclass to handle specified messages and setting this in dwRefData
-		SetWindowSubclass(hWnd_, ListViewSubclassProc, 1, reinterpret_cast<DWORD_PTR>(this));
+		SetWindowSubclass(hWnd_, ListViewSubclassProc, VLV_ID_SUBCL_LWV, reinterpret_cast<DWORD_PTR>(this));
 
 		if (hFont_) DeleteObject(hFont_);
 
