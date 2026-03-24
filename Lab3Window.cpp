@@ -39,8 +39,8 @@ void Lab3Window::clearAll()
     inField->RemoveText();
     setBottomLine();
 
-    radiBottom->SetSelected(ID_RADI_BOTTOM);
-    selectedRadi = ID_RADI_BOTTOM;
+    radiBottom->SetSelected(L3_IDRADI_BOTTOM);
+    selectedRadi = L3_IDRADI_BOTTOM;
     bottomLinePos = 0;
 }
 
@@ -304,7 +304,7 @@ LRESULT Lab3Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         dpiS.Init(m_hwnd);
 
         inField = std::make_unique<MainEdit>(
-            ID_IN_FIELD,
+            L3_IDIN_FIELD,
             S(120), S(30),
             S(120), S(20),
             16,
@@ -313,7 +313,7 @@ LRESULT Lab3Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         );
 
         outField = std::make_unique<MainEdit>(
-            ID_OUT_FIELD,
+            L3_IDOUT_FIELD,
             S(220), S(340),
             S(20), S(60),
             16,
@@ -322,7 +322,7 @@ LRESULT Lab3Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         );
 
         bttnRandCreate = std::make_unique<MainButton>(
-            ID_BTTN_RAND_CR,
+            L3_IDBTTN_RAND_CR,
             L"Создать случайно",
             S(140), S(35),
             S(260), S(20),
@@ -330,7 +330,7 @@ LRESULT Lab3Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         );
 
         bttnAddElem = std::make_unique<MainButton>(
-            ID_BTTN_ADD_EL,
+            L3_IDBTTN_ADD_EL,
             L"Добавить",
             S(140), S(35),
             S(260), S(65),
@@ -338,7 +338,7 @@ LRESULT Lab3Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         );
 
         bttnPop = std::make_unique<MainButton>(
-            ID_BTTN_POP,
+            L3_IDBTTN_POP,
             L"Очистить крайний",
             S(140), S(35),
             S(260), S(110),
@@ -346,7 +346,7 @@ LRESULT Lab3Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         );
 
         bttnClear = std::make_unique<MainButton>(
-            ID_BTTN_CLEAR,
+            L3_IDBTTN_CLEAR,
             L"Очистить всё",
             S(140), S(35),
             S(260), S(155),
@@ -354,7 +354,7 @@ LRESULT Lab3Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         );
 
         bttnSort = std::make_unique<MainButton>(
-            ID_BTTN_SORT,
+            L3_IDBTTN_SORT,
             L"Сортировать",
             S(140), S(35),
             S(260), S(200),
@@ -362,7 +362,7 @@ LRESULT Lab3Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         );
 
         bttnInvert = std::make_unique<MainButton>(
-            ID_BTTN_INVERT,
+            L3_IDBTTN_INVERT,
             L"Перевернуть",
             S(140), S(35),
             S(260), S(245),
@@ -370,22 +370,22 @@ LRESULT Lab3Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         );
 
         bttnTask = std::make_unique<MainButton>(
-            ID_BTTN_TASK,
+            L3_IDBTTN_TASK,
             L"Удалить *5",
             S(140), S(35),
             S(260), S(290),
             m_hwnd
         );
 
-        radiTop = std::make_unique<MainRadioButton<ID_RADI_GROUP>>(
-            ID_RADI_TOP,
+        radiTop = std::make_unique<MainRadioButton<L3_IDRADI_GROUP>>(
+            L3_IDRADI_TOP,
             S(16), S(16),
             S(260), S(355),
             m_hwnd
         );
 
-        radiBottom = std::make_unique<MainRadioButton<ID_RADI_GROUP>>(
-            ID_RADI_BOTTOM,
+        radiBottom = std::make_unique<MainRadioButton<L3_IDRADI_GROUP>>(
+            L3_IDRADI_BOTTOM,
             S(16), S(16),
             S(260), S(381),
             m_hwnd,
@@ -416,36 +416,36 @@ LRESULT Lab3Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         int id = LOWORD(wParam);
         switch (id)
         {
-        case ID_BTTN_RAND_CR:
+        case L3_IDBTTN_RAND_CR:
             randCreateList();
             return 0;
 
-        case ID_BTTN_ADD_EL:
+        case L3_IDBTTN_ADD_EL:
             addToList();
             return 0;
 
-        case ID_BTTN_CLEAR:
+        case L3_IDBTTN_CLEAR:
             clearAll();
             return 0;
 
-        case ID_BTTN_POP:
+        case L3_IDBTTN_POP:
             popFromList();
             return 0;
 
-        case ID_BTTN_SORT:
+        case L3_IDBTTN_SORT:
             sortList();
             return 0;
 
-        case ID_BTTN_INVERT:
+        case L3_IDBTTN_INVERT:
             invertList();
             return 0;
 
-        case ID_BTTN_TASK:
+        case L3_IDBTTN_TASK:
             labTask();
             return 0;
 
-        case ID_RADI_TOP:
-        case ID_RADI_BOTTOM:
+        case L3_IDRADI_TOP:
+        case L3_IDRADI_BOTTOM:
             radiHandler();
             return 0;
         }

@@ -11,22 +11,22 @@
 #include "Stack.h"
 #include <memory>
 
-#define BOTTOM_LINE L"-----------------"
-#define BOTTOM_LNLEN 17
+#define L2_BOTTOM_LINE L"-----------------"
+#define L2_BOTTOM_LNLEN 17
 
-#define ID_IN_FIELD 2001
-#define ID_OUT_FIELD 2002
+#define L2_IDIN_FIELD 2001
+#define L2_IDOUT_FIELD 2002
 
-#define ID_BTTN_RAND_CR 2003
-#define ID_BTTN_ADD_EL 2004
-#define ID_BTTN_CLEAR 2005
-#define ID_BTTN_POP 2006
-#define ID_BTTN_SORT 2007
+#define L2_IDBTTN_RAND_CR 2003
+#define L2_IDBTTN_ADD_EL 2004
+#define L2_IDBTTN_CLEAR 2005
+#define L2_IDBTTN_POP 2006
+#define L2_IDBTTN_SORT 2007
 
-#define ID_RADI_GROUP 222
-#define ID_RADI_GENERAL 2008
-#define ID_RADI_EVEN 2009
-#define ID_RADI_ODD 2010
+#define L2_IDRADI_GROUP 222
+#define L2_IDRADI_GENERAL 2008
+#define L2_IDRADI_EVEN 2009
+#define L2_IDRADI_ODD 2010
 
 class Lab2Window : public WndProps<Lab2Window, 4>, public MainWindow<Lab2Window>
 {
@@ -39,9 +39,9 @@ class Lab2Window : public WndProps<Lab2Window, 4>, public MainWindow<Lab2Window>
     std::unique_ptr<MainButton> bttnPop;
     std::unique_ptr<MainButton> bttnSort;
 
-    std::unique_ptr<MainRadioButton<ID_RADI_GROUP>> radiGeneral;
-    std::unique_ptr<MainRadioButton<ID_RADI_GROUP>> radiEven;
-    std::unique_ptr<MainRadioButton<ID_RADI_GROUP>> radiOdd;
+    std::unique_ptr<MainRadioButton<L2_IDRADI_GROUP>> radiGeneral;
+    std::unique_ptr<MainRadioButton<L2_IDRADI_GROUP>> radiEven;
+    std::unique_ptr<MainRadioButton<L2_IDRADI_GROUP>> radiOdd;
     int selectedRadi;
     bool isSplitted;
 
@@ -55,10 +55,10 @@ class Lab2Window : public WndProps<Lab2Window, 4>, public MainWindow<Lab2Window>
     {
         if (carPos == -1)
         {
-            outField->AppendText(BOTTOM_LINE);
+            outField->AppendText(L2_BOTTOM_LINE);
             return;
         }
-        outField->ReplaceSelText(BOTTOM_LINE, carPos, carPos);
+        outField->ReplaceSelText(L2_BOTTOM_LINE, carPos, carPos);
     }
 
     void randCreateStack();
@@ -70,7 +70,7 @@ class Lab2Window : public WndProps<Lab2Window, 4>, public MainWindow<Lab2Window>
 
 public:
     Lab2Window() : WndProps(L"Стек", 450, 450),
-        selectedRadi(ID_RADI_GENERAL),
+        selectedRadi(L2_IDRADI_GENERAL),
         isSplitted(false),
         oddStackStart(0),
         manipStack(&stackGeneral)

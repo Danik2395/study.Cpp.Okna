@@ -11,14 +11,14 @@
 #include "MainListView.h"
 #include <memory>
 
-#define ID_BTN_CALC 9999
-#define ID_IN_FIELD 9991
-#define ID_OUT_FIELD 9990
-#define ID_CHECK_SMTH 9994
+#define LTEST_IDBTN_CALC 9999
+#define LTEST_IDIN_FIELD 9991
+#define LTEST_IDOUT_FIELD 9990
+#define LTEST_IDCHECK_SMTH 9994
 
-#define ID_RADI_GROUP 128
-#define ID_RADI_1 9995
-#define ID_RADI_2 9996
+#define LTEST_IDRADI_GROUP 128
+#define LTEST_IDRADI_1 9995
+#define LTEST_IDRADI_2 9996
 
 #define ID_LIST_VIEW 9997
 
@@ -29,8 +29,8 @@ class LabTestWindow : public WndProps<LabTestWindow, 4>, public MainWindow<LabTe
     std::unique_ptr<MainButton> calcButton;
     std::unique_ptr<MainCheckBox> testCheckBox;
 
-    std::unique_ptr<MainRadioButton<ID_RADI_GROUP>> radio1;
-    std::unique_ptr<MainRadioButton<ID_RADI_GROUP>> radio2;
+    std::unique_ptr<MainRadioButton<LTEST_IDRADI_GROUP>> radio1;
+    std::unique_ptr<MainRadioButton<LTEST_IDRADI_GROUP>> radio2;
     int selectedRadi;
 
     std::unique_ptr<MainListView> listView;

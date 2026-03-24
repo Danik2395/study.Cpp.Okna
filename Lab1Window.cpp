@@ -124,7 +124,7 @@ LRESULT Lab1Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         dpiS.Init(m_hwnd);
 
         staticField = std::make_unique<MainEdit>(
-            ID_VAR_12_FIELD,
+            L1_ID_VAR_12_FIELD,
             S(280), S(50),
             S(200), S(30),
             15,
@@ -133,7 +133,7 @@ LRESULT Lab1Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         );
 
         inField = std::make_unique<MainEdit>(
-            ID_VAR_12_FIELD,
+            L1_ID_VAR_12_FIELD,
             S(100), S(30),
             S(20), S(50),
             16,
@@ -142,7 +142,7 @@ LRESULT Lab1Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         );
 
         outCycleField = std::make_unique<MainEdit>(
-            ID_VAR_12_FIELD,
+            L1_ID_VAR_12_FIELD,
             S(150), S(30),
             S(20), S(180),
             16,
@@ -151,7 +151,7 @@ LRESULT Lab1Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         );
 
         outRecursionField = std::make_unique<MainEdit>(
-            ID_VAR_12_FIELD,
+            L1_ID_VAR_12_FIELD,
             S(150), S(30),
             S(200), S(180),
             16,
@@ -160,7 +160,7 @@ LRESULT Lab1Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         );
 
         calcButton = std::make_unique<MainButton>(
-            ID_BTTN_CALC,
+            L1_ID_BTTN_CALC,
             L"Посчитать",
             S(120), S(35),
             S(20), S(100),
@@ -185,7 +185,7 @@ LRESULT Lab1Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         int id = LOWORD(wParam);
         switch (id)
         {
-        case ID_BTTN_CALC:
+        case L1_ID_BTTN_CALC:
             calc();
             return 0;
         }

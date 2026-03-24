@@ -8,10 +8,10 @@
 #include "MainButton.h"
 #include <memory>
 
-#define ID_VAR_12_FIELD 1001
-#define ID_OUT_CYLCLE_FIELD 1002
-#define ID_OUT_RECURSION_FIELD 1003
-#define ID_BTTN_CALC 1004
+#define L1_ID_VAR_12_FIELD 1001
+#define L1_ID_OUT_CYLCLE_FIELD 1002
+#define L1_ID_OUT_RECURSION_FIELD 1003
+#define L1_ID_BTTN_CALC 1004
 
 class Lab1Window : public WndProps<Lab1Window, 4>, public MainWindow<Lab1Window>
 {

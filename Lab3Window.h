@@ -11,23 +11,23 @@
 #include "List.h"
 #include <memory>
 
-#define BOTTOM_LINE L"-----------------"
-#define BOTTOM_LNLEN 17
+#define L3_BOTTOM_LINE L"-----------------"
+#define L3_BOTTOM_LNLEN 17
 
-#define ID_IN_FIELD 3001
-#define ID_OUT_FIELD 3002
+#define L3_IDIN_FIELD 3001
+#define L3_IDOUT_FIELD 3002
 
-#define ID_BTTN_RAND_CR 3003
-#define ID_BTTN_ADD_EL 3004
-#define ID_BTTN_CLEAR 3005
-#define ID_BTTN_POP 3006
-#define ID_BTTN_SORT 3007
-#define ID_BTTN_INVERT 3008
-#define ID_BTTN_TASK 3009
+#define L3_IDBTTN_RAND_CR 3003
+#define L3_IDBTTN_ADD_EL 3004
+#define L3_IDBTTN_CLEAR 3005
+#define L3_IDBTTN_POP 3006
+#define L3_IDBTTN_SORT 3007
+#define L3_IDBTTN_INVERT 3008
+#define L3_IDBTTN_TASK 3009
 
-#define ID_RADI_GROUP 333
-#define ID_RADI_TOP 3010
-#define ID_RADI_BOTTOM 3011
+#define L3_IDRADI_GROUP 333
+#define L3_IDRADI_TOP 3010
+#define L3_IDRADI_BOTTOM 3011
 
 class Lab3Window : public WndProps<Lab3Window, 4>, public MainWindow<Lab3Window>
 {
@@ -42,8 +42,8 @@ class Lab3Window : public WndProps<Lab3Window, 4>, public MainWindow<Lab3Window>
     std::unique_ptr<MainButton> bttnInvert;
     std::unique_ptr<MainButton> bttnTask;
 
-    std::unique_ptr<MainRadioButton<ID_RADI_GROUP>> radiTop;
-    std::unique_ptr<MainRadioButton<ID_RADI_GROUP>> radiBottom;
+    std::unique_ptr<MainRadioButton<L3_IDRADI_GROUP>> radiTop;
+    std::unique_ptr<MainRadioButton<L3_IDRADI_GROUP>> radiBottom;
 
     int selectedRadi;
     int bottomLinePos;
@@ -54,10 +54,10 @@ class Lab3Window : public WndProps<Lab3Window, 4>, public MainWindow<Lab3Window>
     {
         if (carPos == -1)
         {
-            outField->AppendText(BOTTOM_LINE);
+            outField->AppendText(L3_BOTTOM_LINE);
             return;
         }
-        outField->ReplaceSelText(BOTTOM_LINE, carPos, carPos);
+        outField->ReplaceSelText(L3_BOTTOM_LINE, carPos, carPos);
     }
 
     void randCreateList();
@@ -73,7 +73,7 @@ class Lab3Window : public WndProps<Lab3Window, 4>, public MainWindow<Lab3Window>
 
 public:
     Lab3Window() : WndProps(L"Список", 450, 450),
-        selectedRadi(ID_RADI_BOTTOM),
+        selectedRadi(L3_IDRADI_BOTTOM),
         bottomLinePos(0)
     {}
 

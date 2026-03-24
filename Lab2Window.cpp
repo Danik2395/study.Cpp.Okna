@@ -30,8 +30,8 @@ void Lab2Window::clearAll()
     inField->RemoveText();
     setBottomLine();
 
-    radiGeneral->SetSelected(ID_RADI_GENERAL);
-    selectedRadi = ID_RADI_GENERAL;
+    radiGeneral->SetSelected(L2_IDRADI_GENERAL);
+    selectedRadi = L2_IDRADI_GENERAL;
     isSplitted = false;
 }
 
@@ -64,7 +64,7 @@ void Lab2Window::randCreateStack()
         setBottomLine(0);
 
         oddStackStart = 0;
-        oddStackStart += BOTTOM_LNLEN + 2; // line + \r + \n
+        oddStackStart += L2_BOTTOM_LNLEN + 2; // line + \r + \n
 
     }
     else
@@ -229,7 +229,7 @@ void Lab2Window::sortStack()
             } while (numToAdd != 0); // Works for int
         }
         setBottomLine(carPos);
-        carPos += BOTTOM_LNLEN;
+        carPos += L2_BOTTOM_LNLEN;
         outField->ReplaceSelText(L"\r\n", carPos, carPos);
     }
     else
@@ -261,13 +261,13 @@ void Lab2Window::splitHandler()
     manipStack = radiGeneral->IsSelected() ? &stackGeneral : radiEven->IsSelected() ? &stackEven : &stackOdd; // Setting the manipulating stack
 
     if (
-        (prevSelRadi == ID_RADI_EVEN || prevSelRadi == ID_RADI_ODD) &&
-        (selectedRadi == ID_RADI_EVEN || selectedRadi == ID_RADI_ODD)
+        (prevSelRadi == L2_IDRADI_EVEN || prevSelRadi == L2_IDRADI_ODD) &&
+        (selectedRadi == L2_IDRADI_EVEN || selectedRadi == L2_IDRADI_ODD)
         ) return; // Nothing to recalculate because already splitted stack
 
     switch (selectedRadi)
     {
-    case ID_RADI_GENERAL:                    // Need to assemble two parts
+    case L2_IDRADI_GENERAL:                    // Need to assemble two parts
     {
         isSplitted = false;
 
@@ -294,15 +294,15 @@ void Lab2Window::splitHandler()
         return;
     }
 
-    case ID_RADI_EVEN:
+    case L2_IDRADI_EVEN:
         [[fallthrough]];                                                     // Idk. C++17 thing. For readability
-    case ID_RADI_ODD:                                                        // Need to split stack
+    case L2_IDRADI_ODD:                                                        // Need to split stack
     {
         isSplitted = true;
 
         outField->RemoveText();
         oddStackStart = 0;
-        oddStackStart += BOTTOM_LNLEN + 2;                                   // line + \r + \n
+        oddStackStart += L2_BOTTOM_LNLEN + 2;                                   // line + \r + \n
 
         for (const auto &num : stackGeneral)
         {
@@ -435,7 +435,7 @@ LRESULT Lab2Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         dpiS.Init(m_hwnd);
 
         inField = std::make_unique<MainEdit>(
-            ID_IN_FIELD,
+            L2_IDIN_FIELD,
             S(120), S(30),
             S(120), S(20),
             16,
@@ -444,7 +444,7 @@ LRESULT Lab2Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         );
 
         outField = std::make_unique<MainEdit>(
-            ID_OUT_FIELD,
+            L2_IDOUT_FIELD,
             S(220), S(340),
             S(20), S(60),
             16,
@@ -453,7 +453,7 @@ LRESULT Lab2Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         );
 
         bttnRandCreate = std::make_unique<MainButton>(
-            ID_BTTN_RAND_CR,
+            L2_IDBTTN_RAND_CR,
             L"Создать случайно",
             S(140), S(35),
             S(260), S(20),
@@ -461,7 +461,7 @@ LRESULT Lab2Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         );
 
         bttnAddElem = std::make_unique<MainButton>(
-            ID_BTTN_ADD_EL,
+            L2_IDBTTN_ADD_EL,
             L"Добавить",
             S(140), S(35),
             S(260), S(65),
@@ -469,7 +469,7 @@ LRESULT Lab2Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         );
 
         bttnPop = std::make_unique<MainButton>(
-            ID_BTTN_POP,
+            L2_IDBTTN_POP,
             L"Очистить верхний",
             S(140), S(35),
             S(260), S(110),
@@ -477,7 +477,7 @@ LRESULT Lab2Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         );
 
         bttnClear = std::make_unique<MainButton>(
-            ID_BTTN_CLEAR,
+            L2_IDBTTN_CLEAR,
             L"Очистить всё",
             S(140), S(35),
             S(260), S(155),
@@ -485,30 +485,30 @@ LRESULT Lab2Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         );
 
         bttnSort = std::make_unique<MainButton>(
-            ID_BTTN_SORT,
+            L2_IDBTTN_SORT,
             L"Сортировать",
             S(140), S(35),
             S(260), S(200),
             m_hwnd
         );
 
-        radiGeneral = std::make_unique<MainRadioButton<ID_RADI_GROUP>>(
-            ID_RADI_GENERAL,
+        radiGeneral = std::make_unique<MainRadioButton<L2_IDRADI_GROUP>>(
+            L2_IDRADI_GENERAL,
             S(16), S(16),
             S(260), S(265),
             m_hwnd,
             1
         );
 
-        radiEven = std::make_unique<MainRadioButton<ID_RADI_GROUP>>(
-            ID_RADI_EVEN,
+        radiEven = std::make_unique<MainRadioButton<L2_IDRADI_GROUP>>(
+            L2_IDRADI_EVEN,
             S(16), S(16),
             S(260), S(291),
             m_hwnd
         );
 
-        radiOdd = std::make_unique<MainRadioButton<ID_RADI_GROUP>>(
-            ID_RADI_ODD,
+        radiOdd = std::make_unique<MainRadioButton<L2_IDRADI_GROUP>>(
+            L2_IDRADI_ODD,
             S(16), S(16),
             S(260), S(317),
             m_hwnd
@@ -537,29 +537,29 @@ LRESULT Lab2Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         int id = LOWORD(wParam);
         switch (id)
         {
-        case ID_BTTN_RAND_CR:
+        case L2_IDBTTN_RAND_CR:
             randCreateStack();
             return 0;
 
-        case ID_BTTN_ADD_EL:
+        case L2_IDBTTN_ADD_EL:
             addToStack();
             return 0;
 
-        case ID_BTTN_CLEAR:
+        case L2_IDBTTN_CLEAR:
             clearAll();
             return 0;
 
-        case ID_BTTN_POP:
+        case L2_IDBTTN_POP:
             popFromStack();
             return 0;
 
-        case ID_BTTN_SORT:
+        case L2_IDBTTN_SORT:
             sortStack();
             return 0;
 
-        case ID_RADI_GENERAL:
-        case ID_RADI_EVEN:
-        case ID_RADI_ODD:
+        case L2_IDRADI_GENERAL:
+        case L2_IDRADI_EVEN:
+        case L2_IDRADI_ODD:
             splitHandler();
             return 0;
         }
