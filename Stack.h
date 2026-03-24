@@ -18,6 +18,7 @@ public:
 
 	void push(const T &val)
 	{
+		++size_;
 		if constexpr (isFList)
 		{
 			return cont.push_front(val);
@@ -26,11 +27,11 @@ public:
 		{
 			return cont.push_back(val);
 		}
-		++size_;
 	}
 
 	void pop()
 	{
+		--size_;
 		if constexpr (isFList)
 		{
 			return cont.pop_front();
@@ -39,7 +40,6 @@ public:
 		{
 			return cont.pop_back();
 		}
-		--size_;
 	}
 
 	T& top()

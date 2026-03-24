@@ -115,7 +115,8 @@ public:
 			else // Because when SetCapture() "set" it makes system not to send WM_MOUSELEAVE (you captured, you processing)
 			{
 				POINT pt = { GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam) };
-				RECT rc; GetClientRect(m_hwnd, &rc);
+				RECT rc;
+				GetClientRect(m_hwnd, &rc);
 				
 				if (!PtInRect(&rc, pt))
 				{
@@ -135,7 +136,7 @@ public:
 		case WM_LBUTTONDOWN:
 		{
 			isPressed = true;
-			SetCapture(this->m_hwnd);
+			SetCapture(this->m_hwnd); // Captures all the mouse movement wheter it on the window or not
 			bttnInvalidate();
 			return 0;
 		}
