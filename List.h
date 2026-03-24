@@ -28,33 +28,28 @@ class List
 
 	size_t size_;
 
-	template<typename U = T> // Template is needed only because enable_if works with templates. And method call would be actual type
-	typename std::enable_if<isCString, U>::type
-	getCopyCString(const U &str)
+	T getCopyCString(const T &str)
 	{
 		if (str == nullptr) return nullptr;
 
-		int strCount{1}; // Mind the '\n'
-		while (str[strCount] != '\0') ++strCount;
+		int strCount{0};
+		while (str[strCount++] != '\0');
 		
-		using baseU = std::remove_pointer<U>::type;
-		using nonConstBaseU = std::remove_const<baseU>::type;
-		nonConstBaseU* copyStr = new nonConstBaseU[strCount];
+		using baseT = std::remove_pointer_t<T>;
+		using nonConstBaseT = std::remove_const_t<baseT>;
+		nonConstBaseT* copyStr = new nonConstBaseT[strCount]; // Need non constant base type to make new
 
-		--strCount;      // To match the index
-		while (strCount != -1) copyStr[strCount] = str[strCount--];
+		while (strCount-- != 0) copyStr[strCount] = str[strCount];
 
-		return reinterpret_cast<U>(copyStr);
+		return reinterpret_cast<T>(copyStr);
 	}
 
-	template<typename U = T>
-	typename std::enable_if<isCString, bool>::type
-	compareCString(const U &firstStr, const U &secondStr)
+	bool compareCString(const T &firstStr, const T &secondStr)
 	{
 		int i{ 0 };
 		while (firstStr[i] != L'\0')
 		{
-			if (firstStr[i] != secondstr[i]) return false;
+			if (firstStr[i] != secondStr[i]) return false;
 			++i;
 		}
 		return secondStr[i] == L'\0';
@@ -110,6 +105,8 @@ public:
 			if (ptr_) ptr_ = ptr_->prev;
 			return tmp;
 		}
+
+		// No copy overload needed
 
 		bool operator==(const Iterator &iter) { return ptr_ == iter.ptr_; }
 		bool operator!=(const Iterator &iter) { return ptr_ != iter.ptr_; }
@@ -208,6 +205,7 @@ public:
 		}
 		head_ = nullptr;
 		tail_ = nullptr;
+		size_ = 0;
 	}
 
 	// Deletes element on the specified position or range of elements
@@ -230,6 +228,7 @@ public:
 		}
 		delete wantedNode;                 // Deleting the wanted node
 
+		--size_;
 		return nextNode ? nextNode : end();
 	}
 
@@ -244,7 +243,7 @@ public:
 		if (afterLast.ptr_) afterLast.ptr_->prev = first.ptr_->prev;
 		else tail_ = first.ptr_->prev;
 
-		Node* tempNode = first.ptr_->next;
+		Node* tempNode = first.ptr_;
 		while (tempNode != afterLast.ptr_)
 		{
 			if constexpr (isCString)
@@ -253,6 +252,7 @@ public:
 			}
 			tempNode = tempNode->next;
 			delete tempNode->prev;
+			--size_;
 		}
 	}
 
