@@ -24,7 +24,7 @@ double Lab1Window::recursion(int n)
 
 void Lab1Window::calc()
 {
-    int steps = MainEdit::GetNumber<int>(std::move(inField->GetText()));
+    int steps = UTL::GetNumber<int>(std::move(inField->GetText()));
 
     if (steps > 1000)  steps = 1000;
 

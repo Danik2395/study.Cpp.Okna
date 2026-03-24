@@ -40,7 +40,7 @@ void Lab2Window::clearAll()
 void Lab2Window::randCreateStack()
 {
     m_random<int> dist(5, 15);
-    int stackSize = MainEdit::GetNumber<int>(inField->GetText());
+    int stackSize = UTL::GetNumber<int>(inField->GetText());
     if (stackSize < 1) stackSize = dist;
     else if (stackSize > 100) stackSize = 100;
 
@@ -131,7 +131,7 @@ void Lab2Window::addToStack()
 
         if (isNumber)                                                       // Sending the number to the outField
         {
-            int val = MainEdit::GetNumber<int>(buffer);
+            int val = UTL::GetNumber<int>(buffer);
             buffer.assign(std::to_wstring(val));
 
             manipStack->push(std::stoi(buffer));

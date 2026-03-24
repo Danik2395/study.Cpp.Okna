@@ -101,68 +101,6 @@ public:
 		SendMessage(hWnd_, EM_REPLACESEL, NULL, (LPARAM)newText.c_str()); // Replacing this select with new text
 	}
 
-	template<typename T>
-	static T GetNumber(std::wstring buffer)
-	{
-		static constexpr bool isIntegral = std::is_integral<T>::value;
-		static constexpr bool isUnsigned = std::is_unsigned<T>::value;
-		bool hasDot = false;
-		bool hasSign = false;
-
-		size_t len = buffer.length();
-
-		if constexpr (!isUnsigned)
-		{
-			if (buffer[0] == L'-')
-			{
-				buffer.erase(0, 1);
-				--len;
-				hasSign = true;
-			}
-		}
-
-		for (int i = 0; i < len; ++i)
-		{
-			if (buffer[i] >= L'0' && buffer[i] <= L'9') continue;
-
-			if constexpr (!isIntegral)
-			{
-				if (buffer[i] == L'.')
-				{
-					if (hasDot)
-					{
-						buffer.erase(i--, 1);
-						--len;
-					}
-					hasDot = true;
-				}
-				else if (buffer[i] == L',')
-				{                                     
-					buffer[i] = L'.';
-					hasDot = true;
-				}
-
-				continue;
-			}
-
-			buffer.erase(i--, 1);
-			--len;
-		}
-
-		if (len == 0) return 0;
-
-		if (len > 10 && buffer[0] > L'2') buffer.erase(11);
-
-		if constexpr (isIntegral)
-		{
-			return hasSign ? -std::stoi(buffer) : std::stoi(buffer);
-		}
-		else
-		{
-			return hasSign ? -std::stof(buffer) : std::stof(buffer);
-		}
-	}
-
 	void Create()
 	{
 		DWORD style = WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL;

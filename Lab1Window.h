@@ -6,6 +6,7 @@
 #include "MainWindow.h"
 #include "MainEdit.h"
 #include "MainButton.h"
+#include "Utils.h"
 #include <memory>
 
 #define L1_ID_VAR_12_FIELD 1001

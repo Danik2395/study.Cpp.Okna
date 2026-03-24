@@ -49,7 +49,7 @@ void Lab3Window::clearAll()
 void Lab3Window::randCreateList()
 {
     m_random<int> dist(5, 15);
-    int listSize = MainEdit::GetNumber<int>(inField->GetText());
+    int listSize = UTL::GetNumber<int>(inField->GetText());
     if (listSize < 1) listSize = dist;
     else if (listSize > 100) listSize = 100;
 
@@ -120,7 +120,7 @@ void Lab3Window::addToList()
         if (isNumber)
         {
             //int val = std::stoi(buffer);
-            int val = MainEdit::GetNumber<int>(buffer);
+            int val = UTL::GetNumber<int>(buffer);
             buffer.assign(std::to_wstring(val));
 
             if (radiBottom->IsSelected())
