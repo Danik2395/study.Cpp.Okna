@@ -11,13 +11,16 @@
 #include "Lab1Window.h"
 #include "Lab2Window.h"
 #include "Lab3Window.h"
+#include "Lab4Window.h"
 #pragma once
 
-#define ID_BTN_LAB_TEST 1111
-#define ID_BTN_LAB1 1001
-#define ID_BTN_LAB2 1002
-#define ID_BTN_LAB3 1003
-#define ID_BTN_LAB4 1004
+#define HUB_ID_BTN_LAB_TEST 1111
+#define HUB_ID_BTN_LAB1 1001
+#define HUB_ID_BTN_LAB2 1002
+#define HUB_ID_BTN_LAB3 1003
+#define HUB_ID_BTN_LAB4 1004
+#define HUB_ID_BTN_LAB5 1005
+#define HUB_ID_BTN_LAB6 1006
 
 class HubWindow : public WndProps<HubWindow>, public MainWindow<HubWindow>
 {

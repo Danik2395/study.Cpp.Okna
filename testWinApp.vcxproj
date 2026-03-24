@@ -135,13 +135,16 @@
     <ClCompile Include="Lab1Window.cpp" />
     <ClCompile Include="Lab2Window.cpp" />
     <ClCompile Include="Lab3Window.cpp" />
+    <ClCompile Include="Lab4Window.cpp" />
     <ClCompile Include="LabTestWindow.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="HubWindow.cpp" />
+    <ClCompile Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lab2Window.h" />
     <ClInclude Include="Lab3Window.h" />
+    <ClInclude Include="Lab4Window.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="MainEdit.h" />
     <ClInclude Include="D2DWindow.h" />
@@ -149,7 +152,7 @@
     <ClInclude Include="IControl.h" />
     <ClInclude Include="Lab1Window.h" />
     <ClInclude Include="MainCheckBox.h" />
-    <ClInclude Include="MainListView.h" />
+    <ClInclude Include="VariablesListView.h" />
     <ClInclude Include="MainRadioButton.h" />
     <ClInclude Include="shuntingYard.h" />
     <ClInclude Include="SingleNodeList.h" />

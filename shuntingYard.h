@@ -1,3 +1,6 @@
+//
+// shuntingYard.h
+//
 #include <string>
 #include <stdexcept>
 #include <cmath>
@@ -42,7 +45,7 @@ private:
 		OPERAND
 	};
 
-	struct OperatorHandler
+	struct internalOperatorHandler
 	{
 		struct OperStruct
 		{
@@ -78,15 +81,15 @@ private:
 		}
 	};
 
-	struct Variables
+	struct internalVariables
 	{
 		std::wstring name;
 		double value;
 	};
 
-	List<Variables> variablesList_;
+	List<internalVariables> variablesList_;
 
-	const Variables* getVariable(const wchar_t* variableName)
+	const internalVariables* getVariable(const wchar_t* variableName)
 	{
 		for (auto &var : variablesList_)
 		{
@@ -124,6 +127,35 @@ private:
 		throw shuntingException(etc.errorMessage + errorTrace);
 	}
 
+
+public:
+	using Variables = internalVariables;
+	using OperatorHandler = internalOperatorHandler;
+
+	//shuntingYard();
+	//~shuntingYard();
+
+	void setVariables(const List<internalVariables> &variablesList)
+	{
+		variablesList_ = variablesList;
+	}
+
+	std::wstring getRpnWString()
+	{
+		if (rpnList.empty()) return std::wstring();
+
+		std::wstring outRpn;
+
+		for (const auto &wch : rpnList)
+		{
+			outRpn.append(wch);
+			outRpn.append(L" ");
+		}
+		outRpn.erase(outRpn.length() - 1, 1);
+
+		return outRpn;
+	}
+
 	pcwList unsortToTokens(std::wstring &unsortExpression)
 	{
 		pcwList outTokenList;
@@ -141,7 +173,7 @@ private:
 				continue;
 			}
 
-			if (OperatorHandler::get(wch) || wch == L'(' || wch == L')')     // Operator
+			if (internalOperatorHandler::get(wch) || wch == L'(' || wch == L')')     // Operator
 			{
 				wchar_t tempWString[] = { wch, L'\0' };
 				outTokenList.push_back(tempWString);
@@ -220,35 +252,10 @@ private:
 		return outTokenList;
 	}
 
-public:
-	using Variables = Variables;
-
-	//shuntingYard();
-	//~shuntingYard();
-
-	void setVariables(const List<Variables> &variablesList)
-	{
-		variablesList_ = variablesList;
-	}
-
-	std::wstring getRpnWString()
-	{
-		if (rpnList.empty()) return std::wstring();
-
-		std::wstring outRpn;
-
-		for (const auto &wch : rpnList)
-		{
-			outRpn.append(wch);
-			outRpn.append(L" ");
-		}
-		outRpn.erase(outRpn.length() - 1, 1);
-
-		return outRpn;
-	}
-
 	pcwList shuntToRpn(std::wstring &unsortExpression)
 	{
+		rpnList.clear();
+
 		// Operators and operands in form of const wchar_t* pointer
 		pcwList tokensList = unsortToTokens(unsortExpression);
 
@@ -279,7 +286,7 @@ public:
 			}
 			// Unary minus
 			else if (wcscmp(token, L"-") == 0 &&
-				(wcscmp(prevToken, L"") == 0 || OperatorHandler::get(prevToken) || wcscmp(prevToken, L"(") == 0))
+				(wcscmp(prevToken, L"") == 0 || internalOperatorHandler::get(prevToken) || wcscmp(prevToken, L"(") == 0))
 			{
 				if (expected != OPERAND)
 				{
@@ -295,7 +302,7 @@ public:
 				stack.push(L'~');
 			}
 			// Binary operator
-			else if (OperatorHandler::get(token))
+			else if (internalOperatorHandler::get(token))
 			{
 				if (expected != OPERATOR)
 				{
@@ -308,10 +315,10 @@ public:
 				}
 				expected = OPERAND;
 
-				auto tokenOperator = OperatorHandler::get(token);
+				auto tokenOperator = internalOperatorHandler::get(token);
 				while (!stack.empty())
 				{
-					auto stackOperator = OperatorHandler::get(stack.top());
+					auto stackOperator = internalOperatorHandler::get(stack.top());
 					if (!stackOperator) break; // nullptr on get()
 
 					bool shouldToPop = tokenOperator->priority < stackOperator->priority ||
@@ -401,6 +408,7 @@ public:
 		{
 			if (stack.top() == L'(')
 			{
+				while (!stack.empty()) stack.pop();
 				throw shuntingException(L"Пропущена закрывающая скобка.");
 			}
 
@@ -429,7 +437,7 @@ public:
 		// Trowing without trace because cannot trace on reverce polish notation
 		for (const auto &token : rpn)
 		{
-			const auto* operatorStruct = OperatorHandler::get(token);
+			const auto* operatorStruct = internalOperatorHandler::get(token);
 
 			if (operatorStruct)                          // Operator
 			{
@@ -497,11 +505,11 @@ public:
 			}
 			else if (iswdigit(token[0]))                 // Number
 			{
-				calcStack.push(std::stod(token));
+				calcStack.push(UTL::GetNumber<double>(token));
 			}
 			else if (iswalpha(token[0]))                 // Variable
 			{
-				const Variables* var = getVariable(token);
+				const internalVariables* var = getVariable(token);
 				if (!var)
 				{
 					throw shuntingException(L"Неизвестная переменная " + std::wstring(token));

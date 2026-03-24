@@ -23,6 +23,9 @@
     <Filter Include="main">
       <UniqueIdentifier>{c7c59d47-0f2b-4d48-a5d1-9e69547662bf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{0369a8ca-039a-405b-b30a-c5e8c1ca1987}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Lab1Window.cpp">
@@ -42,6 +45,12 @@
     </ClCompile>
     <ClCompile Include="Lab3Window.cpp">
       <Filter>Windows\Lab</Filter>
+    </ClCompile>
+    <ClCompile Include="Lab4Window.cpp">
+      <Filter>Windows\Lab</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.h">
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -108,11 +117,14 @@
     <ClInclude Include="Lab3Window.h">
       <Filter>Windows\Lab</Filter>
     </ClInclude>
-    <ClInclude Include="MainListView.h">
+    <ClInclude Include="VariablesListView.h">
       <Filter>Windows\Child</Filter>
     </ClInclude>
     <ClInclude Include="shuntingYard.h">
       <Filter>Algorithms and containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Lab4Window.h">
+      <Filter>Windows\Lab</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

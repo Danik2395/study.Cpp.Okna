@@ -54,11 +54,13 @@ LRESULT HubWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         btnPadding = S(btnPadding);
 
         LabDef labs[] = {
-            { ID_BTN_LAB1, L"Рекурсия" },
-            { ID_BTN_LAB2, L"Стек" },
-            { ID_BTN_LAB3, L"Список" },
-            { ID_BTN_LAB4, L"Лабораторная" },
-            { ID_BTN_LAB_TEST, L"Лабораторная тест" },
+            { HUB_ID_BTN_LAB1, L"Рекурсия" },
+            { HUB_ID_BTN_LAB2, L"Стек" },
+            { HUB_ID_BTN_LAB3, L"Список" },
+            { HUB_ID_BTN_LAB4, L"Сортировочная станция" },
+            { HUB_ID_BTN_LAB5, L"Лаборатоная" },
+            { HUB_ID_BTN_LAB6, L"Лаборатоная" },
+            { HUB_ID_BTN_LAB_TEST, L"Лабораторная тест" },
         };
 
 		for (const auto &lab : labs) // Range-based for. labs __bound is known at compile time
@@ -96,20 +98,24 @@ LRESULT HubWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         int id = LOWORD(wParam);
         switch (id)
         {
-        case ID_BTN_LAB_TEST:
+        case HUB_ID_BTN_LAB_TEST:
             LaunchLabInThread<LabTestWindow>();
             break;
 
-        case ID_BTN_LAB1:
+        case HUB_ID_BTN_LAB1:
             LaunchLabInThread<Lab1Window>();
             break;
 
-        case ID_BTN_LAB2:
+        case HUB_ID_BTN_LAB2:
             LaunchLabInThread<Lab2Window>();
             break;
 
-        case ID_BTN_LAB3:
+        case HUB_ID_BTN_LAB3:
             LaunchLabInThread<Lab3Window>();
+            break;
+
+        case HUB_ID_BTN_LAB4:
+            LaunchLabInThread<Lab4Window>();
             break;
         }
         return 0;
