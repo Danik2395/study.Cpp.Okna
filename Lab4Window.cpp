@@ -170,12 +170,12 @@ void Lab4Window::createVariables()
         while (tempTokensIter != tokens.end())           // Erasing all the duplicates of the new variable
         {
             const wchar_t* tempToken = *tempTokensIter;
-            if (newVarName == tempToken)
+            if (newVarName == tempToken)                 // ITS NEW VARIABLES. They could have duplicates
             {
                 tempTokensIter = tokens.erase(tempTokensIter);
                 continue;
             }
-            ++tempTokensIter;
+            ++tempTokensIter;                 // ITS NEW VARIABLES. They could have duplicates
         }
     }
 

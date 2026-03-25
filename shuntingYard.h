@@ -434,7 +434,7 @@ public:
 
 		Stack<double> calcStack;
 
-		// Trowing without trace because cannot trace on reverce polish notation
+		// Throwing without trace because cannot trace on reverce polish notation
 		for (const auto &token : rpn)
 		{
 			const auto* operatorStruct = internalOperatorHandler::get(token);
