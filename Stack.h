@@ -42,7 +42,7 @@ public:
 		}
 	}
 
-	T& top()
+	T& top() const
 	{
 		if constexpr (isFList)
 		{
@@ -54,9 +54,9 @@ public:
 		}
 	}
 
-	bool empty() { return cont.empty(); }
+	bool empty() const { return cont.empty(); }
 
-	size_t size() { return size_; }
+	size_t size() const { return size_; }
 
 
 
