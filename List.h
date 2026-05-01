@@ -47,12 +47,12 @@ class List
 	bool compareCString(const T &firstStr, const T &secondStr)
 	{
 		int i{ 0 };
-		while (firstStr[i] != L'\0')
+		while (firstStr[i] != '\0')
 		{
 			if (firstStr[i] != secondStr[i]) return false;
 			++i;
 		}
-		return secondStr[i] == L'\0';
+		return secondStr[i] == '\0';
 	}
 
 public:
