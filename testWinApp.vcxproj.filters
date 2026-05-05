@@ -52,6 +52,7 @@
     <ClCompile Include="Utils.h">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="TreeDrawer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainCheckBox.h">
@@ -126,9 +127,15 @@
     <ClInclude Include="Lab4Window.h">
       <Filter>Windows\Lab</Filter>
     </ClInclude>
+    <ClInclude Include="MapleTree.h">
+      <Filter>Algorithms and containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Pair.h" />
+    <ClInclude Include="ScrollWindowBase.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
     <None Include="README.md" />
+    <None Include="AGENTS.md" />
   </ItemGroup>
 </Project>
