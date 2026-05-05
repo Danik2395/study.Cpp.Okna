@@ -3,11 +3,35 @@
 //
 
 #include <type_traits>
+#include <functional>
+#include <concepts>
 #include "Stack.h"
 #include "Pair.h"
 #include "List.h"
 #pragma once
 
+template<typename Lambda, typename LambdaKeyT, typename LambdaValueT, typename... Extras>
+concept LambdaRecurrent = requires(
+	Lambda lambdaF,
+	LambdaKeyT key,
+	LambdaValueT value,
+	Extras&&... args
+	)
+{
+	{ lambdaF(key, value, args...) } -> std::same_as<void>;
+};
+
+template<typename Lambda, typename LambdaKeyT, typename LambdaValueT, typename... Extras>
+concept LambdaStructural = requires(
+	Lambda lambdaF,
+	LambdaKeyT key,
+	LambdaValueT value,
+	const LambdaKeyT* parentKey,
+	Extras&&... args
+	)
+{
+	{ lambdaF(key, value, parentKey, args...) } -> std::same_as<void>;
+};
 
 template<typename KeyType, typename ValueType>
 class MapleTree
@@ -125,6 +149,25 @@ class MapleTree
 				else parent->right = balancedNode;
 			}
 		}
+	}
+
+	template<typename Lambda, typename... Extras>
+	void traverseRecursive(Node* node, Lambda &&callback, Extras&&... args)
+	{
+		if (!node) return; // On the nullptr end (leaf)
+
+		traverseRecursive(node->left, callback, std::forward<Extras>(args));
+		callback(node->data.first, node->data.second, std::forward<Extras>(args));
+		traverseRecursive(node->right, callback, std::forward<Extras>(args));
+	}
+
+	template<typename Lambda, typename... Extras>
+	void crawlDownwards(Node* node, Lambda&& callback, const KeyType* parentKey, Extras&&... args)
+	{
+		if (!node) return;
+		callback(node->data.first, node->data.second, parentKey, std::forward<Extras>(args));
+		crawlDownwards(node->left, callback, &node->data.first, std::forward<Extras>(args));
+		crawlDownwards(node->right, callback, &node->data.first, std::forward<Extras>(args));
 	}
 
 public:
@@ -259,6 +302,22 @@ public:
 	auto begin() const { return Iterator(root_); }
 	auto end() const { return Iterator(nullptr); }
 
+	// callback(KeyType, ValueType, Extras)
+	template<typename Lambda, typename... Extras>
+	requires LambdaRecurrent<Lambda, KeyType, ValueType, Extras...>
+	void ForEach(Lambda &&callback, Extras&&... args)
+	{
+		traverseRecursive(root_, std::forward<Lambda>(callback), std::forward<Extras>(args));
+	}
+
+	// callback(KeyType, ValueType, int Depth, const KeyType* parentKey)
+	template<typename Lambda, typename... Extras>
+	requires LambdaStructural<Lambda, KeyType, ValueType, Extras...>
+	void ForEachStructural(Lambda&& callback, Extras&&... args)
+	{
+		crawlDownwards(root_, std::forward<Lambda>(callback), nullptr, std::forward<Extras>(args));
+	}
+
 	Iterator find(const KeyType &key)
 	{
 		return Iterator::reconstructIter(root_, key);
@@ -266,7 +325,7 @@ public:
 
 	auto insert(const Pair<KeyType, ValueType> &data)
 	{
-		return insert(Pair<KeyType, ValueType>(data.first, data.second));
+		return insert(data.first, data.second);
 	}
 
 	// bool - true if inserted
@@ -315,7 +374,7 @@ public:
 			else break;
 		}
 
-		if (!isInserted)
+		if (isInserted)
 		{
 			balancePath(path);
 		}
@@ -500,7 +559,7 @@ public:
 			nullptr,
 			secondMapleTree.root_->height
 		};
-		copyList.push({ secondMapleTree.root_, root_ });
+		copyList.push_back({ secondMapleTree.root_, root_ });
 
 		while (!copyList.empty())
 		{
@@ -530,5 +589,6 @@ public:
 			}
 		}
 		size_ = secondMapleTree.size_;
+		return *this;
 	}
 };
