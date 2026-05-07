@@ -53,6 +53,9 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="TreeDrawer.h" />
+    <ClCompile Include="Lab5Window.cpp">
+      <Filter>Windows\Lab</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainCheckBox.h">
@@ -132,6 +135,9 @@
     </ClInclude>
     <ClInclude Include="Pair.h" />
     <ClInclude Include="ScrollWindowBase.h" />
+    <ClInclude Include="Lab5Window.h">
+      <Filter>Windows\Lab</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
