@@ -3,6 +3,8 @@
 //
 #pragma once
 #include <string>
+#include <stdexcept>
+#include <limits>
 
 namespace UTL
 {
@@ -15,90 +17,98 @@ namespace UTL
 
 		size_t len = buffer.length();
 
+		size_t index = buffer.find_first_not_of(L" \t\r\n");
+		if (index == std::wstring::npos) return 0;
+
 		if constexpr (!isUnsigned)
 		{
-			if (buffer[0] == L'-')
+			if (buffer[index] == L'-')
 			{
-				buffer.erase(0, 1);
-				--len;
 				hasSign = true;
+				index++;
+			}
+			else if (buffer[index] == L'+')
+			{
+				index++;
 			}
 		}
 
+		std::wstring cleanNumber;
+		cleanNumber.reserve(buffer.length() - index);
 		bool hasDot = false;
-		auto iter = buffer.begin();
-		while (iter != buffer.end())
-		{
-			
-			if (*iter >= L'0' && *iter <= L'9')
-			{
-				++iter;
-				continue;
-			}
 
-			if constexpr (!isIntegral)
+		for (size_t i = index; i < buffer.length(); ++i)
+		{
+			wchar_t ch = buffer[i];
+			if (ch >= L'0' && ch <= L'9')
 			{
-				if (*iter == L'.')
-				{
-					if (hasDot)
-					{
-						buffer.erase(iter);
-						--len;
-						continue;
-					}
-					else
-					{
-						hasDot = true;
-						++iter;
-						continue;
-					}
-				}
-				else if (*iter == L',')
+				cleanNumber.push_back(ch);
+			}
+			else if constexpr (!isIntegral)
+			{
+				if (ch == L'.' || ch == L',')
 				{
 					if (!hasDot)
 					{
-						*iter = L'.';
-					}
-					else
-					{
+						cleanNumber.push_back(L'.');
 						hasDot = true;
-						++iter;
-						continue;
 					}
 				}
 			}
-			buffer.erase(iter);
-			--len;
 		}
 
-		if (len == 0) return 0;
+		if (cleanNumber.empty()) return 0;
 
-		bool isLargeStart = (buffer[0] > L'2');
+		T maxNumberForT{ (std::numeric_limits<T>::max)() };
+		T minNumberForT{ (std::numeric_limits<T>::lowest)() };
+		try
+		{
+			if constexpr (isIntegral)
+			{
+				if constexpr (isUnsigned)
+				{
+					unsigned long long val = std::stoull(cleanNumber);
+					
+					if (val > static_cast<unsigned long long>(maxNumberForT)) return maxNumberForT;
+					
+					return static_cast<T>(val);
+				}
+				else
+				{
+					long long val = std::stoll(cleanNumber);
+					if (hasSign) val = -val;
 
-		if constexpr (std::is_same_v<T, double>)
-		{
-			if (len > 15) buffer.erase(15);
-		}
-		else if constexpr (std::is_same_v<T, float>)
-		{
-			if (len > 9) buffer.erase(9);
-		}
-		else if constexpr (std::is_same_v<T, int> || std::is_same_v<T, long>)
-		{
-			if (len > 10 && isLargeStart) buffer.erase(10); // 2 000 000 000
-		}
-		else if constexpr (std::is_same_v<T, short>)
-		{
-			if (len > 5 && isLargeStart) buffer.erase(5);  // 32 000
-		}
+					if (val > static_cast<long long>(maxNumberForT))    return maxNumberForT;
+					if (val < static_cast<long long>(minNumberForT))    return minNumberForT;
 
-		if constexpr (isIntegral)
-		{
-			return hasSign ? -std::stoi(buffer) : std::stoi(buffer);
+					return static_cast<T>(val);
+				}
+			}
+			else
+			{
+				double val = std::stod(cleanNumber);
+				if (hasSign) val = -val;
+
+				if (val > static_cast<double>(maxNumberForT))    return maxNumberForT;
+				if (val < static_cast<double>(minNumberForT))    return minNumberForT;
+
+				return static_cast<T>(val);
+			}
 		}
-		else
+		catch (const std::out_of_range&)
 		{
-			return hasSign ? -std::stod(buffer) : std::stod(buffer);
+			if (hasSign)
+			{
+				return minNumberForT; 
+			}
+			else
+			{
+				return maxNumberForT;
+			}
+		}
+		catch (...)
+		{
+			return 0;
 		}
 	}
 }
