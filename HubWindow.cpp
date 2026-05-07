@@ -58,7 +58,7 @@ LRESULT HubWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
             { HUB_ID_BTN_LAB2, L"Стек" },
             { HUB_ID_BTN_LAB3, L"Список" },
             { HUB_ID_BTN_LAB4, L"Сортировочная станция" },
-            { HUB_ID_BTN_LAB5, L"Лаборатоная" },
+            { HUB_ID_BTN_LAB5, L"Дерево" },
             { HUB_ID_BTN_LAB6, L"Лаборатоная" },
             { HUB_ID_BTN_LAB_TEST, L"Лабораторная тест" },
         };
@@ -116,6 +116,10 @@ LRESULT HubWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         case HUB_ID_BTN_LAB4:
             LaunchLabInThread<Lab4Window>();
+            break;
+
+        case HUB_ID_BTN_LAB5:
+            LaunchLabInThread<Lab5Window>();
             break;
         }
         return 0;

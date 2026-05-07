@@ -12,6 +12,7 @@
 #include "Lab2Window.h"
 #include "Lab3Window.h"
 #include "Lab4Window.h"
+#include "Lab5Window.h"
 #pragma once
 
 #define HUB_ID_BTN_LAB_TEST 1111

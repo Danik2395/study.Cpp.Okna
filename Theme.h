@@ -42,18 +42,17 @@ namespace thm {
 // ############
 //  TreeDrawer 
 // ############
+	inline constexpr unsigned int trdwBaseColorLight      = 0xFF1F1F22;
+	inline constexpr unsigned int trdwBaseColorDark       = 0xFF212121;
 
-	inline constexpr unsigned int trdwBaseColorLight      = 0xFFAABB44;
-	inline constexpr unsigned int trdwBaseColorDark       = 0xAAFFBB44;
+	inline constexpr unsigned int trdwNodeColorLight      = 0xFF2C2C2F;
+	inline constexpr unsigned int trdwNodeColorDark       = 0xFF2A2A2C;
 
-	inline constexpr unsigned int trdwNodeColorLight      = 0xBBFFBB44;
-	inline constexpr unsigned int trdwNodeColorDark       = 0x44AABB44;
+	inline constexpr unsigned int trdwLinkColor           = 0xFF3C3C48;
+	inline constexpr float		  trdwLinkWidth           = 1.5f;
 
-	inline constexpr unsigned int trdwLinkColor           = 0xAAAABB44;
-	inline constexpr float		  trdwLinkWidth           = 2.25;
+	inline constexpr unsigned int trdwRingColor           = 0xFF605D96;
+	inline constexpr float		  trdwRingWidth           = 1.75f;
 
-	inline constexpr unsigned int trdwRingColor           = 0xBBBBBB44;
-	inline constexpr float		  trdwRingWidth           = 3.25;
-
-	inline constexpr unsigned int trdwTextColor           = 0xFFFFFFFF;
+	inline constexpr unsigned int trdwTextColor           = 0xFFCECFD0;
 }
