@@ -34,10 +34,10 @@ class TreeDrawer : public ScrollWindowBase<TreeDrawer<KeyType, ValueType>>
 
 	void SetNodeProperties()
 	{
-		nodeDia_ = this->dipS.Scale(80);
-		margin_  = this->dipS.Scale(20);
-		hStep_   = nodeDia_ + this->dipS.Scale(40); // Horizontal gap
-		vStep_   = nodeDia_ + this->dipS.Scale(60); // Vertical gap
+		nodeDia_ = 40;
+		margin_  = 50;
+		hStep_   = nodeDia_ + 20; // Horizontal gap
+		vStep_   = nodeDia_ + 20; // Vertical gap
 	}
 
 public:
@@ -77,6 +77,8 @@ public:
 
 	void UpdateRenderData()
 	{
+		nodesVisual_.clear();
+		edges_.clear();
 		auto lambdaAddNode = [](KeyType key, ValueType value, NodesVisual &nodesVisual, int &xOffset) -> void
 			{
 				//            5          
@@ -92,13 +94,11 @@ public:
 				nodesVisual[key] = std::move(node);
 			};
 
-		//using ParentLookUp = MapleTree<KeyType, const KeyType*>;
-		//ParentLookUp parentLookUp;
 		struct LinksGather
 		{
 			NodesVisual &nodesVisual;
 			Edges &edges;
-			int &depth;
+			int &maxDepth;
 		};
 		auto lambdaMakeLookUp = [](KeyType key, ValueType value, const KeyType* parentKey, LinksGather &linksGather)
 			{
@@ -108,7 +108,12 @@ public:
 				//        / \   / \      
 				//      -1   4 6   8   2 
 				NodeVisual &nodeToSetY = linksGather.nodesVisual[key];
-				nodeToSetY.pointY = linksGather.depth++;
+				int depth = parentKey ? linksGather.nodesVisual[*parentKey].pointY + 1 : 0; // 0 for root; else increment depth
+
+				nodeToSetY.pointY = depth;
+
+				int &maxDepth = linksGather.maxDepth;
+				maxDepth = depth > maxDepth ? depth : maxDepth;                // Changing maxDepth
 
 				if (parentKey != nullptr)
 				{
@@ -131,60 +136,22 @@ public:
 		int xOffset = 0;
 		tree_->ForEach(lambdaAddNode, nodesVisual_, xOffset);
 
-		int depth = 0;
-		LinksGather linksGather{ nodesVisual_, edges_, depth };
+		int maxDepth = 0;
+		LinksGather linksGather{ nodesVisual_, edges_, maxDepth };
 		tree_->ForEachStructural(lambdaMakeLookUp, linksGather);
 
-		int virtualW = margin_ * 2 + xOffset * hStep_ + nodeDia_;
-		int virtualH = margin_ * 2 + depth * vStep_ + nodeDia_;
+		int virtualW = margin_ * 2 + (xOffset > 0 ? xOffset - 1 : 0) * hStep_ + nodeDia_;
+		//int virtualW = margin_ * 2 + xOffset * hStep_ + nodeDia_;
+		int virtualH = margin_ * 2 + maxDepth * vStep_ + nodeDia_;
 
-		SetVirtualSize(virtualW, virtualH);
+		this->SetVirtualSize(virtualW, virtualH);
 	}
 
-	void DrawOnScroll()
+	void Create()
 	{
-		float nodeRadi = static_cast<float>(nodeDia_) / 2;
-		for (auto &edge : edges_)
-		{
-			float x1 = static_cast<float>(margin_ + edge.pointX1 * hStep_ + nodeRadi);
-			float y1 = static_cast<float>(margin_ + edge.pointY1 * vStep_ + nodeRadi);
-			float x2 = static_cast<float>(margin_ + edge.pointX2 * hStep_ + nodeRadi);
-			float y2 = static_cast<float>(margin_ + edge.pointY2 * vStep_ + nodeRadi);
+		ScrollWindowBase<TreeDrawer<KeyType, ValueType>>::Create();
 
-			this->pRenderTarget->DrawLine(
-				D2D1::Point2F(x1, y1),
-				D2D1::Point2F(x2, y2),
-				pLinkColorBrush,
-				thm::trdwLinkWidth
-				);
-		}
-
-		for (auto& [key, value] : nodesVisual_)
-		{
-			float x = static_cast<float>(margin_ + value.pointX * hStep_);
-			float y = static_cast<float>(margin_ + value.pointY * vStep_);
-
-			D2D1_ELLIPSE ellipse = D2D1::Ellipse(D2D1::Point2F(x, y), nodeRadi, nodeRadi);
-
-			this->pRenderTarget->FillEllipse(ellipse, pNodeNoiseBrush);
-			this->pRenderTarget->DrawEllipse(ellipse, pNodeNoiseBrush, thm::trdwRingWidth);
-
-			float squareEdge = 0.707107 * nodeDia_; // 1 / sqrt(2)
-			float rectX1 = x - squareEdge / 2;
-			float rectY1 = y - squareEdge / 2;
-			float rectX2 = x + squareEdge / 2;
-			float rectY2 = y + squareEdge / 2;
-			D2D1_RECT_F textRect = D2D1::RectF(rectX1, rectY1, rectX2, rectY2);
-
-			std::wstring nodeText = std::to_wstring(key);
-			this->pRenderTarget->DrawText(
-				nodeText.c_str(),
-				nodeText.length(),
-				pSignTextFormat,
-				textRect,
-				pSignColorBrush
-			);
-		}
+		SetNodeProperties();
 	}
 
 private:
@@ -196,16 +163,9 @@ private:
 	CComPtr<IDWriteTextFormat> pSignTextFormat;
 	CComPtr<ID2D1SolidColorBrush> pSignColorBrush;
 
-	void Create()
-	{
-		ScrollWindowBase::Create();
-
-		SetNodeProperties();
-	}
-
 	void CreateDeviceDepRes(HRESULT &hr)
 	{
-		ScrollWindowBase::CreateDeviceDepRes(hr);
+		ScrollWindowBase<TreeDrawer<KeyType, ValueType>>::CreateDeviceDepRes(hr);
 		const UINT width = 32;
 		const UINT height = 32;
 		std::vector<UINT32> pixelData(width * height);
@@ -240,7 +200,7 @@ private:
 		{
 			hr = this->pDWriteFactory->CreateTextFormat(
 				L"Segoe UI", NULL, DWRITE_FONT_WEIGHT_NORMAL, DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL,
-				3.0f, L"ru-ru", &pSignTextFormat
+				15.0f, L"ru-ru", &pSignTextFormat
 			);
 
 
@@ -269,6 +229,52 @@ private:
 			hr = this->pRenderTarget->CreateSolidColorBrush(
 				D2D1::ColorF(thm::trdwRingColor),
 				&pRingColorBrush
+			);
+		}
+	}
+
+	void DrawOnScroll()
+	{
+		float nodeRadi = static_cast<float>(nodeDia_) / 2;
+		for (auto &edge : edges_)
+		{
+			float x1 = static_cast<float>(margin_ + edge.pointX1 * hStep_);
+			float y1 = static_cast<float>(margin_ + edge.pointY1 * vStep_);
+			float x2 = static_cast<float>(margin_ + edge.pointX2 * hStep_);
+			float y2 = static_cast<float>(margin_ + edge.pointY2 * vStep_);
+
+			this->pRenderTarget->DrawLine(
+				D2D1::Point2F(x1, y1),
+				D2D1::Point2F(x2, y2),
+				pLinkColorBrush,
+				thm::trdwLinkWidth
+				);
+		}
+
+		for (auto& [key, value] : nodesVisual_)
+		{
+			float x = static_cast<float>(margin_ + value.pointX * hStep_);
+			float y = static_cast<float>(margin_ + value.pointY * vStep_);
+
+			D2D1_ELLIPSE ellipse = D2D1::Ellipse(D2D1::Point2F(x, y), nodeRadi, nodeRadi);
+
+			this->pRenderTarget->FillEllipse(ellipse, pNodeNoiseBrush);
+			this->pRenderTarget->DrawEllipse(ellipse, pRingColorBrush, thm::trdwRingWidth);
+
+			float squareEdge = 0.707107 * nodeDia_; // 1 / sqrt(2)
+			float rectX1 = x - squareEdge / 2;
+			float rectY1 = y - squareEdge / 2;
+			float rectX2 = x + squareEdge / 2;
+			float rectY2 = y + squareEdge / 2;
+			D2D1_RECT_F textRect = D2D1::RectF(rectX1, rectY1, rectX2, rectY2);
+
+			std::wstring nodeText = std::to_wstring(key);
+			this->pRenderTarget->DrawText(
+				nodeText.c_str(),
+				nodeText.length(),
+				pSignTextFormat,
+				textRect,
+				pSignColorBrush
 			);
 		}
 	}

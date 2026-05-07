@@ -33,8 +33,8 @@ class ScrollWindowBase : public D2DWindow<DERIVED_TYPE>, public IControl
 	{
 		RECT rc;
 		GetClientRect(this->m_hwnd, &rc);
-		int clientW = rc.right - rc.left;
-		int clientH = rc.bottom - rc.top;
+		int clientW = this->dpiS.Unscale(rc.right - rc.left); // DIPs
+		int clientH = this->dpiS.Unscale(rc.bottom - rc.top); // DIPs
 
 		SCROLLINFO si = {};
 		si.cbSize = sizeof(SCROLLINFO);
@@ -145,7 +145,7 @@ public:
 
 	void Create()
 	{
-		BaseWindow::Create(
+		BaseWindow<DERIVED_TYPE>::Create(
 			L"ScrollWindow",
 			WS_VISIBLE | WS_CHILD | WS_HSCROLL | WS_VSCROLL,
 			0,
@@ -163,8 +163,10 @@ public:
 		{
 			RECT rc;
 			GetClientRect(this->m_hwnd, &rc);
-			int maxX = max(0, virtualW_ - (rc.right - rc.left));
-			int maxY = max(0, virtualH_ - (rc.bottom - rc.top));
+			int clientW = this->dpiS.Unscale(rc.right - rc.left); // DIPs
+			int clientH = this->dpiS.Unscale(rc.bottom - rc.top); // DIPs
+			int maxX = max(0, virtualW_ - clientW);
+			int maxY = max(0, virtualH_ - clientH);
 			if (scrollX_ > maxX) scrollX_ = maxX;
 			if (scrollY_ > maxY) scrollY_ = maxY;
 			UpdateScrollBars();
@@ -195,7 +197,7 @@ public:
 			return 0;
 		}
 		}
-		return D2DWindow::HandleMessage(uMsg, wParam, lParam);
+		return D2DWindow<DERIVED_TYPE>::HandleMessage(uMsg, wParam, lParam);
 	}
 
 	PCWSTR  ClassName() const override { return L"ScrollWindowClass"; }
@@ -229,6 +231,7 @@ protected:
 
 	CComPtr<ID2D1BitmapBrush> pBaseNoiseBrush;
 
+	// Values in pixels
 	void SetVirtualSize(int virtualW, int virtualH)
 	{
 		virtualW_ = virtualW;
@@ -236,8 +239,10 @@ protected:
 
 		RECT rc;
 		GetClientRect(this->m_hwnd, &rc);
-		int maxX = max(0, virtualW - (rc.right - rc.left));
-		int maxY = max(0, virtualH - (rc.bottom - rc.top));
+		int clientW = this->dpiS.Unscale(rc.right - rc.left); // DIPs
+		int clientH = this->dpiS.Unscale(rc.bottom - rc.top); // DIPs
+		int maxX = max(0, virtualW_ - clientW);
+		int maxY = max(0, virtualH_ - clientH);
 		if (scrollX_ > maxX) scrollX_ = maxX;
 		if (scrollY_ > maxY) scrollY_ = maxY;
 
@@ -260,7 +265,7 @@ protected:
 
 		for (auto &px : pixelData)
 		{
-			px = dist() > 8 ? thm::wndBaseColorDark : thm::wndBaseColorLight;
+			px = dist() > 8 ? thm::trdwBaseColorDark : thm::trdwBaseColorLight;
 		}
 
 		if (this->pRenderTarget)
@@ -278,6 +283,12 @@ protected:
 
 	void DrawContent() final
 	{
+		D2D1_SIZE_F size = this->pRenderTarget->GetSize();
+		this->pRenderTarget->FillRectangle(
+			D2D1::RectF(0, 0, size.width, size.height),
+			this->pBaseNoiseBrush
+		);
+
 		this->pRenderTarget->SetTransform(
 			D2D1::Matrix3x2F::Translation(
 				static_cast<float>(-scrollX_),
