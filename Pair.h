@@ -132,8 +132,8 @@ public:
 		}
 		else
 		{
-			if (first < toCompare) return -1;
-			if (first > toCompare) return 1;
+			if (first > toCompare) return -1;
+			if (first < toCompare) return 1;
 			return 0;
 		}
 	}
@@ -149,8 +149,8 @@ public:
 		}
 		else
 		{
-			if (second < toCompare) return -1;
-			if (second > toCompare) return 1;
+			if (second > toCompare) return -1;
+			if (second < toCompare) return 1;
 			return 0;
 		}
 	}

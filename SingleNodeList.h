@@ -182,7 +182,7 @@ public:
 		} while (swapped);
 	}
 
-	SingleNodeList& operator=(SingleNodeList &secList)
+	SingleNodeList& operator=(const SingleNodeList &secList)
 	{
 		if (&secList == this) return *this;
 		Node* cur = secList.head_;                           // Not a pointer because of &

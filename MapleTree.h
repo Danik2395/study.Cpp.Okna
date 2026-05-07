@@ -5,6 +5,7 @@
 #include <type_traits>
 #include <functional>
 #include <concepts>
+#include <utility>
 #include "Stack.h"
 #include "Pair.h"
 #include "List.h"
@@ -156,18 +157,18 @@ class MapleTree
 	{
 		if (!node) return; // On the nullptr end (leaf)
 
-		traverseRecursive(node->left, callback, std::forward<Extras>(args));
-		callback(node->data.first, node->data.second, std::forward<Extras>(args));
-		traverseRecursive(node->right, callback, std::forward<Extras>(args));
+		traverseRecursive(node->left, callback, std::forward<Extras>(args)...);
+		callback(node->data.first, node->data.second, std::forward<Extras>(args)...);
+		traverseRecursive(node->right, callback, std::forward<Extras>(args)...);
 	}
 
 	template<typename Lambda, typename... Extras>
 	void crawlDownwards(Node* node, Lambda&& callback, const KeyType* parentKey, Extras&&... args)
 	{
 		if (!node) return;
-		callback(node->data.first, node->data.second, parentKey, std::forward<Extras>(args));
-		crawlDownwards(node->left, callback, &node->data.first, std::forward<Extras>(args));
-		crawlDownwards(node->right, callback, &node->data.first, std::forward<Extras>(args));
+		callback(node->data.first, node->data.second, parentKey, std::forward<Extras>(args)...);
+		crawlDownwards(node->left, callback, &node->data.first, std::forward<Extras>(args)...);
+		crawlDownwards(node->right, callback, &node->data.first, std::forward<Extras>(args)...);
 	}
 
 public:
@@ -184,7 +185,7 @@ public:
 	{
 		friend class MapleTree;
 
-		Stack<Node*> nodeStack_;
+		Stack<Node*, List<Node*>> nodeStack_;
 
 		static Iterator reconstructIter(Node* root, const KeyType& key)
 		{
@@ -307,7 +308,7 @@ public:
 	requires LambdaRecurrent<Lambda, KeyType, ValueType, Extras...>
 	void ForEach(Lambda &&callback, Extras&&... args)
 	{
-		traverseRecursive(root_, std::forward<Lambda>(callback), std::forward<Extras>(args));
+		traverseRecursive(root_, std::forward<Lambda>(callback), std::forward<Extras>(args)...);
 	}
 
 	// callback(KeyType, ValueType, int Depth, const KeyType* parentKey)
@@ -315,7 +316,7 @@ public:
 	requires LambdaStructural<Lambda, KeyType, ValueType, Extras...>
 	void ForEachStructural(Lambda&& callback, Extras&&... args)
 	{
-		crawlDownwards(root_, std::forward<Lambda>(callback), nullptr, std::forward<Extras>(args));
+		crawlDownwards(root_, std::forward<Lambda>(callback), nullptr, std::forward<Extras>(args)...);
 	}
 
 	Iterator find(const KeyType &key)
@@ -511,7 +512,6 @@ public:
 	{
 		while (first != afterLast)
 		{
-			// erase(Iterator) safely returns the iterator to the next element
 			first = erase(first);
 		}
 		return afterLast;
@@ -543,7 +543,7 @@ public:
 		{
 			root_ = nullptr;
 			size_ = 0;
-			return;
+			return *this;
 		}
 
 		struct CopyPair
