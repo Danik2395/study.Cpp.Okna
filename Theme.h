@@ -42,6 +42,7 @@ namespace thm {
 // ############
 //  TreeDrawer 
 // ############
+
 	inline constexpr unsigned int trdwBaseColorLight      = 0xFF1F1F22;
 	inline constexpr unsigned int trdwBaseColorDark       = 0xFF212121;
 
@@ -55,4 +56,21 @@ namespace thm {
 	inline constexpr float		  trdwRingWidth           = 1.75f;
 
 	inline constexpr unsigned int trdwTextColor           = 0xFFCECFD0;
+
+// #########
+//   Plot
+// #########
+
+	inline constexpr unsigned int pltBgColor              = 0xFF17171A;
+	inline constexpr unsigned int pltGridColor            = 0xFF262630;
+	inline constexpr unsigned int pltAxisColor            = 0xFF58586A;
+	inline constexpr unsigned int pltFuncColor            = 0xFF8170F8;
+	inline constexpr unsigned int pltPointColor           = 0xFFA89EFF;
+	inline constexpr unsigned int pltLabelColor           = 0xFF6E7075;
+
+	inline constexpr float        pltGridLineWidth        = 0.75f;
+	inline constexpr float        pltAxisLineWidth        = 1.25f;
+	inline constexpr float        pltFuncLineWidth        = 1.5f;
+	inline constexpr float        pltPointRadius          = 3.0f;
+	inline constexpr float        pltTickSize             = 4.0f;
 }
