@@ -137,6 +137,7 @@
     <ClCompile Include="Lab3Window.cpp" />
     <ClCompile Include="Lab4Window.cpp" />
     <ClCompile Include="Lab5Window.cpp" />
+    <ClCompile Include="Lab6Window.cpp" />
     <ClCompile Include="LabTestWindow.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="HubWindow.cpp" />
@@ -148,6 +149,7 @@
     <ClInclude Include="Lab3Window.h" />
     <ClInclude Include="Lab4Window.h" />
     <ClInclude Include="Lab5Window.h" />
+    <ClInclude Include="Lab6Window.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="MainEdit.h" />
     <ClInclude Include="D2DWindow.h" />
@@ -156,7 +158,9 @@
     <ClInclude Include="Lab1Window.h" />
     <ClInclude Include="MainCheckBox.h" />
     <ClInclude Include="MapleTree.h" />
+    <ClInclude Include="NoLinearSolver.h" />
     <ClInclude Include="Pair.h" />
+    <ClInclude Include="PlotWindow.h" />
     <ClInclude Include="ScrollWindowBase.h" />
     <ClInclude Include="VariablesListView.h" />
     <ClInclude Include="MainRadioButton.h" />

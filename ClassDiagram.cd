@@ -178,7 +178,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="VariablesListView">
-    <Position X="9" Y="8.25" Width="1.75" />
+    <Position X="9.5" Y="8.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>EAQAAAAAgIACDgAiSQAAAARACAEAEEAAEAQIAEBiAAI=</HashCode>
       <FileName>VariablesListView.h</FileName>
@@ -196,6 +196,86 @@
     <TypeIdentifier>
       <HashCode>QAAAEABIAACASAgAoACAIAAQAAAAKAAAAAAAABAABAA=</HashCode>
       <FileName>Lab4Window.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pair&lt;FirstType, SecondType&gt;">
+    <Position X="45.5" Y="2.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>QBAAACAAAAgAAIACAgEAAQAIAAAAAAAAAAAggAAAAAA=</HashCode>
+      <FileName>Pair.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapleTree&lt;KeyType, ValueType&gt;">
+    <Position X="47.75" Y="2.25" Width="2.5" />
+    <NestedTypes>
+      <Struct Name="MapleTree&lt;KeyType, ValueType&gt;::Node" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>MapleTree.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Class Name="MapleTree&lt;KeyType, ValueType&gt;::Iterator" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>MapleTree.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AEAACAACAABAACQAAIAIIABaAAkAhBAFCgAgAAAgAAA=</HashCode>
+      <FileName>MapleTree.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lab5Window">
+    <Position X="38.25" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAgACABIIQCACAAAICAAAUABAAACAAEQAAAAAQAAAAE=</HashCode>
+      <FileName>Lab5Window.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ScrollWindowBase&lt;DERIVED_TYPE&gt;">
+    <Position X="7.5" Y="8.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>QQAAAADAAICBDAAiQBAAAABAwAAAAEAIAAAEAEAAAig=</HashCode>
+      <FileName>ScrollWindowBase.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TreeDrawer&lt;KeyType, ValueType&gt;">
+    <Position X="7.5" Y="15.75" Width="1.75" />
+    <NestedTypes>
+      <Struct Name="TreeDrawer&lt;KeyType, ValueType&gt;::Edge" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>TreeDrawer.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Struct Name="TreeDrawer&lt;KeyType, ValueType&gt;::NodeVisual" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>TreeDrawer.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAACAAAEIAAADAQAEAAQEAAECAABBQwACA=</HashCode>
+      <FileName>TreeDrawer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlotWindow&lt;FunctionType&gt;">
+    <Position X="5.5" Y="8.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>RFAAEgBAAKDATCAiZIAABCBYAAgAAmIEAAWAGkgAQwE=</HashCode>
+      <FileName>PlotWindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NoLinearSolver&lt;FunctionType&gt;">
+    <Position X="50.75" Y="2.25" Width="2" />
+    <NestedTypes>
+      <Class Name="NoLinearSolver&lt;FunctionType&gt;::noLinearException" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>NoLinearSolver.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAACAEAAAAgACAAAAAAAAAAAAAAAAAAAAACAgCBAAA=</HashCode>
+      <FileName>NoLinearSolver.h</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

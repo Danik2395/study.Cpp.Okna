@@ -8,9 +8,6 @@
     <Filter Include="Windows">
       <UniqueIdentifier>{15ac939f-25c0-4b54-ac4b-8009df5b3f3b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Windows\Lab">
-      <UniqueIdentifier>{35fd4a95-a415-46c0-8432-14490eb33873}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Windows\Child">
       <UniqueIdentifier>{9d132fce-c4fa-4485-9f55-70e07ce380f8}</UniqueIdentifier>
     </Filter>
@@ -26,35 +23,46 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{0369a8ca-039a-405b-b30a-c5e8c1ca1987}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Windows\Actual">
+      <UniqueIdentifier>{35fd4a95-a415-46c0-8432-14490eb33873}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Windows\Templates">
+      <UniqueIdentifier>{492b527e-3e44-48d1-b6b1-70d031204063}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Lab1Window.cpp">
-      <Filter>Windows\Lab</Filter>
+      <Filter>Windows\Actual</Filter>
     </ClCompile>
     <ClCompile Include="LabTestWindow.cpp">
-      <Filter>Windows\Lab</Filter>
-    </ClCompile>
-    <ClCompile Include="HubWindow.cpp">
-      <Filter>Windows</Filter>
+      <Filter>Windows\Actual</Filter>
     </ClCompile>
     <ClCompile Include="Lab2Window.cpp">
-      <Filter>Windows\Lab</Filter>
+      <Filter>Windows\Actual</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>main</Filter>
     </ClCompile>
     <ClCompile Include="Lab3Window.cpp">
-      <Filter>Windows\Lab</Filter>
+      <Filter>Windows\Actual</Filter>
     </ClCompile>
     <ClCompile Include="Lab4Window.cpp">
-      <Filter>Windows\Lab</Filter>
+      <Filter>Windows\Actual</Filter>
     </ClCompile>
     <ClCompile Include="Utils.h">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="TreeDrawer.h" />
     <ClCompile Include="Lab5Window.cpp">
-      <Filter>Windows\Lab</Filter>
+      <Filter>Windows\Actual</Filter>
+    </ClCompile>
+    <ClCompile Include="HubWindow.cpp">
+      <Filter>Windows\Actual</Filter>
+    </ClCompile>
+    <ClCompile Include="TreeDrawer.h">
+      <Filter>Windows\Child</Filter>
+    </ClCompile>
+    <ClCompile Include="Lab6Window.cpp">
+      <Filter>Windows\Actual</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -67,23 +75,11 @@
     <ClInclude Include="MainButton.h">
       <Filter>Windows\Child</Filter>
     </ClInclude>
-    <ClInclude Include="D2DWindow.h">
-      <Filter>Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="HubWindow.h">
-      <Filter>Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="MainWindow.h">
-      <Filter>Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseWindow.h">
-      <Filter>Windows</Filter>
-    </ClInclude>
     <ClInclude Include="Lab1Window.h">
-      <Filter>Windows\Lab</Filter>
+      <Filter>Windows\Actual</Filter>
     </ClInclude>
     <ClInclude Include="LabTestWindow.h">
-      <Filter>Windows\Lab</Filter>
+      <Filter>Windows\Actual</Filter>
     </ClInclude>
     <ClInclude Include="IControl.h">
       <Filter>Windows\Helpers</Filter>
@@ -107,7 +103,7 @@
       <Filter>Algorithms and containers</Filter>
     </ClInclude>
     <ClInclude Include="Lab2Window.h">
-      <Filter>Windows\Lab</Filter>
+      <Filter>Windows\Actual</Filter>
     </ClInclude>
     <ClInclude Include="Theme.h">
       <Filter>main</Filter>
@@ -119,7 +115,7 @@
       <Filter>Algorithms and containers</Filter>
     </ClInclude>
     <ClInclude Include="Lab3Window.h">
-      <Filter>Windows\Lab</Filter>
+      <Filter>Windows\Actual</Filter>
     </ClInclude>
     <ClInclude Include="VariablesListView.h">
       <Filter>Windows\Child</Filter>
@@ -128,15 +124,40 @@
       <Filter>Algorithms and containers</Filter>
     </ClInclude>
     <ClInclude Include="Lab4Window.h">
-      <Filter>Windows\Lab</Filter>
+      <Filter>Windows\Actual</Filter>
     </ClInclude>
     <ClInclude Include="MapleTree.h">
       <Filter>Algorithms and containers</Filter>
     </ClInclude>
-    <ClInclude Include="Pair.h" />
-    <ClInclude Include="ScrollWindowBase.h" />
     <ClInclude Include="Lab5Window.h">
-      <Filter>Windows\Lab</Filter>
+      <Filter>Windows\Actual</Filter>
+    </ClInclude>
+    <ClInclude Include="HubWindow.h">
+      <Filter>Windows\Actual</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseWindow.h">
+      <Filter>Windows\Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="D2DWindow.h">
+      <Filter>Windows\Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="MainWindow.h">
+      <Filter>Windows\Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="ScrollWindowBase.h">
+      <Filter>Windows\Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="NoLinearSolver.h">
+      <Filter>Algorithms and containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Pair.h">
+      <Filter>Algorithms and containers</Filter>
+    </ClInclude>
+    <ClInclude Include="PlotWindow.h">
+      <Filter>Windows\Child</Filter>
+    </ClInclude>
+    <ClInclude Include="Lab6Window.h">
+      <Filter>Windows\Actual</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
