@@ -118,6 +118,14 @@ public:
 		GetWindowText(hWnd_, &text_[0], len + 1);
 		return text_;
 	}
+	 
+	bool Empty() const
+	{
+		if (!hWnd_) return true;
+		int len = GetWindowTextLength(hWnd_);
+		if (len == 0) return true;
+		return false;
+	}
 
 	void SetText(const std::wstring &text) const
 	{
