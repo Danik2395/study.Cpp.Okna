@@ -14,6 +14,13 @@ void Lab6Window::setLimits()
     limMin_ = UTL::GetNumber<double>(minLimFieldText);
     limMax_ = UTL::GetNumber<double>(maxLimFieldText);
 
+    if (limMin_ > limMax_)
+    {
+        double limTemp = limMin_;
+        limMin_ = limMax_;
+        limMax_ = limTemp;
+    }
+
     limMinField->SetText(std::to_wstring(limMin_));
     limMaxField->SetText(std::to_wstring(limMax_));
 
