@@ -64,6 +64,9 @@
     <ClCompile Include="Lab6Window.cpp">
       <Filter>Windows\Actual</Filter>
     </ClCompile>
+    <ClCompile Include="Lab8Window.cpp">
+      <Filter>Windows\Actual</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainCheckBox.h">
@@ -158,6 +161,15 @@
     </ClInclude>
     <ClInclude Include="Lab6Window.h">
       <Filter>Windows\Actual</Filter>
+    </ClInclude>
+    <ClInclude Include="IntegralSolver.h">
+      <Filter>Algorithms and containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Lab8Window.h">
+      <Filter>Windows\Actual</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

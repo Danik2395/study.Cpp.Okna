@@ -138,6 +138,7 @@
     <ClCompile Include="Lab4Window.cpp" />
     <ClCompile Include="Lab5Window.cpp" />
     <ClCompile Include="Lab6Window.cpp" />
+    <ClCompile Include="Lab8Window.cpp" />
     <ClCompile Include="LabTestWindow.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="HubWindow.cpp" />
@@ -145,11 +146,14 @@
     <ClCompile Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Functions.h" />
+    <ClInclude Include="IntegralSolver.h" />
     <ClInclude Include="Lab2Window.h" />
     <ClInclude Include="Lab3Window.h" />
     <ClInclude Include="Lab4Window.h" />
     <ClInclude Include="Lab5Window.h" />
     <ClInclude Include="Lab6Window.h" />
+    <ClInclude Include="Lab8Window.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="MainEdit.h" />
     <ClInclude Include="D2DWindow.h" />

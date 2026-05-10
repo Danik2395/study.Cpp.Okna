@@ -278,5 +278,33 @@
       <FileName>NoLinearSolver.h</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="IntegralSolver&lt;FunctionType&gt;">
+    <Position X="53.25" Y="2.25" Width="1.75" />
+    <NestedTypes>
+      <Class Name="IntegralSolver&lt;FunctionType&gt;::integralException" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>IntegralSolver.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAACAEAAAAAACAAAAAAgAAAAAAAAAAAAAAAAwAAAAE=</HashCode>
+      <FileName>IntegralSolver.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lab6Window">
+    <Position X="40" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QoAQCABIQBCBCAAAIAAIIAAQAAQAAAAAAIQAAJAABBI=</HashCode>
+      <FileName>Lab6Window.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lab8Window">
+    <Position X="41.75" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QgAQCABIABCBCAAAIAAIKAABABQAACABAJQAABAABBA=</HashCode>
+      <FileName>Lab8Window.h</FileName>
+    </TypeIdentifier>
+  </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
