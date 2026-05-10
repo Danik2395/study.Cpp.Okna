@@ -3,9 +3,7 @@
 //
 
 #include <type_traits>
-#include <functional>
 #include <concepts>
-#include <utility>
 #include "Stack.h"
 #include "Pair.h"
 #include "List.h"

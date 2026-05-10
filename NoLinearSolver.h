@@ -1,7 +1,6 @@
 //
 // NoLinearSolver.h
 //
-#include <iostream>
 #include <concepts>
 #include "List.h"
 #include "Pair.h"
@@ -63,8 +62,8 @@ public:
 	requires LinearFunc<FunctionT>
 	void SetFunctions(FunctionT &&function, FunctionT&& dFunction)
 	{
-		func_ = std::forward<LinearFunc>(function);
-		dFunc_ = std::forward<LinearFunc>(dFunction);
+		func_ = std::forward<FunctionT>(function);
+		dFunc_ = std::forward<FunctionT>(dFunction);
 	}
 
 	IntervalsList FindIntervals(double limStart, double limEnd, double step)
