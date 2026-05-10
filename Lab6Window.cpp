@@ -41,6 +41,7 @@ void Lab6Window::setEpsilon()
     std::wstring epsilonFieldText = epsilonField->GetText();
     epsilon_ = UTL::GetNumber<double>(epsilonFieldText);
     epsilonField->SetText(std::to_wstring(epsilon_));
+    noLinearSolver.SetEpsilon(epsilon_);
 }
 
 void Lab6Window::calculate()
@@ -66,7 +67,7 @@ void Lab6Window::calculate()
             double root = noLinearSolver.SolveNewton(initialGuess);
             rootText.append(std::to_wstring(root).append(L"\r\n"));
         }
-        catch (const NoLinearSolver<decltype(&Functions::linearFunction)>::noLinearException &e)
+        catch (const NoLinearSolver<decltype(&Functions::lab6Function)>::noLinearException &e)
         {
             rootText.append(std::wstring(e.wwhat()).append(L"\r\n"));
         }
@@ -150,7 +151,7 @@ LRESULT Lab6Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 		dpiS.Init(m_hwnd);
 
-		plotWindow = std::make_unique<PlotWindow<decltype(&Functions::linearFunction)>>(
+		plotWindow = std::make_unique<PlotWindow<decltype(&Functions::lab6Function)>>(
 			L6_IDPLOT,
 			S(585), S(360),
 			S(215), S(110),
@@ -158,7 +159,7 @@ LRESULT Lab6Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
             -5, 5,
             -3, 12
 		);
-		plotWindow->SetFunction(Functions::linearFunction);
+		plotWindow->SetFunction(Functions::lab6Function);
 
 		limMinField = std::make_unique<MainEdit>(
 			L6_IDFIELD_LIM_MIN,

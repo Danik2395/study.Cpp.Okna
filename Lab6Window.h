@@ -7,31 +7,18 @@
 #include "MainButton.h"
 #include "PlotWindow.h"
 #include "Utils.h"
+#include "Functions.h"
 #include "NoLinearSolver.h"
 #include <memory>
-#include <cmath>
 #pragma once
 
-#define L6_IDFIELD_LIM_MIN 5001
-#define L6_IDFIELD_LIM_MAX 5002
-#define L6_IDFIELD_RESULT 5003
-#define L6_IDFIELD_EPSILON 5004
-#define L6_IDFIELD_STEP 5005
-#define L6_IDPLOT 5006
-#define L6_IDBTTN_CALCULATE 5007
-
-namespace Functions
-{
-	inline double linearFunction(double x)
-	{
-		return x * x + 5 * cos(x) - 3;
-	}
-
-	inline double linearDFunction(double x)
-	{
-		return 2 * x - 5 * sin(x);
-	}
-}
+#define L6_IDFIELD_LIM_MIN 6001
+#define L6_IDFIELD_LIM_MAX 6002
+#define L6_IDFIELD_RESULT 6003
+#define L6_IDFIELD_EPSILON 6004
+#define L6_IDFIELD_STEP 6005
+#define L6_IDPLOT 6006
+#define L6_IDBTTN_CALCULATE 6007
 
 class Lab6Window : public WndProps<Lab6Window, 4>, public MainWindow<Lab6Window>
 {
@@ -41,9 +28,9 @@ class Lab6Window : public WndProps<Lab6Window, 4>, public MainWindow<Lab6Window>
     std::unique_ptr<MainEdit>   stepField;
     std::unique_ptr<MainEdit>   epsilonField;
     std::unique_ptr<MainButton> bttnCalculate;
-    std::unique_ptr<PlotWindow<decltype(&Functions::linearFunction)>> plotWindow;
+    std::unique_ptr<PlotWindow<decltype(&Functions::lab6Function)>> plotWindow;
 
-    NoLinearSolver<decltype(&Functions::linearFunction)> noLinearSolver;
+    NoLinearSolver<decltype(&Functions::lab6Function)> noLinearSolver;
 
     double limMin_;
     double limMax_;
@@ -58,7 +45,12 @@ class Lab6Window : public WndProps<Lab6Window, 4>, public MainWindow<Lab6Window>
     void calculate();
 
 public:
-    Lab6Window() : WndProps(L"Корни уравнений", 830, 530), noLinearSolver(Functions::linearFunction, Functions::linearDFunction)
+    Lab6Window() : WndProps(L"Корни уравнений", 830, 530),
+        limMin_(-4),
+        limMax_(2),
+        epsilon_(0.001),
+        step_(0.01),
+        noLinearSolver(Functions::lab6Function, Functions::lab6DFunction, epsilon_)
     {}
 
     PCWSTR ClassName() const override { return L"Lab6WindowClass"; }
