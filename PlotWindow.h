@@ -387,6 +387,7 @@ protected:
 		CComPtr<ID2D1GeometrySink> pSink;
 		if (FAILED(pPath->Open(&pSink))) return;
 
+		if (points.size() < 1) return;
 		pSink->BeginFigure(points[0], D2D1_FIGURE_BEGIN_HOLLOW); // No fill inside
 
 		for (int i = 1; i < actualPoints; ++i) pSink->AddLine(points[i]);
