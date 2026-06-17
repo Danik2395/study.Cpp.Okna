@@ -60,6 +60,52 @@ public:
 		func_ = std::forward<FunctionT>(function);
 	}
 
+	//double SolveGauss3(double limStart, double limEnd, int partitionCount)
+	//{
+	//	if (partitionCount <= 0)
+	//	{
+	//		throw integralException(L" оличество разбиений должно быть больше нул€.");
+	//	}
+
+	//	double result = 0.0;
+	//	double step = (limEnd - limStart) / partitionCount;
+
+	//	for (int i = 0; i < partitionCount; ++i)
+	//	{
+	//		double xStart = limStart + i * step;
+	//		double xCenter = xStart + step / 2.0;
+
+	//		double shift = (step / 2.0) * std::sqrt(3.0 / 5.0);
+
+	//		double x1 = xCenter - shift;
+	//		double x2 = xCenter;
+	//		double x3 = xCenter + shift;
+
+	//		result += (step / 18.0) * (5.0 * func_(x1) + 8.0 * func_(x2) + 5.0 * func_(x3));
+	//	}
+
+	//	return result;
+	//}
+	//double SolveGauss3(double limStart, double limEnd, int partitionCount)
+	//{
+	//	if (partitionCount <= 0)
+	//	{
+	//		throw integralException(L" оличество разбиений должно быть больше нул€.");
+	//	}
+	//	double result = 0.0;
+	//	double step = (limEnd - limStart) / partitionCount;
+
+	//	double halfStep = step / 2;
+	//	double coefficient = halfStep * 0.7745966692;
+	//	double K1 = 5. / 9, K2 = 8. / 9;
+
+	//	for (double x = limStart + halfStep; x < limEnd; x += step)
+	//	{
+	//		result += K1 * func_(x - coefficient) + K2 * func_(x) + K1 * func_(x + coefficient);
+	//	}
+
+	//	return halfStep * result;
+	//}
 	double SolveGauss3(double limStart, double limEnd, int partitionCount)
 	{
 		if (partitionCount <= 0)
@@ -68,20 +114,16 @@ public:
 		}
 
 		double result = 0.0;
-		double step = (limEnd - limStart) / partitionCount;
+		const double step = (limEnd - limStart) / partitionCount;
+		const double halfStep = step / 2;
+		const double shift = halfStep * std::sqrt(3.0 / 5.0);
+		const double outerCoeff = 5.0 / 18.0 * step;
+		const double innerCoeff = 8.0 / 18.0 * step;
 
 		for (int i = 0; i < partitionCount; ++i)
 		{
-			double xStart = limStart + i * step;
-			double xCenter = xStart + step / 2.0;
-
-			double shift = (step / 2.0) * std::sqrt(3.0 / 5.0);
-
-			double x1 = xCenter - shift;
-			double x2 = xCenter;
-			double x3 = xCenter + shift;
-
-			result += (step / 18.0) * (5.0 * func_(x1) + 8.0 * func_(x2) + 5.0 * func_(x3));
+			double center = limStart + i * step + halfStep;
+			result += outerCoeff * func_(center - shift) + innerCoeff * func_(center) + outerCoeff * func_(center + shift);
 		}
 
 		return result;
