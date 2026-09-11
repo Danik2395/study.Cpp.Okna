@@ -33,13 +33,7 @@ set(SOURCES
     ScrollWindowBase.h
     Theme.h
     Utils.h
-    #m_random.h
-    #SingleNodeList.h
-    #List.h
-    #Stack.h
-    #Pair.h
     shuntingYard.h
-    #MapleTree.h
     TreeDrawer.h
     Functions.h
     IntegralSolver.h
