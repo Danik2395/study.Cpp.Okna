@@ -4,8 +4,7 @@
 // Name conflict with ScrollWindow
 #include "D2DWindow.h"
 #include "IControl.h"
-#include "m_random.h"
-#include "List.h"
+#include "ssstl/random.h"
 #include <string>
 #include <vector>
 #pragma once
@@ -255,7 +254,7 @@ protected:
 		const UINT width = 32;
 		const UINT height = 32;
 		std::vector<UINT32> pixelData(width * height);
-		m_random<int> dist(12345, 0, 10);
+		ssstl::random<int> dist(12345, 0, 10);
 
 		CComPtr<ID2D1Bitmap> pBitmap;
 		D2D1_BITMAP_PROPERTIES props;

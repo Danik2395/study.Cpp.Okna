@@ -3,8 +3,7 @@
 //
 #include <concepts>
 #include <cmath>
-#include "List.h"
-#include "Pair.h"
+#include "ssstl/Pair.h"
 
 template<typename FunctionType>
 concept MathFunc = requires(FunctionType function, double x)
@@ -129,7 +128,7 @@ public:
 		return result;
 	}
 
-	Pair<double, int> SolveGauss3Auto(double limStart, double limEnd, int initialPartitions = 2, int iterationThreshold = 25)
+	ssstl::Pair<double, int> SolveGauss3Auto(double limStart, double limEnd, int initialPartitions = 2, int iterationThreshold = 25)
 	{
 		int m = initialPartitions;
 		double s1 = SolveGauss3(limStart, limEnd, m);

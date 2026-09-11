@@ -7,9 +7,9 @@
 #include "MainEdit.h"
 #include "MainButton.h"
 #include "MainRadioButton.h"
-#include "m_random.h"
+#include "ssstl/random.h"
 #include "Utils.h"
-#include "Stack.h"
+#include "ssstl/Stack.h"
 #include <memory>
 
 #define L2_BOTTOM_LINE L"-----------------"
@@ -46,10 +46,10 @@ class Lab2Window : public WndProps<Lab2Window, 4>, public MainWindow<Lab2Window>
     int selectedRadi;
     bool isSplitted;
 
-    Stack<int> stackGeneral;
-    Stack<int> stackEven;
-    Stack<int> stackOdd;
-    Stack<int>* manipStack;
+    ssstl::Stack<int> stackGeneral;
+    ssstl::Stack<int> stackEven;
+    ssstl::Stack<int> stackOdd;
+    ssstl::Stack<int>* manipStack;
     int oddStackStart; // For text logic
 
     void setBottomLine(int carPos = -1)
@@ -70,7 +70,7 @@ class Lab2Window : public WndProps<Lab2Window, 4>, public MainWindow<Lab2Window>
     void splitHandler();
 
 public:
-    Lab2Window() : WndProps(L"Стек", 450, 450),
+    Lab2Window() : WndProps(L"пїЅпїЅпїЅпїЅ", 450, 450),
         selectedRadi(L2_IDRADI_GENERAL),
         isSplitted(false),
         oddStackStart(0),

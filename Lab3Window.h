@@ -7,9 +7,9 @@
 #include "MainEdit.h"
 #include "MainButton.h"
 #include "MainRadioButton.h"
-#include "m_random.h"
+#include "ssstl/random.h"
 #include "Utils.h"
-#include "List.h"
+#include "ssstl/List.h"
 #include <memory>
 
 #define L3_BOTTOM_LINE L"-----------------"
@@ -49,7 +49,7 @@ class Lab3Window : public WndProps<Lab3Window, 4>, public MainWindow<Lab3Window>
     int selectedRadi;
     int bottomLinePos;
 
-    List<int> list;
+    ssstl::List<int> list;
 
     void setBottomLine(int carPos = -1)
     {
@@ -73,7 +73,7 @@ class Lab3Window : public WndProps<Lab3Window, 4>, public MainWindow<Lab3Window>
     void labTask();
 
 public:
-    Lab3Window() : WndProps(L"Список", 450, 450),
+    Lab3Window() : WndProps(L"пїЅпїЅпїЅпїЅпїЅпїЅ", 450, 450),
         selectedRadi(L3_IDRADI_BOTTOM),
         bottomLinePos(0)
     {}

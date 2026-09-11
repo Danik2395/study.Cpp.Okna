@@ -6,7 +6,7 @@
 #include "MainWindow.h"
 #include "MainEdit.h"
 #include "MainButton.h"
-#include "MapleTree.h"
+#include "ssstl/MapleTree.h"
 #include "TreeDrawer.h"
 #include "Utils.h"
 #include <memory>
@@ -30,7 +30,7 @@ class Lab5Window : public WndProps<Lab5Window, 4>, public MainWindow<Lab5Window>
     std::unique_ptr<MainButton>                               bttnClearAll;
     std::unique_ptr<MainButton>                               bttnMiddleKey;
 
-    MapleTree<LAB5_KEYTYPE, LAB5_VALUETYPE> labTree;
+    ssstl::MapleTree<LAB5_KEYTYPE, LAB5_VALUETYPE> labTree;
 
     LAB5_KEYTYPE keyFromField();
 
@@ -41,7 +41,7 @@ class Lab5Window : public WndProps<Lab5Window, 4>, public MainWindow<Lab5Window>
     void middleKeyInfo();
 
 public:
-    Lab5Window() : WndProps(L"Дерево", 720, 410)
+    Lab5Window() : WndProps(L"пїЅпїЅпїЅпїЅпїЅпїЅ", 720, 410)
     {}
 
     PCWSTR ClassName() const override { return L"Lab5WindowClass"; }

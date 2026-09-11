@@ -2,7 +2,7 @@
 // MainWindow.h
 //
 #include "D2DWindow.h"
-#include "m_random.h"
+#include "ssstl/random.h"
 #include <vector>
 #pragma once
 
@@ -62,7 +62,7 @@ protected:
         const UINT width = 32;
         const UINT height = 32;
         std::vector<UINT32> pixelData(width * height);
-        m_random<int> dist(12345, 0, 10);
+        ssstl::random<int> dist(12345, 0, 10);
 
         for (auto &px : pixelData)
         {

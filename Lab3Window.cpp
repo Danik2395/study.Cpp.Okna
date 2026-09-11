@@ -7,8 +7,7 @@
 #define CLEAR_LIST(lst)\
 do\
 {\
-(lst)->~List();\
-new (lst) List<int>();\
+(lst)->clear();\
 } while (0);\
 
 
@@ -48,7 +47,7 @@ void Lab3Window::clearAll()
 
 void Lab3Window::randCreateList()
 {
-    m_random<int> dist(5, 15);
+    ssstl::random<int> dist(5, 15);
     int listSize = UTL::GetNumber<int>(inField->GetText());
     if (listSize < 1) listSize = dist;
     else if (listSize > 100) listSize = 100;
@@ -266,7 +265,7 @@ void Lab3Window::DrawContent()
     {
         D2D1_RECT_F textRect = D2D1::RectF(20.0f, 20.0f, 150.0f, 45.0f);
         pRenderTarget->DrawText(
-            L"Свободное значение",
+            L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
             18,
             pLabelTextFormat,
             textRect,
@@ -275,7 +274,7 @@ void Lab3Window::DrawContent()
 
         textRect = D2D1::RectF(286.0f, 355.0f, 450.0f, 375.0f);
         pRenderTarget->DrawText(
-            L"Начало",
+            L"пїЅпїЅпїЅпїЅпїЅпїЅ",
             6,
             pLabelTextFormat,
             textRect,
@@ -284,7 +283,7 @@ void Lab3Window::DrawContent()
 
         textRect = D2D1::RectF(286.0f, 381.0f, 450.0f, 401.0f);
         pRenderTarget->DrawText(
-            L"Конец",
+            L"пїЅпїЅпїЅпїЅпїЅ",
             5,
             pLabelTextFormat,
             textRect,
@@ -323,7 +322,7 @@ LRESULT Lab3Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         bttnRandCreate = std::make_unique<MainButton>(
             L3_IDBTTN_RAND_CR,
-            L"Создать случайно",
+            L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
             S(140), S(35),
             S(260), S(20),
             m_hwnd
@@ -331,7 +330,7 @@ LRESULT Lab3Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         bttnAddElem = std::make_unique<MainButton>(
             L3_IDBTTN_ADD_EL,
-            L"Добавить",
+            L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
             S(140), S(35),
             S(260), S(65),
             m_hwnd
@@ -339,7 +338,7 @@ LRESULT Lab3Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         bttnPop = std::make_unique<MainButton>(
             L3_IDBTTN_POP,
-            L"Очистить крайний",
+            L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
             S(140), S(35),
             S(260), S(110),
             m_hwnd
@@ -347,7 +346,7 @@ LRESULT Lab3Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         bttnClear = std::make_unique<MainButton>(
             L3_IDBTTN_CLEAR,
-            L"Очистить всё",
+            L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ",
             S(140), S(35),
             S(260), S(155),
             m_hwnd
@@ -355,7 +354,7 @@ LRESULT Lab3Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         bttnSort = std::make_unique<MainButton>(
             L3_IDBTTN_SORT,
-            L"Сортировать",
+            L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
             S(140), S(35),
             S(260), S(200),
             m_hwnd
@@ -363,7 +362,7 @@ LRESULT Lab3Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         bttnInvert = std::make_unique<MainButton>(
             L3_IDBTTN_INVERT,
-            L"Перевернуть",
+            L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
             S(140), S(35),
             S(260), S(245),
             m_hwnd
@@ -371,7 +370,7 @@ LRESULT Lab3Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         bttnTask = std::make_unique<MainButton>(
             L3_IDBTTN_TASK,
-            L"Удалить *5",
+            L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅ *5",
             S(140), S(35),
             S(260), S(290),
             m_hwnd

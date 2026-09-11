@@ -81,7 +81,7 @@ void Lab4Window::createVariables()
         return;
     }
 
-    pcwList tokens;
+    ssstl::List<const wchar_t*> tokens;
     try
     {
         tokens = yard.unsortToTokens(expression);
@@ -283,7 +283,7 @@ void Lab4Window::DrawContent()
     {
         D2D1_RECT_F textRect = D2D1::RectF(185.0f, 15.0f, 545.0f, 33.0f);
         pRenderTarget->DrawText(
-            L"Введите выражение",
+            L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
             17,
             pLabelTextFormat,
             textRect,
@@ -292,7 +292,7 @@ void Lab4Window::DrawContent()
 
         textRect = D2D1::RectF(185.0f, 80.0f, 545.0f, 98.0f);
         pRenderTarget->DrawText(
-            L"Полученная ОПЗ",
+            L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ",
             14,
             pLabelTextFormat,
             textRect,
@@ -301,7 +301,7 @@ void Lab4Window::DrawContent()
 
         textRect = D2D1::RectF(185.0f, 145.0f, 545.0f, 163.0f);
         pRenderTarget->DrawText(
-            L"Результат",
+            L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
             9,
             pLabelTextFormat,
             textRect,
@@ -349,7 +349,7 @@ LRESULT Lab4Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         bttnTranslate = std::make_unique<MainButton>(
             L4_IDBTTN_TRANSL,
-            L"Перевести",
+            L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
             S(110), S(40),
             S(290), S(220),
             m_hwnd
@@ -357,7 +357,7 @@ LRESULT Lab4Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         bttnCalculate = std::make_unique<MainButton>(
             L4_IDBTTN_CALC,
-            L"Посчитать",
+            L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
             S(110), S(40),
             S(420), S(220),
             m_hwnd
@@ -377,8 +377,8 @@ LRESULT Lab4Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         bttnTranslate->Create();
         vlvVariables->Create();
 
-        vlvVariables->AddColumn(0, L"Имя", S(50));
-        vlvVariables->AddColumn(1, L"Знач.", S(105));
+        vlvVariables->AddColumn(0, L"пїЅпїЅпїЅ", S(50));
+        vlvVariables->AddColumn(1, L"пїЅпїЅпїЅпїЅ.", S(105));
 
         return 0;
     }

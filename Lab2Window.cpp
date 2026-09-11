@@ -10,8 +10,10 @@
 #define CLEAR_STACK(st)\
 do\
 {\
-(st)->~Stack();\
-new (st) Stack<int>();\
+while (!(st)->empty())\
+{\
+(st)->pop();\
+}\
 } while (0);\
 
 
@@ -39,7 +41,7 @@ void Lab2Window::clearAll()
 
 void Lab2Window::randCreateStack()
 {
-    m_random<int> dist(5, 15);
+    ssstl::random<int> dist(5, 15);
     int stackSize = UTL::GetNumber<int>(inField->GetText());
     if (stackSize < 1) stackSize = dist;
     else if (stackSize > 100) stackSize = 100;
@@ -388,7 +390,7 @@ void Lab2Window::DrawContent()
     {
         D2D1_RECT_F textRect = D2D1::RectF(20.0f, 20.0f, 150.0f, 45.0f);
         pRenderTarget->DrawText(
-            L"Свободное значение",
+            L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
             18,
             pLabelTextFormat,
             textRect,
@@ -397,7 +399,7 @@ void Lab2Window::DrawContent()
 
         textRect = D2D1::RectF(286.0f, 265.0f, 450.0f, 285.0f);
         pRenderTarget->DrawText(
-            L"Общий",
+            L"пїЅпїЅпїЅпїЅпїЅ",
             5,
             pLabelTextFormat,
             textRect,
@@ -406,7 +408,7 @@ void Lab2Window::DrawContent()
 
         textRect = D2D1::RectF(286.0f, 291.0f, 450.0f, 311.0f);
         pRenderTarget->DrawText(
-            L"Чётный",
+            L"ЧёпїЅпїЅпїЅпїЅ",
             6,
             pLabelTextFormat,
             textRect,
@@ -415,7 +417,7 @@ void Lab2Window::DrawContent()
 
         textRect = D2D1::RectF(286.0f, 317.0f, 450.0f, 337.0f);
         pRenderTarget->DrawText(
-            L"Нечётный",
+            L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
             8,
             pLabelTextFormat,
             textRect,
@@ -454,7 +456,7 @@ LRESULT Lab2Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         bttnRandCreate = std::make_unique<MainButton>(
             L2_IDBTTN_RAND_CR,
-            L"Создать случайно",
+            L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
             S(140), S(35),
             S(260), S(20),
             m_hwnd
@@ -462,7 +464,7 @@ LRESULT Lab2Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         bttnAddElem = std::make_unique<MainButton>(
             L2_IDBTTN_ADD_EL,
-            L"Добавить",
+            L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
             S(140), S(35),
             S(260), S(65),
             m_hwnd
@@ -470,7 +472,7 @@ LRESULT Lab2Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         bttnPop = std::make_unique<MainButton>(
             L2_IDBTTN_POP,
-            L"Очистить верхний",
+            L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
             S(140), S(35),
             S(260), S(110),
             m_hwnd
@@ -478,7 +480,7 @@ LRESULT Lab2Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         bttnClear = std::make_unique<MainButton>(
             L2_IDBTTN_CLEAR,
-            L"Очистить всё",
+            L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ",
             S(140), S(35),
             S(260), S(155),
             m_hwnd
@@ -486,7 +488,7 @@ LRESULT Lab2Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         bttnSort = std::make_unique<MainButton>(
             L2_IDBTTN_SORT,
-            L"Сортировать",
+            L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
             S(140), S(35),
             S(260), S(200),
             m_hwnd

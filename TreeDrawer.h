@@ -1,7 +1,7 @@
 #include "ScrollWindowBase.h"
-#include "List.h"
-#include "Pair.h"
-#include "MapleTree.h"
+#include "ssstl/List.h"
+#include "ssstl/MapleTree.h"
+#include "ssstl/random.h"
 #pragma once
 
 template<typename KeyType, typename ValueType>
@@ -19,13 +19,13 @@ class TreeDrawer : public ScrollWindowBase<TreeDrawer<KeyType, ValueType>>
 		int pointX, pointY;
 	};
 
-	using NodesVisual = MapleTree<KeyType, NodeVisual>;
+	using NodesVisual = ssstl::MapleTree<KeyType, NodeVisual>;
 	NodesVisual nodesVisual_;
 
-	using Edges = List<Edge>;
+	using Edges = ssstl::List<Edge>;
 	Edges edges_;
 
-	MapleTree<KeyType, ValueType>* tree_;
+	ssstl::MapleTree<KeyType, ValueType>* tree_;
 
 	int nodeDia_;
 	int margin_;
@@ -43,7 +43,7 @@ class TreeDrawer : public ScrollWindowBase<TreeDrawer<KeyType, ValueType>>
 public:
 	TreeDrawer(
 		int id,
-		MapleTree<KeyType, ValueType> &tree
+		ssstl::MapleTree<KeyType, ValueType> &tree
 	) :
 		ScrollWindowBase<TreeDrawer<KeyType, ValueType>>(id),
 		tree_(&tree)
@@ -58,7 +58,7 @@ public:
 		int y,
 		int horizontalLineSize,
 		int verticalLineSize,
-		MapleTree<KeyType, ValueType> &tree,
+		ssstl::MapleTree<KeyType, ValueType> &tree,
 		HWND parent
 	) :
 		ScrollWindowBase<TreeDrawer<KeyType, ValueType>>(
@@ -169,7 +169,7 @@ private:
 		const UINT width = 32;
 		const UINT height = 32;
 		std::vector<UINT32> pixelData(width * height);
-		m_random<int> dist(12345, 0, 10);
+		ssstl::random<int> dist(12345, 0, 10);
 
 		CComPtr<ID2D1Bitmap> pBitmap;
 		D2D1_BITMAP_PROPERTIES props;

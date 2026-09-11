@@ -7,7 +7,7 @@
 #include "MainEdit.h"
 #include "MainButton.h"
 #include "VariablesListView.h"
-#include "List.h"
+#include "ssstl/List.h"
 #include "shuntingYard.h"
 #include <memory>
 
@@ -32,7 +32,7 @@ class Lab4Window : public WndProps<Lab4Window, 4>, public MainWindow<Lab4Window>
 
     std::unique_ptr<VariablesListView> vlvVariables;
 
-    List<shuntingYard::Variables> variablesList;
+    ssstl::List<shuntingYard::Variables> variablesList;
 
     shuntingYard yard;
 
@@ -41,7 +41,7 @@ class Lab4Window : public WndProps<Lab4Window, 4>, public MainWindow<Lab4Window>
     void createVariables();
 
 public:
-    Lab4Window() : WndProps(L"Сортировочная станция", 580, 340)
+    Lab4Window() : WndProps(L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ", 580, 340)
     {}
 
     PCWSTR ClassName() const override { return L"Lab4WindowClass"; }

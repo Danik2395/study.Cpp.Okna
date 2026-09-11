@@ -2,8 +2,8 @@
 // NoLinearSolver.h
 //
 #include <concepts>
-#include "List.h"
-#include "Pair.h"
+#include "ssstl/List.h"
+#include "ssstl/Pair.h"
 
 template<typename FunctionType>
 concept LinearFunc = requires(FunctionType function, double x)
@@ -32,8 +32,6 @@ public:
 			return message.c_str();
 		}
 	};
-
-	using IntervalsList = List<Pair<double, double>>;
 
 private:
 	FunctionType func_;
@@ -66,9 +64,9 @@ public:
 		dFunc_ = std::forward<FunctionT>(dFunction);
 	}
 
-	IntervalsList FindIntervals(double limStart, double limEnd, double step)
+	ssstl::List<ssstl::Pair<double, double>> FindIntervals(double limStart, double limEnd, double step)
 	{
-		IntervalsList intervals;
+		ssstl::List<ssstl::Pair<double, double>> intervals;
 		for (double x = limStart; x <= limEnd; x += step)
 		{
 			if (func_(x) * func_(x + step) < 0)
@@ -90,7 +88,7 @@ public:
 
 			if (abs(derivative) < 1e-12)
 			{
-				throw noLinearException(L"Производная равна нулю. Невозможно применить метод Ньютона.");
+				throw noLinearException(L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.");
 			}
 
 			xNext = xPrev - (func_(xPrev) / derivative);
@@ -103,6 +101,6 @@ public:
 			xPrev = xNext;
 		}
 
-		throw noLinearException(L"Корень не найден. Превышено количество итераций.");
+		throw noLinearException(L"пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.");
 	}
 };

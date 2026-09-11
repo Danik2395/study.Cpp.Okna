@@ -4,8 +4,8 @@
 #include <string>
 #include <stdexcept>
 #include <cmath>
-#include "List.h"
-#include "Stack.h"
+#include "ssstl/List.h"
+#include "ssstl/Stack.h"
 #pragma once
 
 class shuntingYard
@@ -30,8 +30,8 @@ public:
 	};
 
 private:
-	pcwList rpnList;
-	Stack<const wchar_t, cwList> stack;
+	ssstl::List<const wchar_t*> rpnList;
+	ssstl::Stack<const wchar_t, ssstl::List<const wchar_t>> stack;
 
 	enum Assoc
 	{
@@ -87,7 +87,7 @@ private:
 		double value;
 	};
 
-	List<internalVariables> variablesList_;
+	ssstl::List<internalVariables> variablesList_;
 
 	const internalVariables* getVariable(const wchar_t* variableName)
 	{
@@ -106,8 +106,8 @@ private:
 	struct ErrorTokenContext
 	{
 		const std::wstring &errorMessage; // Only for temporary usage in processTokenError()
-		pcwList &tokens;
-		pcwList::Iterator fromToken;
+		ssstl::List<const wchar_t*> &tokens;
+		ssstl::List<const wchar_t*>::Iterator fromToken;
 		int tokenTraceCount;
 	};
 
@@ -135,7 +135,7 @@ public:
 	//shuntingYard();
 	//~shuntingYard();
 
-	void setVariables(const List<internalVariables> &variablesList)
+	void setVariables(const ssstl::List<internalVariables> &variablesList)
 	{
 		variablesList_ = variablesList;
 	}
@@ -156,9 +156,9 @@ public:
 		return outRpn;
 	}
 
-	pcwList unsortToTokens(std::wstring &unsortExpression)
+	ssstl::List<const wchar_t*> unsortToTokens(std::wstring &unsortExpression)
 	{
-		pcwList outTokenList;
+		ssstl::List<const wchar_t*> outTokenList;
 		std::wstring buffer;
 
 		int unsortIter = 0;
@@ -195,7 +195,7 @@ public:
 					else if (wch == L'.')                                    // "x.1", "x.x"
 					{
 						std::wstring errorTrace = getErrorTrace(unsortExpression, unsortIter);
-						throw shuntingException(L"Переменная не может содержать точку " + errorTrace);
+						throw shuntingException(L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ " + errorTrace);
 					}
 					else                                                     // Parced whole variable
 					{
@@ -226,14 +226,14 @@ public:
 						if (dotCount > 1)
 						{
 							std::wstring errorTrace = getErrorTrace(unsortExpression, unsortIter);
-							throw shuntingException(L"Слишком много точек в числе " + errorTrace);
+							throw shuntingException(L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ " + errorTrace);
 						}
 						buffer.push_back(wch);
 					}
 					else if (iswalpha(wch))                                  // "1a" not the variable
 					{
 						std::wstring errorTrace = getErrorTrace(unsortExpression, unsortIter);
-						throw shuntingException(L"Число не может содержать буквы " + errorTrace);
+						throw shuntingException(L"пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ " + errorTrace);
 					}
 					else                                                     // Parced whole number
 					{
@@ -246,18 +246,18 @@ public:
 			}
 
 			std::wstring errorTrace = getErrorTrace(unsortExpression, unsortIter);
-			throw shuntingException(L"Неизвестный символ " + errorTrace);
+			throw shuntingException(L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ " + errorTrace);
 		}
 
 		return outTokenList;
 	}
 
-	pcwList shuntToRpn(std::wstring &unsortExpression)
+	ssstl::List<const wchar_t*> shuntToRpn(std::wstring &unsortExpression)
 	{
 		rpnList.clear();
 
 		// Operators and operands in form of const wchar_t* pointer
-		pcwList tokensList = unsortToTokens(unsortExpression);
+		ssstl::List<const wchar_t*> tokensList = unsortToTokens(unsortExpression);
 
 
 		Expected expected = OPERAND;
@@ -274,7 +274,7 @@ public:
 				if (expected != OPERAND)
 				{
 					processTokenError({
-						L"Ожидался операнд ",
+						L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ ",
 						tokensList,
 						tokenIter,
 						6
@@ -291,7 +291,7 @@ public:
 				if (expected != OPERAND)
 				{
 					processTokenError({
-						L"Ожидался операнд ",
+						L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ ",
 						tokensList,
 						tokenIter,
 						6
@@ -307,7 +307,7 @@ public:
 				if (expected != OPERATOR)
 				{
 					processTokenError({
-						L"Ожидался оператор ",
+						L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ",
 						tokensList,
 						tokenIter,
 						6
@@ -343,7 +343,7 @@ public:
 				if (expected != OPERAND)
 				{
 					processTokenError({
-						L"Ожидался операнд ",
+						L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ ",
 						tokensList,
 						tokenIter,
 						6
@@ -358,7 +358,7 @@ public:
 				if (expected != OPERATOR)
 				{
 					processTokenError({
-						L"Ожидался оператор ",
+						L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ",
 						tokensList,
 						tokenIter,
 						6
@@ -376,7 +376,7 @@ public:
 				if (stack.empty())
 				{
 					processTokenError({
-						L"Лишняя закрывающая скобка ",
+						L"пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ ",
 						tokensList,
 						tokenIter,
 						6
@@ -388,7 +388,7 @@ public:
 			else
 			{
 				processTokenError({
-					L"Неизвестный символ ",
+					L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ ",
 					tokensList,
 					tokenIter,
 					6
@@ -401,7 +401,7 @@ public:
 
 		if (expected != OPERATOR && !tokensList.empty())
 		{
-			throw shuntingException(L"Выражение не закончено.");
+			throw shuntingException(L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.");
 		}
 
 		while (!stack.empty())
@@ -409,7 +409,7 @@ public:
 			if (stack.top() == L'(')
 			{
 				while (!stack.empty()) stack.pop();
-				throw shuntingException(L"Пропущена закрывающая скобка.");
+				throw shuntingException(L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.");
 			}
 
 			const wchar_t tempStackTopOper[] = { stack.top(), L'\0' };
@@ -425,14 +425,14 @@ public:
 	double calculateRpn() { return calculateRpn(rpnList); }
 	
 	// Throws on empty list, unknown token, undefined variable, division by zero, and infinite result.
-	double calculateRpn(const pcwList &rpn)
+	double calculateRpn(const ssstl::List<const wchar_t*> &rpn)
 	{
 		if (rpn.empty())
 		{
-			throw shuntingException(L"Список RPN пуст.");
+			throw shuntingException(L"пїЅпїЅпїЅпїЅпїЅпїЅ RPN пїЅпїЅпїЅпїЅ.");
 		}
 
-		Stack<double> calcStack;
+		ssstl::Stack<double> calcStack;
 
 		// Throwing without trace because cannot trace on reverce polish notation
 		for (const auto &token : rpn)
@@ -445,7 +445,7 @@ public:
 				{
 					if (calcStack.empty())               // Unary minus. Needs one operand
 					{
-						throw shuntingException(L"Недостаточно операндов для унарного минуса.");
+						throw shuntingException(L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.");
 					}
 
 					double valToPush = calcStack.top();
@@ -456,7 +456,7 @@ public:
 				{
 					if (calcStack.size() < 2)            // Binary operator. Needs two operands
 					{
-						throw shuntingException(L"Недостаточно операндов для оператора.");
+						throw shuntingException(L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.");
 					}
 
 					double rightOperand = calcStack.top();
@@ -482,7 +482,7 @@ public:
 					case L'/':
 						if (isZero(rightOperand))
 						{
-							throw shuntingException(L"Деление на ноль.");
+							throw shuntingException(L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ.");
 						}
 						result = leftOperand / rightOperand;
 						break;
@@ -492,12 +492,12 @@ public:
 						break;
 
 					default:
-						throw shuntingException(L"Неизвестный оператор.");
+						throw shuntingException(L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.");
 					}
 
 					if (std::isinf(result))
 					{
-						throw shuntingException(L"Результат операции бесконечность.");
+						throw shuntingException(L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.");
 					}
 
 					calcStack.push(result);
@@ -512,19 +512,19 @@ public:
 				const internalVariables* var = getVariable(token);
 				if (!var)
 				{
-					throw shuntingException(L"Неизвестная переменная " + std::wstring(token));
+					throw shuntingException(L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ " + std::wstring(token));
 				}
 				calcStack.push(var->value);
 			}
 			else                                         // Undefined
 			{
-				throw shuntingException(L"Неизвестный токен " + std::wstring(token));
+				throw shuntingException(L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ " + std::wstring(token));
 			}
 		}
 
 		if (calcStack.size() != 1)
 		{
-			throw shuntingException(L"Некорректное выражение. Лишние операнды.");
+			throw shuntingException(L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.");
 		}
 
 		return calcStack.top();
