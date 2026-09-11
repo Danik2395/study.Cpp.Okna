@@ -17,49 +17,63 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(SOURCES
-    main.cpp
-    BaseWindow.h
-    D2DWindow.h
-    MainWindow.h
-    WndProps.h
-    ThreadLauncher.h
-    DpiScale.h
-    IControl.h
-    MainButton.h
-    MainEdit.h
-    MainCheckBox.h
-    MainRadioButton.h
-    VariablesListView.h
-    ScrollWindowBase.h
-    Theme.h
-    Utils.h
-    shuntingYard.h
-    TreeDrawer.h
-    Functions.h
-    IntegralSolver.h
-    NoLinearSolver.h
-    PlotWindow.h
-    HubWindow.h
-    HubWindow.cpp
-    Lab1Window.h
-    Lab1Window.cpp
-    Lab2Window.h
-    Lab2Window.cpp
-    Lab3Window.h
-    Lab3Window.cpp
-    Lab4Window.h
-    Lab4Window.cpp
-    Lab5Window.h
-    Lab5Window.cpp
-    Lab6Window.h
-    Lab6Window.cpp
-    Lab8Window.h
-    Lab8Window.cpp
-    LabTestWindow.h
-    LabTestWindow.cpp
+    main/main.cpp
+    main/Theme.h
+
+    Windows/Templates/BaseWindow.h
+    Windows/Templates/D2DWindow.h
+    Windows/Templates/MainWindow.h
+    Windows/Templates/ScrollWindowBase.h
+    Windows/Helpers/WndProps.h
+    Windows/Helpers/ThreadLauncher.h
+    Windows/Helpers/DpiScale.h
+    Windows/Helpers/IControl.h
+    Windows/Child/MainButton.h
+    Windows/Child/MainEdit.h
+    Windows/Child/MainCheckBox.h
+    Windows/Child/MainRadioButton.h
+    Windows/Child/VariablesListView.h
+    Windows/Child/PlotWindow.h
+    Windows/Child/TreeDrawer.h
+
+    Windows/Actual/HubWindow.h
+    Windows/Actual/HubWindow.cpp
+    Windows/Actual/Lab1Window.h
+    Windows/Actual/Lab1Window.cpp
+    Windows/Actual/Lab2Window.h
+    Windows/Actual/Lab2Window.cpp
+    Windows/Actual/Lab3Window.h
+    Windows/Actual/Lab3Window.cpp
+    Windows/Actual/Lab4Window.h
+    Windows/Actual/Lab4Window.cpp
+    Windows/Actual/Lab5Window.h
+    Windows/Actual/Lab5Window.cpp
+    Windows/Actual/Lab6Window.h
+    Windows/Actual/Lab6Window.cpp
+    Windows/Actual/Lab8Window.h
+    Windows/Actual/Lab8Window.cpp
+    Windows/Actual/LabTestWindow.h
+    Windows/Actual/LabTestWindow.cpp
+
+    Utils/Utils.h
+    Utils/Functions.h
+
+    Algorithms_and_containers/shuntingYard.h
+    Algorithms_and_containers/IntegralSolver.h
+    Algorithms_and_containers/NoLinearSolver.h
 )
 
 add_executable(${PROJECT_NAME} WIN32 ${SOURCES})
+
+target_include_directories(${PROJECT_NAME} PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}/Windows/Actual"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Windows/Child"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Windows/Helpers"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Windows/Templates"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Algorithms_and_containers"
+    "${CMAKE_CURRENT_SOURCE_DIR}/main"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Utils"
+)
 
 set_property(TARGET ${PROJECT_NAME} PROPERTY VS_DPI_AWARE "PerMonitor")
 
