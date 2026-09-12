@@ -9,7 +9,7 @@
 
 ## Библиотеки
 
-ssstl - написаная мной stl like библиотека
+[ssstl](https://github.com/Danik2395/ssstl) - написаная мной stl like библиотека
 
 - В ssstl::random подключается `windows.h`, в котором убирается флаг юникода, поэтому его нужно определить в `CMakeListts.txt`
 
@@ -25,8 +25,8 @@ ssstl - написаная мной stl like библиотека
 
 **Вариант 12:** Созданный список разделить на два: в первый поместить четные, а во второй – нечетные числа
 
-- [Односвязный список](#singlenodelist)
-- [Стек](#stack)
+- [Односвязный список](https://github.com/Danik2395/ssstl/blob/main/README.md/#singlenodelist)
+- [Стек](https://github.com/Danik2395/ssstl/blob/main/README.md/#stack)
 - [Применение](Lab2Window.cpp)
 
 ### Свободное значение:
@@ -73,7 +73,7 @@ ssstl - написаная мной stl like библиотека
 
 **Вариант 5:** Из созданного списка удалить элементы, заканчивающиеся на цифру 5 
 
-- [Двусвязный список](#list)
+- [Двусвязный список](https://github.com/Danik2395/ssstl/blob/main/README.md/#list)
 - [Применение](Lab3Window.cpp)
 
 ## 4. Сортировочная станция
@@ -86,7 +86,7 @@ ssstl - написаная мной stl like библиотека
 
 **Вариант 13:** Между максимальным и минимальным значениями ключей найти запись с ключом  со значением, ближайшим к среднему значению
 
-- [Дерево](#mapletree)
+- [Дерево](https://github.com/Danik2395/ssstl/blob/main/README.md/#mapletree)
 - [Применение](Lab5Window.cpp)
 
 ## 6. Поиск корней уравнений
