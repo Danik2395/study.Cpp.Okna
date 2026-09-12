@@ -28,7 +28,7 @@ class Lab1Window : public WndProps<Lab1Window, 4>, public MainWindow<Lab1Window>
     double recursion(int steps);
 
 public:
-    Lab1Window() : WndProps(L"Рекурсия", 500, 300) {}
+    Lab1Window() : WndProps(L"Р РµРєСѓСЂСЃРёСЏ", 500, 300) {}
 
     PCWSTR ClassName() const override { return L"Lab1WindowClass"; }
     LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) override;

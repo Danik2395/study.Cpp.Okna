@@ -195,7 +195,7 @@ public:
 					else if (wch == L'.')                                    // "x.1", "x.x"
 					{
 						std::wstring errorTrace = getErrorTrace(unsortExpression, unsortIter);
-						throw shuntingException(L"���������� �� ����� ��������� ����� " + errorTrace);
+						throw shuntingException(L"Переменная не может содержать точку " + errorTrace);
 					}
 					else                                                     // Parced whole variable
 					{
@@ -226,14 +226,14 @@ public:
 						if (dotCount > 1)
 						{
 							std::wstring errorTrace = getErrorTrace(unsortExpression, unsortIter);
-							throw shuntingException(L"������� ����� ����� � ����� " + errorTrace);
+							throw shuntingException(L"Слишком много точек в числе " + errorTrace);
 						}
 						buffer.push_back(wch);
 					}
 					else if (iswalpha(wch))                                  // "1a" not the variable
 					{
 						std::wstring errorTrace = getErrorTrace(unsortExpression, unsortIter);
-						throw shuntingException(L"����� �� ����� ��������� ����� " + errorTrace);
+						throw shuntingException(L"Число не может содержать буквы " + errorTrace);
 					}
 					else                                                     // Parced whole number
 					{
@@ -246,7 +246,7 @@ public:
 			}
 
 			std::wstring errorTrace = getErrorTrace(unsortExpression, unsortIter);
-			throw shuntingException(L"����������� ������ " + errorTrace);
+			throw shuntingException(L"Неизвестный символ " + errorTrace);
 		}
 
 		return outTokenList;
@@ -274,7 +274,7 @@ public:
 				if (expected != OPERAND)
 				{
 					processTokenError({
-						L"�������� ������� ",
+						L"Ожидался операнд ",
 						tokensList,
 						tokenIter,
 						6
@@ -291,7 +291,7 @@ public:
 				if (expected != OPERAND)
 				{
 					processTokenError({
-						L"�������� ������� ",
+						L"Ожидался операнд ",
 						tokensList,
 						tokenIter,
 						6
@@ -307,7 +307,7 @@ public:
 				if (expected != OPERATOR)
 				{
 					processTokenError({
-						L"�������� �������� ",
+						L"Ожидался оператор ",
 						tokensList,
 						tokenIter,
 						6
@@ -343,7 +343,7 @@ public:
 				if (expected != OPERAND)
 				{
 					processTokenError({
-						L"�������� ������� ",
+						L"Ожидался операнд ",
 						tokensList,
 						tokenIter,
 						6
@@ -358,7 +358,7 @@ public:
 				if (expected != OPERATOR)
 				{
 					processTokenError({
-						L"�������� �������� ",
+						L"Ожидался оператор ",
 						tokensList,
 						tokenIter,
 						6
@@ -376,7 +376,7 @@ public:
 				if (stack.empty())
 				{
 					processTokenError({
-						L"������ ����������� ������ ",
+						L"Лишняя закрывающая скобка ",
 						tokensList,
 						tokenIter,
 						6
@@ -388,7 +388,7 @@ public:
 			else
 			{
 				processTokenError({
-					L"����������� ������ ",
+					L"Неизвестный символ ",
 					tokensList,
 					tokenIter,
 					6
@@ -401,7 +401,7 @@ public:
 
 		if (expected != OPERATOR && !tokensList.empty())
 		{
-			throw shuntingException(L"��������� �� ���������.");
+			throw shuntingException(L"Выражение не закончено.");
 		}
 
 		while (!stack.empty())
@@ -409,7 +409,7 @@ public:
 			if (stack.top() == L'(')
 			{
 				while (!stack.empty()) stack.pop();
-				throw shuntingException(L"��������� ����������� ������.");
+				throw shuntingException(L"Пропущена закрывающая скобка.");
 			}
 
 			const wchar_t tempStackTopOper[] = { stack.top(), L'\0' };
@@ -429,7 +429,7 @@ public:
 	{
 		if (rpn.empty())
 		{
-			throw shuntingException(L"������ RPN ����.");
+			throw shuntingException(L"Список RPN пуст.");
 		}
 
 		ssstl::Stack<double> calcStack;
@@ -445,7 +445,7 @@ public:
 				{
 					if (calcStack.empty())               // Unary minus. Needs one operand
 					{
-						throw shuntingException(L"������������ ��������� ��� �������� ������.");
+						throw shuntingException(L"Недостаточно операндов для унарного минуса.");
 					}
 
 					double valToPush = calcStack.top();
@@ -456,7 +456,7 @@ public:
 				{
 					if (calcStack.size() < 2)            // Binary operator. Needs two operands
 					{
-						throw shuntingException(L"������������ ��������� ��� ���������.");
+						throw shuntingException(L"Недостаточно операндов для оператора.");
 					}
 
 					double rightOperand = calcStack.top();
@@ -482,7 +482,7 @@ public:
 					case L'/':
 						if (isZero(rightOperand))
 						{
-							throw shuntingException(L"������� �� ����.");
+							throw shuntingException(L"Деление на ноль.");
 						}
 						result = leftOperand / rightOperand;
 						break;
@@ -492,12 +492,12 @@ public:
 						break;
 
 					default:
-						throw shuntingException(L"����������� ��������.");
+						throw shuntingException(L"Неизвестный оператор.");
 					}
 
 					if (std::isinf(result))
 					{
-						throw shuntingException(L"��������� �������� �������������.");
+						throw shuntingException(L"Результат операции бесконечность.");
 					}
 
 					calcStack.push(result);
@@ -512,19 +512,19 @@ public:
 				const internalVariables* var = getVariable(token);
 				if (!var)
 				{
-					throw shuntingException(L"����������� ���������� " + std::wstring(token));
+					throw shuntingException(L"Неизвестная переменная " + std::wstring(token));
 				}
 				calcStack.push(var->value);
 			}
 			else                                         // Undefined
 			{
-				throw shuntingException(L"����������� ����� " + std::wstring(token));
+				throw shuntingException(L"Неизвестный токен " + std::wstring(token));
 			}
 		}
 
 		if (calcStack.size() != 1)
 		{
-			throw shuntingException(L"������������ ���������. ������ ��������.");
+			throw shuntingException(L"Некорректное выражение. Лишние операнды.");
 		}
 
 		return calcStack.top();

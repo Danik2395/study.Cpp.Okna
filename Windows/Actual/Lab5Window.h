@@ -41,7 +41,7 @@ class Lab5Window : public WndProps<Lab5Window, 4>, public MainWindow<Lab5Window>
     void middleKeyInfo();
 
 public:
-    Lab5Window() : WndProps(L"������", 720, 410)
+    Lab5Window() : WndProps(L"Дерево", 720, 410)
     {}
 
     PCWSTR ClassName() const override { return L"Lab5WindowClass"; }

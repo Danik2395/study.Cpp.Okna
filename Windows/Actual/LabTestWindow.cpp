@@ -55,7 +55,7 @@ LRESULT LabTestWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         inField = std::make_unique<MainEdit>(LTEST_IDIN_FIELD, S(200), S(100), S(10), S(10), 12, m_hwnd, ES_CENTER | ES_MULTILINE);
         outField = std::make_unique<MainEdit>(LTEST_IDOUT_FIELD, S(200), S(100), S(10), S(210), 12, m_hwnd, ES_CENTER | ES_MULTILINE | ES_READONLY);
-        calcButton = std::make_unique<MainButton>(LTEST_IDBTN_CALC, L"Посчитать", S(100), S(30), S(20), S(150), m_hwnd);
+        calcButton = std::make_unique<MainButton>(LTEST_IDBTN_CALC, L"РџРѕСЃС‡РёС‚Р°С‚СЊ", S(100), S(30), S(20), S(150), m_hwnd);
         testCheckBox = std::make_unique<MainCheckBox>(LTEST_IDCHECK_SMTH, S(40), S(40), S(300), S(10), m_hwnd);
 
         radio1 = std::make_unique<MainRadioButton<LTEST_IDRADI_GROUP>>(LTEST_IDRADI_1, S(30), S(30), S(340), S(40), m_hwnd);

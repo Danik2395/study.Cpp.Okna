@@ -63,7 +63,7 @@ public:
 	//{
 	//	if (partitionCount <= 0)
 	//	{
-	//		throw integralException(L"Êîëè÷åñòâî ðàçáèåíèé äîëæíî áûòü áîëüøå íóëÿ.");
+	//		throw integralException(L"ÐšÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ñ€Ð°Ð·Ð±Ð¸ÐµÐ½Ð¸Ð¹ Ð´Ð¾Ð»Ð¶Ð½Ð¾ Ð±Ñ‹Ñ‚ÑŒ Ð±Ð¾Ð»ÑŒÑˆÐµ Ð½ÑƒÐ»Ñ.");
 	//	}
 
 	//	double result = 0.0;
@@ -89,7 +89,7 @@ public:
 	//{
 	//	if (partitionCount <= 0)
 	//	{
-	//		throw integralException(L"Êîëè÷åñòâî ðàçáèåíèé äîëæíî áûòü áîëüøå íóëÿ.");
+	//		throw integralException(L"ÐšÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ñ€Ð°Ð·Ð±Ð¸ÐµÐ½Ð¸Ð¹ Ð´Ð¾Ð»Ð¶Ð½Ð¾ Ð±Ñ‹Ñ‚ÑŒ Ð±Ð¾Ð»ÑŒÑˆÐµ Ð½ÑƒÐ»Ñ.");
 	//	}
 	//	double result = 0.0;
 	//	double step = (limEnd - limStart) / partitionCount;
@@ -109,7 +109,7 @@ public:
 	{
 		if (partitionCount <= 0)
 		{
-			throw integralException(L"Êîëè÷åñòâî ðàçáèåíèé äîëæíî áûòü áîëüøå íóëÿ.");
+			throw integralException(L"ÐšÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ñ€Ð°Ð·Ð±Ð¸ÐµÐ½Ð¸Ð¹ Ð´Ð¾Ð»Ð¶Ð½Ð¾ Ð±Ñ‹Ñ‚ÑŒ Ð±Ð¾Ð»ÑŒÑˆÐµ Ð½ÑƒÐ»Ñ.");
 		}
 
 		double result = 0.0;
@@ -147,6 +147,6 @@ public:
 			s1 = s2;
 		}
 
-		throw integralException(L"Èíòåãðàë íå ñîøåëñÿ.\r\nÏðåâûøåíî êîëè÷åñòâî èòåðàöèé.");
+		throw integralException(L"Ð˜Ð½Ñ‚ÐµÐ³Ñ€Ð°Ð» Ð½Ðµ ÑÐ¾ÑˆÐµÐ»ÑÑ.\r\nÐŸÑ€ÐµÐ²Ñ‹ÑˆÐµÐ½Ð¾ ÐºÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ð¸Ñ‚ÐµÑ€Ð°Ñ†Ð¸Ð¹.");
 	}
 };

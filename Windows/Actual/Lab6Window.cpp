@@ -50,17 +50,17 @@ void Lab6Window::calculate()
     auto intervals = noLinearSolver.FindIntervals(limMin_, limMax_, step_);
     if (intervals.empty())
     {
-        resultField->AppendText(L"Корни не найдены.");
+        resultField->AppendText(L"РљРѕСЂРЅРё РЅРµ РЅР°Р№РґРµРЅС‹.");
         return;
     }
-    std::wstring intervalsFoundText{L"Интервалов найдено: "};
+    std::wstring intervalsFoundText{L"РРЅС‚РµСЂРІР°Р»РѕРІ РЅР°Р№РґРµРЅРѕ: "};
     intervalsFoundText.append(std::to_wstring(intervals.size()));
     resultField->AppendText(std::move(intervalsFoundText));
     resultField->AppendText(L"\r\n\r\n");
     int rootCount = 1;
     for (auto &interval : intervals)
     {
-        std::wstring rootText{ L"Корень " + std::to_wstring(rootCount++) + L":\r\n\t"};
+        std::wstring rootText{ L"РљРѕСЂРµРЅСЊ " + std::to_wstring(rootCount++) + L":\r\n\t"};
         double initialGuess = (interval.first + interval.second) / 2.0;
         try
         {
@@ -126,7 +126,7 @@ void Lab6Window::DrawContent()
         );
 
         pRenderTarget->DrawText(
-            L"Шаг",
+            L"РЁР°Рі",
             3,
             pLabelTextFormat,
             D2D1::RectF(240.0f, 18.0f, 280.0f, 46.0f),
@@ -208,7 +208,7 @@ LRESULT Lab6Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 		bttnCalculate = std::make_unique<MainButton>(
 			L6_IDBTTN_CALCULATE,
-			L"Посчитать",
+			L"РџРѕСЃС‡РёС‚Р°С‚СЊ",
 			S(140), S(53),
 			S(462), S(28),
 			m_hwnd

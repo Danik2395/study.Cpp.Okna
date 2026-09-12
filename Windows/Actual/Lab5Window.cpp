@@ -176,7 +176,7 @@ void Lab5Window::DrawContent()
     {
         D2D1_RECT_F textRect = D2D1::RectF(335.0f, 30.0f, 447.0f, 60.0f);
         pRenderTarget->DrawText(
-            L"Число-ключ",
+            L"Р§РёСЃР»Рѕ-РєР»СЋС‡",
             12,
             pLabelTextFormat,
             textRect,
@@ -185,7 +185,7 @@ void Lab5Window::DrawContent()
 
         textRect = D2D1::RectF(330.0f, 80.0f, 447.0f, 110.0f);
         pRenderTarget->DrawText(
-            L"Информация",
+            L"РРЅС„РѕСЂРјР°С†РёСЏ",
             12,
             pLabelTextFormat,
             textRect,
@@ -233,7 +233,7 @@ LRESULT Lab5Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         bttnDelete = std::make_unique<MainButton>(
             L5_IDBTTN_DELETE,
-            L"Удалить",
+            L"РЈРґР°Р»РёС‚СЊ",
             S(180), S(40),
             S(450), S(130),
             m_hwnd
@@ -241,7 +241,7 @@ LRESULT Lab5Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         bttnClearAll = std::make_unique<MainButton>(
             L5_IDBTTN_CLEAR_ALL,
-            L"Очистить всё",
+            L"РћС‡РёСЃС‚РёС‚СЊ РІСЃС‘",
             S(180), S(40),
             S(450), S(180),
             m_hwnd
@@ -249,7 +249,7 @@ LRESULT Lab5Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         bttnMiddleKey = std::make_unique<MainButton>(
             L5_IDBTTN_MIDDLE_KEY,
-            L"Средний ключ",
+            L"РЎСЂРµРґРЅРёР№ РєР»СЋС‡",
             S(180), S(40),
             S(450), S(230),
             m_hwnd

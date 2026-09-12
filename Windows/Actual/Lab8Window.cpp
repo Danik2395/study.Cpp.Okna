@@ -53,15 +53,15 @@ void Lab8Window::calculate()
         if (radiAuto->IsSelected())
         {
             auto integralResult = integralSolver.SolveGauss3Auto(limMin_, limMax_);
-            resultText = L"Расчёт по точности: " + std::to_wstring(epsilon_) + L"\r\n" +
-                         L"Количество разбиений: " + std::to_wstring(integralResult.second) + L"\r\n" +
-                         L"Значение интеграла: " + std::to_wstring(integralResult.first);
+            resultText = L"Р Р°СЃС‡С‘С‚ РїРѕ С‚РѕС‡РЅРѕСЃС‚Рё: " + std::to_wstring(epsilon_) + L"\r\n" +
+                         L"РљРѕР»РёС‡РµСЃС‚РІРѕ СЂР°Р·Р±РёРµРЅРёР№: " + std::to_wstring(integralResult.second) + L"\r\n" +
+                         L"Р—РЅР°С‡РµРЅРёРµ РёРЅС‚РµРіСЂР°Р»Р°: " + std::to_wstring(integralResult.first);
         }
         else
         {
             double integralResult = integralSolver.SolveGauss3(limMin_, limMax_, partitions_);
-            resultText = L"Количество разбиений: " + std::to_wstring(partitions_) + L"\r\n" +
-                         L"Значение интеграла: " + std::to_wstring(integralResult);
+            resultText = L"РљРѕР»РёС‡РµСЃС‚РІРѕ СЂР°Р·Р±РёРµРЅРёР№: " + std::to_wstring(partitions_) + L"\r\n" +
+                         L"Р—РЅР°С‡РµРЅРёРµ РёРЅС‚РµРіСЂР°Р»Р°: " + std::to_wstring(integralResult);
         }
         resultField->AppendText(resultText);
     }
@@ -138,7 +138,7 @@ void Lab8Window::DrawContent()
 		);
 
 		pRenderTarget->DrawText(
-			L"По N",
+			L"РџРѕ N",
 			4,
 			pLabelTextFormat,
 			D2D1::RectF(434.0f, 18.0f, 500.0f, 46.0f),
@@ -146,7 +146,7 @@ void Lab8Window::DrawContent()
 		);
 
 		pRenderTarget->DrawText(
-			L"Авто",
+			L"РђРІС‚Рѕ",
 			4,
 			pLabelTextFormat,
 			D2D1::RectF(434.0f, 63.0f, 500.0f, 91.0f),
@@ -235,7 +235,7 @@ LRESULT Lab8Window::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 		bttnCalculate = std::make_unique<MainButton>(
 			L8_IDBTTN_CALCULATE,
-			L"Посчитать",
+			L"РџРѕСЃС‡РёС‚Р°С‚СЊ",
 			S(140), S(53),
 			S(562), S(28),
 			m_hwnd

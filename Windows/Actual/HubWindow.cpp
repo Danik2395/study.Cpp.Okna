@@ -54,14 +54,14 @@ LRESULT HubWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         btnPadding = S(btnPadding);
 
         LabDef labs[] = {
-            { HUB_ID_BTN_LAB1, L"Рекурсия" },
-            { HUB_ID_BTN_LAB2, L"Стек" },
-            { HUB_ID_BTN_LAB3, L"Список" },
-            { HUB_ID_BTN_LAB4, L"Сортировочная станция" },
-            { HUB_ID_BTN_LAB5, L"Дерево" },
-            { HUB_ID_BTN_LAB6, L"Корни уравнений" },
-            { HUB_ID_BTN_LAB8, L"Интегралы" },
-            { HUB_ID_BTN_LAB_TEST, L"Лабораторная тест" },
+            { HUB_ID_BTN_LAB1, L"Р РµРєСѓСЂСЃРёСЏ" },
+            { HUB_ID_BTN_LAB2, L"РЎС‚РµРє" },
+            { HUB_ID_BTN_LAB3, L"РЎРїРёСЃРѕРє" },
+            { HUB_ID_BTN_LAB4, L"РЎРѕСЂС‚РёСЂРѕРІРѕС‡РЅР°СЏ СЃС‚Р°РЅС†РёСЏ" },
+            { HUB_ID_BTN_LAB5, L"Р”РµСЂРµРІРѕ" },
+            { HUB_ID_BTN_LAB6, L"РљРѕСЂРЅРё СѓСЂР°РІРЅРµРЅРёР№" },
+            { HUB_ID_BTN_LAB8, L"РРЅС‚РµРіСЂР°Р»С‹" },
+            { HUB_ID_BTN_LAB_TEST, L"Р›Р°Р±РѕСЂР°С‚РѕСЂРЅР°СЏ С‚РµСЃС‚" },
         };
 
 		for (const auto &lab : labs) // Range-based for. labs __bound is known at compile time

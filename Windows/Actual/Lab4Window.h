@@ -41,7 +41,7 @@ class Lab4Window : public WndProps<Lab4Window, 4>, public MainWindow<Lab4Window>
     void createVariables();
 
 public:
-    Lab4Window() : WndProps(L"������������� �������", 580, 340)
+    Lab4Window() : WndProps(L"Сортировочная станция", 580, 340)
     {}
 
     PCWSTR ClassName() const override { return L"Lab4WindowClass"; }

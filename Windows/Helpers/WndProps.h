@@ -64,9 +64,9 @@ public:
     {
         if (sInstanceCount > WND_COUNT)
         {
-            std::wstring msg = L"Максимум окон для лабораторной: " + std::to_wstring(WND_COUNT);
+            std::wstring msg = L"РњР°РєСЃРёРјСѓРј РѕРєРѕРЅ РґР»СЏ Р»Р°Р±РѕСЂР°С‚РѕСЂРЅРѕР№: " + std::to_wstring(WND_COUNT);
 
-            MessageBox(NULL, msg.c_str(), L"Ошибка", MB_ICONERROR);
+            MessageBox(NULL, msg.c_str(), L"РћС€РёР±РєР°", MB_ICONERROR);
             return 1;
         }
         return 0;

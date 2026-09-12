@@ -70,7 +70,7 @@ class Lab2Window : public WndProps<Lab2Window, 4>, public MainWindow<Lab2Window>
     void splitHandler();
 
 public:
-    Lab2Window() : WndProps(L"����", 450, 450),
+    Lab2Window() : WndProps(L"Стек", 450, 450),
         selectedRadi(L2_IDRADI_GENERAL),
         isSplitted(false),
         oddStackStart(0),

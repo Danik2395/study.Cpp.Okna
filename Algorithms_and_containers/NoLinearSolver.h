@@ -88,7 +88,7 @@ public:
 
 			if (abs(derivative) < 1e-12)
 			{
-				throw noLinearException(L"����������� ����� ����. ���������� ��������� ����� �������.");
+				throw noLinearException(L"Производная равна нулю. Невозможно применить метод Ньютона.");
 			}
 
 			xNext = xPrev - (func_(xPrev) / derivative);
@@ -101,6 +101,6 @@ public:
 			xPrev = xNext;
 		}
 
-		throw noLinearException(L"������ �� ������. ��������� ���������� ��������.");
+		throw noLinearException(L"Корень не найден. Превышено количество итераций.");
 	}
 };
