@@ -1,4 +1,7 @@
-# Лабораторные
+# GUI лабораторные на WinAPI
+
+<video src="https://github.com/user-attachments/assets/e6afc745-ccaa-4a33-bb24-e0ea08d6acf3" controls ></video>
+<img src="assets/okna_display.png" width=600>
 
 # Настройки проекта
 
@@ -12,6 +15,8 @@
 [ssstl](https://github.com/Danik2395/ssstl) - написаная мной stl like библиотека
 
 - В ssstl::random подключается `windows.h`, в котором убирается флаг юникода, поэтому его нужно определить в `CMakeListts.txt`
+
+# Лабораторные
 
 ## 1. Рекурсия
 						
